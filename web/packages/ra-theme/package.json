@@ -1,0 +1,18 @@
+{
+  "name": "@frontity/ra-theme",
+  "version": "0.1.0",
+  "description": "Radio Aktywne Theme",
+  "dependencies": {
+    "@frontity/components": "^1.8.2",
+    "@frontity/html2react": "^1.7.0",
+    "@frontity/source": "^1.5.2",
+    "@frontity/router": "^1.3.0",
+    "frontity": "^1.17.2"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.29",
+    "@types/node-fetch": "^2.6.1",
+    "@types/react": "^18.0.8",
+    "typescript": "^4.6.3"
+  }
+}

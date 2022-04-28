@@ -1,0 +1,31 @@
+{
+  "name": "radioaktywne",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Radio Aktywne",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "dev": "frontity dev",
+    "build": "frontity build",
+    "serve": "frontity serve"
+  },
+  "prettier": {},
+  "dependencies": {
+    "@frontity/core": "^1.15.1",
+    "@frontity/html2react": "^1.7.0",
+    "@frontity/ra-theme": "./packages/ra-theme",
+    "@frontity/tiny-router": "^1.4.4",
+    "@frontity/wp-source": "^1.11.7",
+    "frontity": "^1.17.2"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.29",
+    "@types/node-fetch": "^2.6.1",
+    "@types/react": "^18.0.8",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
+  }
+}
