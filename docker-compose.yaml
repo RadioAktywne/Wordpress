@@ -38,16 +38,16 @@ services:
       - "WORDPRESS_CONFIG_EXTRA=$WORDPRESS_CONFIG_EXTRA"
     depends_on:
       - database
-#  web:
-#    build: web
-#    ports:
-#      - "${WEB_PUBLISHED_PORT:-3000}:3000"
-#    extra_hosts:
-#      - host.docker.internal:host-gateway
-#    environment:
-#      - "WEB_WORDPRESS_URL=${WEB_WORDPRESS_URL:-http://wordpress:80}"
-#    depends_on:
-#      - wordpress
+  web:
+    build: web
+    ports:
+      - "${WEB_PUBLISHED_PORT:-3000}:3000"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      - "WEB_WORDPRESS_URL=${WEB_WORDPRESS_URL:-http://wordpress:80}"
+    depends_on:
+      - wordpress
 
 volumes:
   database:
