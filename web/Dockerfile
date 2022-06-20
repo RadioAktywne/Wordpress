@@ -1,4 +1,5 @@
-ARG NODE_IMAGE_TAG=16.15.0-alpine3.15
+# Currently Frontity doesn't work with Node higher than 16
+ARG NODE_IMAGE_TAG=16.15.1-alpine3.16
 
 # Install dependencies only when needed
 FROM node:$NODE_IMAGE_TAG AS deps
