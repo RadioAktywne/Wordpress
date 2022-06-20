@@ -10,6 +10,8 @@ RUN set -eux; \
 COPY ./start.sh ./start.sh
 RUN chmod +x ./start.sh
 
+COPY ./theme/ ./wp-content/themes/theme/
+
 COPY ./wp-config.php ./wp-config.php
 
 ENV WORDPRESS_DATABASE_NAME=database \
@@ -28,6 +30,7 @@ ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_NONCE_SALT=nonce-salt \
     WORDPRESS_TABLE_PREFIX=wp_ \
     WORDPRESS_DEBUG='' \
+    WORDPRESS_DEFAULT_THEME=theme \
     WORDPRESS_CONFIG_EXTRA=''
 
 EXPOSE 80

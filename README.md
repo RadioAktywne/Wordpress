@@ -11,7 +11,7 @@ docker-compose up
 ```
 
 By default, website is at [localhost:3000](http://localhost:3000),
-while the admin panel is at [localhost:80/admin](http://localhost:80/admin).
+while the admin panel is at [localhost:80](http://localhost:80).
 
 ## Components
 
@@ -38,7 +38,7 @@ At first launch, you need to configure it by going to the admin panel.
 
 You can find everything related to WordPress in `wordpress` directory.
 WordPress admin panel is available
-on [localhost:80/admin](http://localhost:80/admin) by
+on [localhost:80](http://localhost:80) by
 default.
 
 ### Web

@@ -56,6 +56,9 @@ $table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
 /** WordPress debugging mode. */
 define( 'WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', '') );
 
+/** Default theme **/
+define( 'WP_DEFAULT_THEME', getenv_docker('WORDPRESS_DEFAULT_THEME', 'theme') );
+
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
 	$_SERVER['HTTPS'] = 'on';
