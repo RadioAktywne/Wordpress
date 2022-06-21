@@ -29,10 +29,16 @@ else
   echo "WordPress is already installed. Url, title and admin user won't be changed even if configuration is different."
 fi
 
-wp theme activate redirect --allow-root
-wp theme delete twentytwenty twentytwentyone twentytwentytwo --allow-root
+echo "Configuring basic themes and plugins..."
 
+wp theme activate redirect --allow-root
 wp plugin activate hide-menu-items --allow-root
+wp plugin install disable-comments --activate --allow-root
+wp disable-comments settings --types=all --allow-root
+
+echo "Removing preinstalled bloatware..."
+
+wp theme delete twentytwenty twentytwentyone twentytwentytwo --allow-root
 wp plugin uninstall akismet hello --deactivate --allow-root
 
 echo "WordPress is set up!"
