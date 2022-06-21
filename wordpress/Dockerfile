@@ -2,6 +2,11 @@ ARG WORDPRESS_IMAGE_TAG=6.0.0-php7.4-apache
 
 FROM wordpress:$WORDPRESS_IMAGE_TAG
 
+ARG WP_CLI_VERSION=2.6.0
+
+RUN curl -o /usr/local/bin/wp -fL https://github.com/wp-cli/wp-cli/releases/download/v$WP_CLI_VERSION/wp-cli-$WP_CLI_VERSION.phar && \
+    chmod +x /usr/local/bin/wp
+
 WORKDIR /app
 
 RUN set -eux; \
@@ -10,7 +15,8 @@ RUN set -eux; \
 COPY ./start.sh ./start.sh
 RUN chmod +x ./start.sh
 
-COPY ./theme/ ./wp-content/themes/theme/
+COPY ./themes/ ./wp-content/themes/
+COPY ./plugins/ ./wp-content/plugins/
 
 COPY ./wp-config.php ./wp-config.php
 
@@ -30,8 +36,12 @@ ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_NONCE_SALT=nonce-salt \
     WORDPRESS_TABLE_PREFIX=wp_ \
     WORDPRESS_DEBUG='' \
-    WORDPRESS_DEFAULT_THEME=theme \
-    WORDPRESS_CONFIG_EXTRA=''
+    WORDPRESS_CONFIG_EXTRA='' \
+    WORDPRESS_ROOT_URL='http://localhost' \
+    WORDPRESS_SITE_TITLE='Radio Aktywne' \
+    WORDPRESS_ADMIN_USERNAME=username \
+    WORDPRESS_ADMIN_PASSWORD=password \
+    WORDPRESS_ADMIN_EMAIL='example@example.com'
 
 EXPOSE 80
 
