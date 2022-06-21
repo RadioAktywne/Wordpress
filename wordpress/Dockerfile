@@ -37,6 +37,7 @@ ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_TABLE_PREFIX=wp_ \
     WORDPRESS_DEBUG='' \
     WORDPRESS_CONFIG_EXTRA='' \
+    WORDPRESS_WEB_URL='http://localhost:3000' \
     WORDPRESS_ROOT_URL='http://localhost' \
     WORDPRESS_SITE_TITLE='Radio Aktywne' \
     WORDPRESS_ADMIN_USERNAME=username \

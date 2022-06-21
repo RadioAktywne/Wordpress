@@ -1,8 +1,8 @@
 <?php
-   /*
-   Plugin Name: Hide Menu Items
-   Description: Hides menu items in admin panel
-   */
+    /*
+    Plugin Name: Hide Menu Items
+    Description: Hides menu items in admin panel
+    */
 
     function remove_menus() {
         remove_menu_page( 'edit-comments.php' );
