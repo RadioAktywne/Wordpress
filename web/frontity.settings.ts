@@ -8,33 +8,70 @@ const settings: Settings<Theme | WpSource> = {
     frontity: {
       url: process.env.WEB_URL || "https://radioaktywne.pl",
       title: "Radio Aktywne",
-      description: "Radio Aktywne",
-    },
+      description: "Radio Aktywne"
+    }
   },
   packages: [
     {
       name: "@frontity/ra-theme",
       state: {
         theme: {
-          menu: [["Home", "/"]],
+          menu: [
+            ["Radio Aktywne", "/"],
+            ["Nagrania", "/recordings"],
+            ["Płyta Tygodnia", "/albums"],
+            ["Radio", "/info"]
+          ],
           featured: {
             showOnList: false,
-            showOnPost: false,
-          },
-        },
-      },
+            showOnPost: false
+          }
+        }
+      }
     },
     {
       name: "@frontity/wp-source",
       state: {
         source: {
           url: process.env.WEB_WORDPRESS_URL || "http://wordpress:80",
-        },
-      },
+          postTypes: [
+            {
+              type: "member",
+              endpoint: "member",
+              archive: "/members"
+            },
+            {
+              type: "show",
+              endpoint: "show",
+              archive: "/shows"
+            },
+            {
+              type: "event",
+              endpoint: "event",
+              archive: "/events"
+            },
+            {
+              type: "album",
+              endpoint: "album",
+              archive: "/albums"
+            },
+            {
+              type: "recording",
+              endpoint: "recording",
+              archive: "/recordings"
+            },
+            {
+              type: "info",
+              endpoint: "info",
+              archive: "/info"
+            }
+          ]
+        }
+      }
     },
     "@frontity/tiny-router",
-    "@frontity/html2react",
-  ],
+    "@frontity/html2react"
+  ]
 };
 
 export default settings;
