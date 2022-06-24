@@ -48,9 +48,11 @@ wp post delete 1 2 3 --force --allow-root
 echo "Configuring plugins..."
 
 wp plugin install --activate --allow-root \
+  advanced-custom-fields \
   disable-comments \
   disable-blog
 wp plugin activate --allow-root \
+  ra-custom-types \
   ra-fix-rest \
   ra-hide-admin-items \
   ra-remove-redirects

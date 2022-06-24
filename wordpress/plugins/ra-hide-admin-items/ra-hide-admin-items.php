@@ -24,6 +24,9 @@ function ra_hide_admin_menu()
 
     // Tools -> Disable Comments (plugin)
     remove_submenu_page('tools.php', 'disable_comments_tools');
+
+    // Custom Fields (plugin)
+    remove_menu_page('edit.php?post_type=acf-field-group');
 }
 
 add_action('admin_menu', 'ra_hide_admin_menu', 9999);
