@@ -1,6 +1,6 @@
 import { connect, css, Global, styled, useConnect } from "frontity";
 import Switch from "@frontity/components/switch";
-import { isError } from "@frontity/source";
+import { isError, isPage } from "@frontity/source";
 import Header from "./header";
 import MemberList from "./member-list";
 import ShowList from "./show-list";
@@ -30,6 +30,7 @@ import Event from "./event";
 import Album from "./album";
 import Recording from "./recording";
 import Head from "./head";
+import Page from "./page";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -40,8 +41,6 @@ import Head from "./head";
 function Theme() {
   const { state } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
-
-  console.log(data)
 
   return (
     <>
@@ -68,6 +67,7 @@ function Theme() {
         <Switch>
           <Loading when={data.isFetching} />
           <PageError when={isError(data)} data={isError(data) && data} />
+          <Page when={isPage(data)} data={isPage(data) && data} />
           <MemberList
             when={isMemberArchive(data)}
             data={isMemberArchive(data) && data}
@@ -112,7 +112,7 @@ const globalStyles = css`
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   a,
@@ -132,7 +132,9 @@ const HeadContainer = styled.div`
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  background-image: linear-gradient(180deg,
-  rgba(66, 174, 228, 0.1),
-  rgba(66, 174, 228, 0));
+  background-image: linear-gradient(
+    180deg,
+    rgba(66, 174, 228, 0.1),
+    rgba(66, 174, 228, 0)
+  );
 `;

@@ -67,6 +67,11 @@ interface RaThemeTypeScript extends Package {
        * Closes the mobile menu, not matter the previous state.
        */
       closeMobileMenu: Action<Packages>;
+
+      /**
+       * Initial action.
+       */
+      init: Action<Packages>;
     };
   };
 }
@@ -76,10 +81,8 @@ export default RaThemeTypeScript;
 /**
  * Packages required by `RaThemeTypeScript`.
  */
-export type Packages = MergePackages<
-  Frontity,
+export type Packages = MergePackages<Frontity,
   Router,
   Source,
   Html2React,
-  RaThemeTypeScript
->;
+  RaThemeTypeScript>;

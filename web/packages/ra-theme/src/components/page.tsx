@@ -1,17 +1,16 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-image";
-import { MemberData, MemberEntity } from "../data";
 import React from "react";
+import { PageData, PageEntity } from "@frontity/source/types";
 
 /**
- * Properties received by the `Member` component.
+ * Properties received by the `Page` component.
  */
-interface MemberProps {
+interface PageProps {
   /**
    * Data element representing a URL in your frontity site.
    */
-  data: MemberData;
+  data: PageData;
 
   /**
    * Whether to render this component.
@@ -20,23 +19,23 @@ interface MemberProps {
 }
 
 /**
- * The Member component that is used to render members
+ * The Page component that is used to render pages
  *
  * @param props - The Frontity store (state, actions, and libraries).
  *
  * @example
  * ```js
  * <Switch>
- *   <Member when={data.isMember} />
+ *   <Page when={data.isPage} />
  * </Switch>
  * ```
  *
- * @returns The {@link Member} element rendered.
+ * @returns The {@link Page} element rendered.
  */
-function Member({ data }: MemberProps): JSX.Element {
+function Page({ data }: PageProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
-  // Get the data of the member.
-  const member: MemberEntity = state.source[data.type][data.id];
+  // Get the data of the page.
+  const page: PageEntity = state.source[data.type][data.id];
 
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
@@ -45,24 +44,21 @@ function Member({ data }: MemberProps): JSX.Element {
   return data.isReady ? (
     <Container>
       <div>
-        <Title>{member.acf.name}</Title>
-        {member.acf.role}
+        <Title>{page.title.rendered}</Title>
       </div>
 
-      {member.acf.image && <FeaturedMedia id={member.acf.image} />}
-
-      {member.acf.description && ( // Render the content using the Html2React component so the HTML is
+      {page.content?.rendered && ( // Render the content using the Html2React component so the HTML is
         // processed by the processors we included in the
         // libraries.html2react.processors array.
         <Content>
-          <Html2React html={member.acf.description} />
+          <Html2React html={page.content.rendered} />
         </Content>
       )}
     </Container>
   ) : null;
 }
 
-export default connect(Member);
+export default connect(Page);
 
 const Container = styled.div`
   width: 800px;

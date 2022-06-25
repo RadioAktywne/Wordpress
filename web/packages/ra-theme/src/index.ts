@@ -3,6 +3,7 @@ import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import iframe from "@frontity/html2react/processors/iframe";
 import link from "@frontity/html2react/processors/link";
+import { postTypeHandler } from "@frontity/wp-source/src/libraries/handlers";
 
 const raThemeTypeScript: RaThemeTypeScript = {
   name: "@frontity/ra-theme",
@@ -22,10 +23,6 @@ const raThemeTypeScript: RaThemeTypeScript = {
       autoPrefetch: "in-view",
       menu: [],
       isMobileMenuOpen: false,
-      featured: {
-        showOnList: false,
-        showOnPost: false,
-      },
     },
   },
 
@@ -40,6 +37,18 @@ const raThemeTypeScript: RaThemeTypeScript = {
       },
       closeMobileMenu: ({ state }) => {
         state.theme.isMobileMenuOpen = false;
+      },
+      init: ({ libraries }) => {
+        // fix for handling pages
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "page handler",
+          priority: 20,
+          pattern: "/(.*)?/:slug",
+          func: postTypeHandler({
+            endpoints: ["pages"],
+          }),
+        });
       },
     },
   },
