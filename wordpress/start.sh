@@ -48,7 +48,8 @@ wp post delete 1 2 3 --force --allow-root
 echo "Configuring plugins..."
 
 wp plugin install --activate --allow-root \
-  disable-comments
+  disable-comments \
+  disable-blog
 wp plugin activate --allow-root \
   ra-fix-rest \
   ra-hide-admin-items \
