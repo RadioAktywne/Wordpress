@@ -1,6 +1,6 @@
 import { connect, css, Global, styled, useConnect } from "frontity";
 import Switch from "@frontity/components/switch";
-import { isError, isPage } from "@frontity/source";
+import { isError, isHome, isPage } from "@frontity/source";
 import Header from "./header";
 import MemberList from "./member-list";
 import ShowList from "./show-list";
@@ -31,6 +31,7 @@ import Album from "./album";
 import Recording from "./recording";
 import Head from "./head";
 import Page from "./page";
+import Home from "./home";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -67,6 +68,10 @@ function Theme() {
         <Switch>
           <Loading when={data.isFetching} />
           <PageError when={isError(data)} data={isError(data) && data} />
+          <Home
+            when={isHome(data) && isPage(data)}
+            data={isHome(data) && isPage(data) && data}
+          />
           <Page when={isPage(data)} data={isPage(data) && data} />
           <MemberList
             when={isMemberArchive(data)}

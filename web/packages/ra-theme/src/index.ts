@@ -44,7 +44,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
         libraries.source.handlers.push({
           name: "page handler",
           priority: 20,
-          pattern: "/(.*)?/:slug",
+          pattern: "/(.*)?",
           func: postTypeHandler({
             endpoints: ["pages"],
           }),
