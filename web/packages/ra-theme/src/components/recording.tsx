@@ -1,7 +1,8 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-media";
+import FeaturedMedia from "./featured-image";
 import { RecordingData, RecordingEntity } from "../data";
+import FeaturedAudio from "./featured-audio";
 
 /**
  * Properties received by the `Recording` component.
@@ -32,7 +33,7 @@ interface RecordingProps {
  *
  * @returns The {@link Recording} element rendered.
  */
-const Recording = ({ data }: RecordingProps): JSX.Element => {
+function Recording({ data }: RecordingProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   // Get the data of the recording.
   const recording: RecordingEntity = state.source[data.type][data.id];
@@ -43,15 +44,11 @@ const Recording = ({ data }: RecordingProps): JSX.Element => {
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
-      <div>
-        <Title>{recording.acf.title}</Title>
-        {recording.acf.file}
-      </div>
+      <Title>{recording.acf.title}</Title>
 
-      {/* Look at the settings to see if we should include the featured image */}
-      {state.theme.featured.showOnPost && recording.acf.image && (
-        <FeaturedMedia id={recording.acf.image} />
-      )}
+      {recording.acf.file && <FeaturedAudio id={recording.acf.file} />}
+
+      {recording.acf.image && <FeaturedMedia id={recording.acf.image} />}
 
       {recording.acf.description && ( // Render the content using the Html2React component so the HTML is
         // processed by the processors we included in the
@@ -62,7 +59,7 @@ const Recording = ({ data }: RecordingProps): JSX.Element => {
       )}
     </Container>
   ) : null;
-};
+}
 
 export default connect(Recording);
 

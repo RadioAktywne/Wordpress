@@ -9,7 +9,7 @@ import { Packages } from "../../types";
  *
  * @returns The header element.
  */
-const Header = () => {
+function Header() {
   const { state } = useConnect<Packages>();
   return (
     <>
@@ -23,7 +23,7 @@ const Header = () => {
       <Nav />
     </>
   );
-};
+}
 
 export default connect(Header);
 
@@ -39,8 +39,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
-  margin: 0;
-  margin-bottom: 16px;
+  margin: 0 0 16px;
 `;
 
 const Description = styled.h4`

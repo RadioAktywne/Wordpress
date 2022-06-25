@@ -8,7 +8,7 @@ import { Packages } from "../../types";
  * @param props - The props passed to the component from parent.
  * @returns A React component.
  */
-const MenuModal = ({ ...props }) => {
+function MenuModal({ ...props }) {
   const { state } = useConnect<Packages>();
   const { menu } = state.theme;
   const isThereLinks = menu?.length > 0;
@@ -30,7 +30,7 @@ const MenuModal = ({ ...props }) => {
       </MenuContent>
     </div>
   );
-};
+}
 
 const MenuOverlay = styled.div`
   background-color: #1f38c5;

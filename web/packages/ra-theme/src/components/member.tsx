@@ -1,7 +1,8 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-media";
+import FeaturedMedia from "./featured-image";
 import { MemberData, MemberEntity } from "../data";
+import React from "react";
 
 /**
  * Properties received by the `Member` component.
@@ -32,13 +33,17 @@ interface MemberProps {
  *
  * @returns The {@link Member} element rendered.
  */
-const Member = ({ data }: MemberProps): JSX.Element => {
+function Member({ data }: MemberProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   // Get the data of the member.
   const member: MemberEntity = state.source[data.type][data.id];
 
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
+
+  console.log("data", data);
+  console.log("member", member);
+  console.log("source", state.source);
 
   // Load the post, but only if the data is ready.
   return data.isReady ? (
@@ -48,10 +53,7 @@ const Member = ({ data }: MemberProps): JSX.Element => {
         {member.acf.role}
       </div>
 
-      {/* Look at the settings to see if we should include the featured image */}
-      {state.theme.featured.showOnPost && member.acf.image && (
-        <FeaturedMedia id={member.acf.image} />
-      )}
+      {member.acf.image && <FeaturedMedia id={member.acf.image} />}
 
       {member.acf.description && ( // Render the content using the Html2React component so the HTML is
         // processed by the processors we included in the
@@ -62,7 +64,7 @@ const Member = ({ data }: MemberProps): JSX.Element => {
       )}
     </Container>
   ) : null;
-};
+}
 
 export default connect(Member);
 

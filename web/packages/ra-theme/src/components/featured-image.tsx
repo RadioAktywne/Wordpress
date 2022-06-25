@@ -1,11 +1,14 @@
 import Image from "@frontity/components/image";
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
+import React from "react";
+import useMedia from "../hooks/useMedia";
+import Loading from "./loading";
 
 /**
- * Props of the {@link FeaturedMedia} component.
+ * Props of the {@link FeaturedImage} component.
  */
-interface FeaturedMediaProps {
+interface FeaturedImageProps {
   /**
    * ID of the attachment entity.
    */
@@ -23,25 +26,28 @@ interface ContainerProps {
 }
 
 /**
- * The Component that renders a featured media, typically an image. The featured
- * media can represent an individual Post, Page, or Custom Post Type.
+ * The Component that renders a featured image.
  *
  * @param props - The state injected by {@link connect } and the ID of the
- * featured media.
+ * featured image.
  *
  * @returns A react component.
  */
-const FeaturedMedia = ({ id }: FeaturedMediaProps): JSX.Element => {
+function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  const media = state.source.attachment[id];
+  const {
+    status,
+    value: [media],
+  } = useMedia([id]);
 
+  if (status === "pending") return <Loading />;
   if (!media) return null;
 
   const srcset =
     Object.values(media.media_details.sizes)
       // Get the url and width of each size.
       .map((item) => [item.source_url, item.width])
-      // Recude them to a string with the format required by `srcset`.
+      // Reduce them to a string with the format required by `srcset`.
       .reduce(
         (final, current, index, array) =>
           final.concat(
@@ -61,9 +67,9 @@ const FeaturedMedia = ({ id }: FeaturedMediaProps): JSX.Element => {
       />
     </Container>
   );
-};
+}
 
-export default connect(FeaturedMedia);
+export default connect(FeaturedImage);
 
 const Container = styled.div<ContainerProps>`
   margin-top: 16px;

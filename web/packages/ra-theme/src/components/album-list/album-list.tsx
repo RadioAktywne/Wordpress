@@ -1,34 +1,34 @@
 import { connect, decode, styled, useConnect } from "frontity";
-import Item from "./list-item";
+import AlbumListItem from "./album-list-item";
 import Pagination from "./pagination";
 import { Packages } from "../../../types";
 import { isAuthor, isTerm } from "@frontity/source";
-import { ArchiveData } from "@frontity/source/types";
+import { AlbumArchiveData } from "../../data";
 
 /**
- * Props received by the {@link List} component.
+ * Props received by the {@link AlbumList} component.
  */
 interface ListProps {
   /**
    * Data object representing an archive link.
    */
-  data: ArchiveData;
+  data: AlbumArchiveData;
 
   /**
-   * Flag used by Frontity's {@link Switch} component to decide whether this
+   * Flag used by Frontity's {@link Switch} component to decide whether
    * this component should be rendered.
    */
   when?: boolean;
 }
 
 /**
- * Component that renders the list of posts that belongs to the specified
- * archive page, passed as an {@link ArchiveData} object.
+ * Component that renders the list of albums,
+ * passed as an {@link AlbumArchiveData} object.
  *
  * @param props - Object of type {@link ListProps}.
  * @returns React component.
  */
-const List = ({ data }: ListProps): JSX.Element => {
+function AlbumList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   return (
@@ -51,15 +51,15 @@ const List = ({ data }: ListProps): JSX.Element => {
       {/* Iterate over the items of the list. */}
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
-        // Render one Item component for each one.
-        return <Item key={item.id} item={item} />;
+        // Render one AlbumListItem component for each one.
+        return <AlbumListItem key={item.id} item={item} />;
       })}
       <Pagination data={data} />
     </Container>
   );
-};
+}
 
-export default connect(List);
+export default connect(AlbumList);
 
 const Container = styled.section`
   width: 800px;

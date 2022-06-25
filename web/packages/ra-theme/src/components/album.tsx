@@ -1,6 +1,6 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-media";
+import FeaturedMedia from "./featured-image";
 import { AlbumData, AlbumEntity } from "../data";
 
 /**
@@ -32,7 +32,7 @@ interface AlbumProps {
  *
  * @returns The {@link Album} element rendered.
  */
-const Album = ({ data }: AlbumProps): JSX.Element => {
+function Album({ data }: AlbumProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   // Get the data of the album.
   const album: AlbumEntity = state.source[data.type][data.id];
@@ -48,10 +48,7 @@ const Album = ({ data }: AlbumProps): JSX.Element => {
         {album.acf.artist}
       </div>
 
-      {/* Look at the settings to see if we should include the featured image */}
-      {state.theme.featured.showOnPost && album.acf.image && (
-        <FeaturedMedia id={album.acf.image} />
-      )}
+      {album.acf.image && <FeaturedMedia id={album.acf.image} />}
 
       {album.acf.description && ( // Render the content using the Html2React component so the HTML is
         // processed by the processors we included in the
@@ -62,7 +59,7 @@ const Album = ({ data }: AlbumProps): JSX.Element => {
       )}
     </Container>
   ) : null;
-};
+}
 
 export default connect(Album);
 

@@ -11,7 +11,7 @@ interface PageErrorProps {
   data: ErrorData;
 
   /**
-   * Whether or not to render this component. Used by the `<Switch>` component.
+   * Whether to render this component. Used by the `<Switch>` component.
    */
   when?: boolean;
 }
@@ -40,7 +40,7 @@ const description = (
  * @param props - The props, defined in {@link PageErrorProps}.
  * @returns The error screen.
  */
-const PageError = ({ data }: PageErrorProps): JSX.Element => {
+export default function PageError({ data }: PageErrorProps): JSX.Element {
   const title = "Oops! Something went wrong";
   const title404 = "Oops! 404";
 
@@ -50,9 +50,7 @@ const PageError = ({ data }: PageErrorProps): JSX.Element => {
       <Description>{data.is404 ? description404 : description}</Description>
     </Container>
   );
-};
-
-export default PageError;
+}
 
 const Container = styled.div`
   width: 800px;
@@ -62,9 +60,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  margin: 0;
-  margin-top: 24px;
-  margin-bottom: 8px;
+  margin: 24px 0 8px;
   color: rgba(12, 17, 43);
   font-size: 4em;
 `;

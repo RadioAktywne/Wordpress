@@ -1,32 +1,29 @@
 import { connect, styled, useConnect } from "frontity";
-import { PostEntity } from "@frontity/source/types";
 import Link from "../link";
-import FeaturedMedia from "../featured-media";
+import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
+import { AlbumEntity } from "../../data";
 
 /**
- * The props of the {@link Item} component.
+ * The props of the {@link AlbumListItem} component.
  */
 interface ItemProps {
   /**
-   * The post that should be shown.
+   * The album that should be shown.
    */
-  item: PostEntity;
+  item: AlbumEntity;
 }
 
 /**
- * List item Component.
+ * Album List item Component.
  *
- * It renders the preview of a blog post. Each blog post contains:
- * - Title: clickable title of the post.
- * - Author: name of author and published date.
- * - FeaturedMedia: the featured image/video of the post.
+ * It renders the preview of an album.
  *
  * @param props - Defined in {@link ItemProps}.
  *
- * @returns The rendered post.
+ * @returns The rendered album.
  */
-const Item = ({ item }: ItemProps): JSX.Element => {
+function AlbumListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
   const author = state.source.author[item.author];
   const date = new Date(item.date);
@@ -38,7 +35,7 @@ const Item = ({ item }: ItemProps): JSX.Element => {
       </Link>
 
       <div>
-        {/* If the post has an author, we render a clickable author text. */}
+        {/* If the album post has an author, we render a clickable author text. */}
         {author && (
           <StyledLink link={author.link}>
             <AuthorName>
@@ -52,24 +49,13 @@ const Item = ({ item }: ItemProps): JSX.Element => {
         </PublishDate>
       </div>
 
-      {/*
-       * If the want to show featured media in the
-       * list of featured posts, we render the media.
-       */}
-      {state.theme.featured.showOnList && (
-        <FeaturedMedia id={item.featured_media} />
-      )}
-
-      {/* If the post has an excerpt (short summary text), we render it */}
-      {item.excerpt && (
-        <Excerpt dangerouslySetInnerHTML={{ __html: item.excerpt.rendered }} />
-      )}
+      {item.acf.image && <FeaturedMedia id={item.acf.image} />}
     </article>
   );
-};
+}
 
-// Connect the Item to gain access to `state` as a prop
-export default connect(Item);
+// Connect the AlbumListItem to gain access to `state` as a prop
+export default connect(AlbumListItem);
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -92,9 +78,4 @@ const StyledLink = styled(Link)`
 const PublishDate = styled.span`
   color: rgba(12, 17, 43, 0.9);
   font-size: 0.9em;
-`;
-
-const Excerpt = styled.div`
-  line-height: 1.6em;
-  color: rgba(12, 17, 43, 0.8);
 `;

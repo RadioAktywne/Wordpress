@@ -8,8 +8,8 @@ const settings: Settings<Theme | WpSource> = {
     frontity: {
       url: process.env.WEB_URL || "https://radioaktywne.pl",
       title: "Radio Aktywne",
-      description: "Radio Aktywne"
-    }
+      description: "Radio Aktywne",
+    },
   },
   packages: [
     {
@@ -20,14 +20,10 @@ const settings: Settings<Theme | WpSource> = {
             ["Radio Aktywne", "/"],
             ["Nagrania", "/recordings"],
             ["Płyta Tygodnia", "/albums"],
-            ["Radio", "/info"]
+            ["Radio", "/info"],
           ],
-          featured: {
-            showOnList: false,
-            showOnPost: false
-          }
-        }
-      }
+        },
+      },
     },
     {
       name: "@frontity/wp-source",
@@ -38,40 +34,40 @@ const settings: Settings<Theme | WpSource> = {
             {
               type: "member",
               endpoint: "member",
-              archive: "/members"
+              archive: "/members",
             },
             {
               type: "show",
               endpoint: "show",
-              archive: "/shows"
+              archive: "/shows",
             },
             {
               type: "event",
               endpoint: "event",
-              archive: "/events"
+              archive: "/events",
             },
             {
               type: "album",
               endpoint: "album",
-              archive: "/albums"
+              archive: "/albums",
             },
             {
               type: "recording",
               endpoint: "recording",
-              archive: "/recordings"
+              archive: "/recordings",
             },
             {
               type: "info",
               endpoint: "info",
-              archive: "/info"
-            }
-          ]
-        }
-      }
+              archive: "/info",
+            },
+          ],
+        },
+      },
     },
     "@frontity/tiny-router",
-    "@frontity/html2react"
-  ]
+    "@frontity/html2react",
+  ],
 };
 
 export default settings;

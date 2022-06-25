@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { connect, styled, useConnect } from "frontity";
 import Link from "../link";
 import { Packages } from "../../../types";
-import { ArchiveData } from "@frontity/source/types";
+import { MemberArchiveData } from "../../data";
 
 /**
  * Props received by the {@link Pagination} component.
@@ -11,20 +11,20 @@ interface PaginationProps {
   /**
    * Data object representing an archive link.
    */
-  data: ArchiveData;
+  data: MemberArchiveData;
 }
 
 /**
  * Render a pagination component, used to allow the user to navigate between a
- * list of posts.
+ * list of members.
  *
  * @param props - Object of type {@link PaginationProps}.
  * @returns Pagination component.
  */
-const Pagination = ({ data }: PaginationProps): JSX.Element => {
+function Pagination({ data }: PaginationProps): JSX.Element {
   const { actions } = useConnect<Packages>();
 
-  // Pre-fetch the the next page if it hasn't been fetched yet.
+  // Pre-fetch the next page if it hasn't been fetched yet.
   useEffect(() => {
     if (data.next) actions.source.fetch(data.next);
   }, [actions.source, data.next]);
@@ -48,7 +48,7 @@ const Pagination = ({ data }: PaginationProps): JSX.Element => {
       )}
     </div>
   );
-};
+}
 
 export default connect(Pagination);
 

@@ -47,22 +47,6 @@ interface RaThemeTypeScript extends Package {
        * Indicates if the mobile menu is opened or closed.
        */
       isMobileMenuOpen: boolean;
-
-      /**
-       * The settings of the featured images.
-       */
-      featured: {
-        /**
-         * Indicates if the feature images should be shown in the archives or
-         * not.
-         */
-        showOnList: boolean;
-
-        /**
-         * Indicates if the feature images should be shown in the posts or not.
-         */
-        showOnPost: boolean;
-      };
     };
   };
 

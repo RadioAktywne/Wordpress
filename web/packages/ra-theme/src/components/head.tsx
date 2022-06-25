@@ -1,14 +1,19 @@
-import { connect, decode, Head, useConnect } from "frontity";
+import { connect, decode, Head as FrontityHead, useConnect } from "frontity";
 import { isAuthor, isError, isPostType, isTerm } from "@frontity/source";
 import { Packages } from "../../types";
+import React from "react";
 
 /**
- * Populate the `<title>` tag with different titles, based on the type of
+ * Head with `<title>` tag populated with different titles, based on the type of
  * page rendered.
  *
- * @returns The `<title>` tag.
+ * @returns The `<head>` tag.
  */
-const Title = (): JSX.Element => {
+function Head({
+  // @ts-ignore
+  children,
+  ...props
+}: React.ComponentProps<typeof FrontityHead>): JSX.Element {
   const { state } = useConnect<Packages>();
   // Get data about the current URL.
   const data = state.source.get(state.router.link);
@@ -44,10 +49,11 @@ const Title = (): JSX.Element => {
   }
 
   return (
-    <Head>
+    <FrontityHead {...props}>
       <title>{title}</title>
-    </Head>
+      {children}
+    </FrontityHead>
   );
-};
+}
 
-export default connect(Title);
+export default connect(Head);

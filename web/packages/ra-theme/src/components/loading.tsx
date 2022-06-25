@@ -28,19 +28,19 @@ const scale = keyframes`
  * @param _props - Defined in {@link LoadingProps}.
  * @returns The loading animation.
  */
-const Loading = (_props: LoadingProps): JSX.Element => (
-  <Container>
-    <div>
-      <div css={bar(1)} />
-      <div css={bar(2)} />
-      <div css={bar(3)} />
-      <div css={bar(4)} />
-      <div css={bar(5)} />
-    </div>
-  </Container>
-);
-
-export default Loading;
+export default function Loading(_props: LoadingProps): JSX.Element {
+  return (
+    <Container>
+      <div>
+        <div css={bar(1)} />
+        <div css={bar(2)} />
+        <div css={bar(3)} />
+        <div css={bar(4)} />
+        <div css={bar(5)} />
+      </div>
+    </Container>
+  );
+}
 
 /**
  * Returns the CSS required for each of the bars.

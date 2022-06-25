@@ -1,4 +1,9 @@
-import { Data, PostTypeData, PostTypeEntity } from "@frontity/source/types";
+import {
+  ArchiveData,
+  Data,
+  PostTypeData,
+  PostTypeEntity,
+} from "@frontity/source/types";
 
 export interface MemberData extends PostTypeData {
   /**
@@ -10,6 +15,18 @@ export interface MemberData extends PostTypeData {
    * Identify a member.
    */
   isMember: true;
+}
+
+export interface MemberArchiveData extends ArchiveData {
+  /**
+   * Member archive type slug.
+   */
+  type: "member";
+
+  /**
+   * Identify a member archive.
+   */
+  isMemberArchive: true;
 }
 
 export interface MemberEntity extends PostTypeEntity {
@@ -40,6 +57,10 @@ export function isMember(data: Data): data is MemberData {
   return (data as MemberData).isMember === true;
 }
 
+export function isMemberArchive(data: Data): data is MemberArchiveData {
+  return (data as MemberArchiveData).isMemberArchive === true;
+}
+
 export interface ShowData extends PostTypeData {
   /**
    * Show type slug.
@@ -50,6 +71,18 @@ export interface ShowData extends PostTypeData {
    * Identify a show.
    */
   isShow: true;
+}
+
+export interface ShowArchiveData extends ArchiveData {
+  /**
+   * Show archive type slug.
+   */
+  type: "show";
+
+  /**
+   * Identify a show archive.
+   */
+  isShowArchive: true;
 }
 
 export interface ShowEntity extends PostTypeEntity {
@@ -80,6 +113,10 @@ export function isShow(data: Data): data is ShowData {
   return (data as ShowData).isShow === true;
 }
 
+export function isShowArchive(data: Data): data is ShowArchiveData {
+  return (data as ShowArchiveData).isShowArchive === true;
+}
+
 export interface EventData extends PostTypeData {
   /**
    * Event type slug.
@@ -90,6 +127,18 @@ export interface EventData extends PostTypeData {
    * Identify an event.
    */
   isEvent: true;
+}
+
+export interface EventArchiveData extends ArchiveData {
+  /**
+   * Event archive type slug.
+   */
+  type: "event";
+
+  /**
+   * Identify an event archive.
+   */
+  isEventArchive: true;
 }
 
 export type DayOfTheWeek =
@@ -136,6 +185,10 @@ export function isEvent(data: Data): data is EventData {
   return (data as EventData).isEvent === true;
 }
 
+export function isEventArchive(data: Data): data is EventArchiveData {
+  return (data as EventArchiveData).isEventArchive === true;
+}
+
 export interface AlbumData extends PostTypeData {
   /**
    * Album type slug.
@@ -146,6 +199,18 @@ export interface AlbumData extends PostTypeData {
    * Identify an album.
    */
   isAlbum: true;
+}
+
+export interface AlbumArchiveData extends ArchiveData {
+  /**
+   * Album archive type slug.
+   */
+  type: "album";
+
+  /**
+   * Identify an album archive.
+   */
+  isAlbumArchive: true;
 }
 
 export interface AlbumEntity extends PostTypeEntity {
@@ -176,6 +241,10 @@ export function isAlbum(data: Data): data is AlbumData {
   return (data as AlbumData).isAlbum === true;
 }
 
+export function isAlbumArchive(data: Data): data is AlbumArchiveData {
+  return (data as AlbumArchiveData).isAlbumArchive === true;
+}
+
 export interface RecordingData extends PostTypeData {
   /**
    * Recording type slug.
@@ -186,6 +255,18 @@ export interface RecordingData extends PostTypeData {
    * Identify a recording.
    */
   isRecording: true;
+}
+
+export interface RecordingArchiveData extends ArchiveData {
+  /**
+   * Recording archive type slug.
+   */
+  type: "recording";
+
+  /**
+   * Identify a recording archive.
+   */
+  isRecordingArchive: true;
 }
 
 export interface RecordingEntity extends PostTypeEntity {
@@ -216,6 +297,10 @@ export function isRecording(data: Data): data is RecordingData {
   return (data as RecordingData).isRecording === true;
 }
 
+export function isRecordingArchive(data: Data): data is RecordingArchiveData {
+  return (data as RecordingArchiveData).isRecordingArchive === true;
+}
+
 export interface InfoTileData extends PostTypeData {
   /**
    * Info tile type slug.
@@ -226,6 +311,18 @@ export interface InfoTileData extends PostTypeData {
    * Identify an info tile.
    */
   isInfo: true;
+}
+
+export interface InfoTileArchiveData extends ArchiveData {
+  /**
+   * Info tile archive type slug.
+   */
+  type: "info";
+
+  /**
+   * Identify an info tile archive.
+   */
+  isInfoArchive: true;
 }
 
 export interface InfoTileEntity extends PostTypeEntity {
@@ -249,4 +346,8 @@ export interface InfoTileEntity extends PostTypeEntity {
 
 export function isInfoTile(data: Data): data is InfoTileData {
   return (data as InfoTileData).isInfo === true;
+}
+
+export function isInfoTileArchive(data: Data): data is InfoTileArchiveData {
+  return (data as InfoTileArchiveData).isInfoArchive === true;
 }

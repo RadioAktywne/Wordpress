@@ -1,7 +1,8 @@
-import { connect, Global, Head, styled, useConnect } from "frontity";
+import { connect, Global, styled, useConnect } from "frontity";
 import { CloseIcon, HamburgerIcon } from "./menu-icon";
 import MenuModal from "./menu-modal";
 import { Packages } from "../../types";
+import AmpHead from "./amp-head";
 
 /**
  * The menu that should be displayed on mobile devices displaying links to
@@ -17,13 +18,7 @@ function MobileMenu() {
 
   return state.frontity.mode === "amp" ? (
     <>
-      <Head>
-        <script
-          async={undefined}
-          custom-element="amp-bind"
-          src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"
-        ></script>
-      </Head>
+      <AmpHead />
 
       <MenuToggle>
         <HamburgerIcon

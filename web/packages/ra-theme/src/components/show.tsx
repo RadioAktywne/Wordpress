@@ -1,7 +1,9 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-media";
+import FeaturedMedia from "./featured-image";
 import { ShowData, ShowEntity } from "../data";
+import useMembers from "../hooks/useMembers";
+import Loading from "./loading";
 
 /**
  * Properties received by the `Show` component.
@@ -32,7 +34,7 @@ interface ShowProps {
  *
  * @returns The {@link Show} element rendered.
  */
-const Show = ({ data }: ShowProps): JSX.Element => {
+function Show({ data }: ShowProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   // Get the data of the show.
   const show: ShowEntity = state.source[data.type][data.id];
@@ -40,21 +42,24 @@ const Show = ({ data }: ShowProps): JSX.Element => {
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
+  const { status, value: hosts } = useMembers(show.acf.hosts);
+
+  if (status === "pending") return <Loading />;
+
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
       <div>
         <Title>{show.acf.title}</Title>
-        {show.acf.hosts.join(", ")}
+        {hosts
+          .filter((host) => host)
+          .map((host) => host.acf.name)
+          .join(", ")}
       </div>
 
-      {/* Look at the settings to see if we should include the featured image */}
-      {state.theme.featured.showOnPost && show.acf.image && (
-        <FeaturedMedia id={show.acf.image} />
-      )}
+      {show.acf.image && <FeaturedMedia id={show.acf.image} />}
 
-      {show.acf.description && (
-        // Render the content using the Html2React component so the HTML is
+      {show.acf.description && ( // Render the content using the Html2React component so the HTML is
         // processed by the processors we included in the
         // libraries.html2react.processors array.
         <Content>
@@ -63,7 +68,7 @@ const Show = ({ data }: ShowProps): JSX.Element => {
       )}
     </Container>
   ) : null;
-};
+}
 
 export default connect(Show);
 

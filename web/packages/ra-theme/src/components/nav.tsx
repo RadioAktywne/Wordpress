@@ -7,7 +7,7 @@ import { Packages } from "../../types";
  *
  * @returns The `<nav>` tag with the menu.
  */
-const Nav = (): JSX.Element => {
+function Nav(): JSX.Element {
   const { state } = useConnect<Packages>();
 
   return (
@@ -28,7 +28,7 @@ const Nav = (): JSX.Element => {
       })}
     </NavContainer>
   );
-};
+}
 
 export default connect(Nav);
 

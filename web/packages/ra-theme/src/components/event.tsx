@@ -31,7 +31,7 @@ interface EventProps {
  *
  * @returns The {@link Event} element rendered.
  */
-const Event = ({ data }: EventProps): JSX.Element => {
+function Event({ data }: EventProps): JSX.Element {
   const { state } = useConnect<Packages>();
   // Get the data of the event.
   const event: EventEntity = state.source[data.type][data.id];
@@ -45,7 +45,7 @@ const Event = ({ data }: EventProps): JSX.Element => {
       </div>
     </Container>
   ) : null;
-};
+}
 
 export default connect(Event);
 

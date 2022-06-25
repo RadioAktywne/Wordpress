@@ -1,10 +1,12 @@
 /**
  * A "hamburger" icon used for opening the mobile menu.
  *
+ * @param size - Icon size.
+ * @param color - Icon color.
  * @param props - Props used to customize this element.
  * @returns A React component.
  */
-export const HamburgerIcon = ({ size, color, ...props }) => {
+export function HamburgerIcon({ size, color, ...props }) {
   return (
     <svg
       height={size}
@@ -22,15 +24,17 @@ export const HamburgerIcon = ({ size, color, ...props }) => {
       </g>
     </svg>
   );
-};
+}
 
 /**
  * A "close" icon used for a closing the mobile menu.
  *
+ * @param size - Icon size.
+ * @param color - Icon color.
  * @param props - Props used to customize this element.
  * @returns A React component.
  */
-export const CloseIcon = ({ size, color, ...props }) => {
+export function CloseIcon({ size, color, ...props }) {
   return (
     <svg
       height={size}
@@ -46,4 +50,4 @@ export const CloseIcon = ({ size, color, ...props }) => {
       </g>
     </svg>
   );
-};
+}
