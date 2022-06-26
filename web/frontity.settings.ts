@@ -29,7 +29,7 @@ const settings: Settings<Theme | WpSource> = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: process.env.WEB_WORDPRESS_URL || "http://wordpress:80",
+          url: process.env.WEB_WORDPRESS_URL || "http://localhost:80",
           postTypes: [
             {
               type: "member",

@@ -53,10 +53,9 @@ services:
     build: web
     ports:
       - "${WEB_PUBLISHED_PORT:-3000}:3000"
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    network_mode: "host"
     environment:
-      - "WEB_WORDPRESS_URL=${WEB_WORDPRESS_URL:-http://wordpress:80}"
+      - "WEB_WORDPRESS_URL=${WEB_WORDPRESS_URL:-http://localhost:80}"
     depends_on:
       - wordpress
 

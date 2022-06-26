@@ -36,6 +36,6 @@ USER frontity
 EXPOSE 3000
 
 ENV PORT=3000 \
-    WEB_WORDPRESS_URL=http://wordpress:80
+    WEB_WORDPRESS_URL=http://localhost:80
 
 CMD ["node", "server.js"]
