@@ -2,22 +2,29 @@ import { connect, styled, useConnect } from "frontity";
 import Link from "./link";
 import Nav from "./nav";
 import MobileMenu from "./menu";
+import Socials from "./socials";
 import { Packages } from "../../types";
 
 /**
- * The header of the site, showing the title and description, and the nav bar.
+ * The header of the site, logo, socials and the nav bar.
  *
  * @returns The header element.
  */
-function Header() {
+
+function Header(props) {
   const { state } = useConnect<Packages>();
   return (
     <>
       <Container>
-        <StyledLink link="/">
-          <Title>{state.frontity.title}</Title>
-        </StyledLink>
-        <Description>{state.frontity.description}</Description>
+        <Link link="/">
+          <img
+              alt="Radio Aktywne" 
+              src={props.logoImg}
+            /> 
+        </Link>
+        <Socials style="padding-left: 20px;"
+          ytImg={props.ytImg} igImg={props.igImg} fbImg={props.fbImg} sfImg={props.sfImg}
+          yt={props.yt} ig={props.ig} fb={props.fb} sf={props.sf}/>
         <MobileMenu />
       </Container>
       <Nav />
@@ -28,25 +35,24 @@ function Header() {
 export default connect(Header);
 
 const Container = styled.div`
-  width: 848px;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 1rem 0 0.35rem 0;
   color: #fff;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-around;
-`;
 
-const Title = styled.h2`
-  margin: 0 0 16px;
-`;
+  & > a > img {
+    height: 50px;
+    width: auto;
+  }
 
-const Description = styled.h4`
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-`;
+  @media (max-width: 900px) {
+    padding: 0.8rem 0 0.05rem 0;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
+    & > a > img {
+      margin-bottom: 10px;
+    }
+  }
 `;

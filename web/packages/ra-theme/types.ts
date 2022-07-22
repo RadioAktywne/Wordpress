@@ -37,6 +37,8 @@ interface RaThemeTypeScript extends Package {
        */
       autoPrefetch: AutoPrefetch;
 
+      title: string,
+
       /**
        * The menu of the theme. Expresed as an array of arrays that contain the
        * label in the first item and the link in the second.

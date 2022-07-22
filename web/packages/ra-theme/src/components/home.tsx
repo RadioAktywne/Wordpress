@@ -1,6 +1,7 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import React from "react";
+import Player from "./player";
 import { HomeData, PageData, PageEntity } from "@frontity/source/types";
 
 /**
@@ -34,48 +35,77 @@ interface HomeProps {
  */
 function Home({ data }: HomeProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
-
   // Get the data of the homepage.
   const home: PageEntity = state.source[data.type][data.id];
-
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
+  //set rds autorefresh
+  let XMLHttpRequest = require('xhr2');
+  let xhr = new XMLHttpRequest();
+  function rds()
+  {
+    xhr.open("GET", "https://listen.radioaktywne.pl:8443/status-json.xsl", true);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let title = JSON.parse(this.responseText).icestats.source[1].title;
+  
+            if(title != 'Unknown' && !title.endsWith("- Unknown")) {	
+              state.theme.title = title;
+            }
+        }
+    }
+  
+    xhr.send();
+  }
+  rds();
+  setInterval(function() {rds();}, 10000);
+
+
   // Load the page, but only if the data is ready.
   return data.isReady ? (
-    <Container>
-      <div>
-        <Title>{home.title.rendered}</Title>
-      </div>
+    <BigContainer>
+      <Container>
+        <Player
+          bgUrl="https://radioaktywne.pl/user/themes/raktywne/images/studio.jpg"
+        />
 
-      {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
-        // processed by the processors we included in the
-        // libraries.html2react.processors array.
-        <Content>
-          <Html2React html={home.content.rendered} />
-        </Content>
-      )}
-    </Container>
+        {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
+          // processed by the processors we included in the
+          // libraries.html2react.processors array.
+          <Content>
+            <Html2React html={home.content.rendered} />
+          </Content>
+        )}
+      </Container>
+    </BigContainer>
   ) : null;
 }
 
 export default connect(Home);
 
+const BigContainer = styled.div`
+  padding-bottom: 50px;
+  width: 100%;
+  max-width: 1200px;
+`;
+
 const Container = styled.div`
-  width: 800px;
-  margin: 0;
-  padding: 24px;
-`;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  padding-left: 30px;
+  padding-right: 15px;
 
-const Title = styled.h1`
-  margin: 24px 0 8px;
-  color: rgba(12, 17, 43);
-`;
+  @media (max-width: 900px)
+  {
+    padding: 0 0;
+  }
+`
 
-/**
- * This component is the parent of the `content.rendered` HTML. We can use nested
- * selectors to style that HTML.
- */
 const Content = styled.div`
   color: rgba(12, 17, 43, 0.8);
   word-break: break-word;

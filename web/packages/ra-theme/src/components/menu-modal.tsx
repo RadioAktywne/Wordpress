@@ -15,58 +15,65 @@ function MenuModal({ ...props }) {
 
   return (
     <div {...props}>
-      {state.frontity.mode !== "amp" && <MenuOverlay />}
       <MenuContent as="nav">
         {isThereLinks &&
-          menu.map(([name, link]) => (
-            <MenuLink
-              key={name}
-              link={link}
-              aria-current={state.router.link === link ? "page" : undefined}
-            >
-              {name}
-            </MenuLink>
-          ))}
+          menu.map(([name, link]) => {
+            const data = state.source.get(state.router.link);
+            const isCurrentPage = (data.route === link || data.route.slice(0, data.route.length - 1) === link);
+    
+            return (
+              <MenuLink 
+                key={name}
+                link={link}
+                aria-current={isCurrentPage ? "page" : undefined}
+              >
+                  {name}
+              </MenuLink>
+            );
+          }
+        )}
       </MenuContent>
     </div>
   );
 }
 
-const MenuOverlay = styled.div`
-  background-color: #1f38c5;
-  width: 100vw;
+const MenuContent = styled.div`
+  background-color: #3C3C4C;
+  width: 200px;
   height: 100vh;
   overflow: hidden auto;
   position: fixed;
-  z-index: 2;
-  top: 0;
+  top: 81.7px;
   left: 0;
-`;
-
-const MenuContent = styled.div`
   z-index: 3;
-  position: relative;
+  line-height: 1.7;
+  font-family: sans-serif;
+
+  @media (min-width: 560px) {
+    display: none;
+  }
 `;
 
 const MenuLink = styled(Link)`
   width: 100%;
   display: inline-block;
   outline: 0;
-  font-size: 20px;
-  text-align: center;
-  padding: 1.2rem 0;
+  font-size: 1rem;
+  font-weight: normal;
+  padding-left: 15px;
 
   &:hover,
   &:focus {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #6aba9c;
+    color: #F7F5F6;
   }
 
-  /* styles for active link */
+  // /* styles for active link */
 
-  &[aria-current="page"] {
-    color: yellow;
-    font-weight: bold;
-  }
+  // &[aria-current="page"] {
+  //   background-color: #F7F5F6;
+  //   color: #3c3c4c;
+  // }
 `;
 
 export default connect(MenuModal, { injectProps: false });

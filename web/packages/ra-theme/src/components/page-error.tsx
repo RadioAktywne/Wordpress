@@ -18,7 +18,7 @@ interface PageErrorProps {
 
 const description404 = (
   <>
-    That page can’t be found{" "}
+    Nie mamy takiej strony{" "}
     <span role="img" aria-label="confused face">
       😕
     </span>
@@ -27,9 +27,8 @@ const description404 = (
 
 const description = (
   <>
-    Don&apos;t panic! Seems like you encountered an error. If this persists,
-    <a href="https://community.frontity.org"> let us know </a> or try refreshing
-    your browser.
+    Jest problem, ale nie&apos;panikuj! Jeśli nie rozwiąże się,
+    <a href="https://community.frontity.org"> daj nam znać </a> lub odśwież swoją przeglądarkę.
   </>
 );
 
@@ -41,8 +40,8 @@ const description = (
  * @returns The error screen.
  */
 export default function PageError({ data }: PageErrorProps): JSX.Element {
-  const title = "Oops! Something went wrong";
-  const title404 = "Oops! 404";
+  const title = "Ojej! Coś poszło nie tak";
+  const title404 = "Ojej! 404";
 
   return (
     <Container>

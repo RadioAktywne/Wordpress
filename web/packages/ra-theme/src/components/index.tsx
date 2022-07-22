@@ -58,7 +58,19 @@ function Theme() {
 
       {/* Add the header of the site. */}
       <HeadContainer>
-        <Header />
+        <Header 
+          logoImg="http://localhost/wp-content/uploads/2022/07/ra-logof.png"
+
+          ytImg="http://localhost/wp-content/uploads/2022/07/ytlogo.png"
+          igImg="http://localhost/wp-content/uploads/2022/07/iglogo.png"
+          fbImg="http://localhost/wp-content/uploads/2022/07/fblogo.png"
+          sfImg="http://localhost/wp-content/uploads/2022/07/spotifylogo.png"
+
+          yt="https://www.youtube.com/channel/UCWotunR5aYz-A_tM2fcs9eg"
+          ig="https://www.instagram.com/radioaktywnepw/"
+          fb="https://www.facebook.com/RadioaktywnePW/"
+          sf="https://open.spotify.com/show/615XOIPs62nU0f5itBUY8V"
+        />
       </HeadContainer>
 
       {/* Add the main section. It renders a different component depending
@@ -118,6 +130,11 @@ const globalStyles = css`
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      
+    background-color: #F7F5F6;
+    font-size: 1rem;
+    line-height: 1.7;
+    font-family: sans-serif;
   }
 
   a,
@@ -125,21 +142,33 @@ const globalStyles = css`
     color: inherit;
     text-decoration: none;
   }
+
+  @media (max-width: 1400px)
+  html {
+    font-size: 12px;
+  }
 `;
 
 const HeadContainer = styled.div`
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: #1f38c5;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-direction: row;
+  background-color: #3C3C4C;
+
+  padding: 0 3rem;
+
+  @media (max-width: 900px) {
+    padding: 0 .3rem;
+  }
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  background-image: linear-gradient(
-    180deg,
-    rgba(66, 174, 228, 0.1),
-    rgba(66, 174, 228, 0)
-  );
 `;
