@@ -21,6 +21,7 @@
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
     "frontity": "^1.17.2",
+    "react-player": "^2.10.1",
     "xhr2": "^0.2.1"
   },
   "devDependencies": {

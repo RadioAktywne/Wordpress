@@ -40,28 +40,6 @@ function Home({ data }: HomeProps): JSX.Element {
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
-  //set rds autorefresh
-  let XMLHttpRequest = require('xhr2');
-  let xhr = new XMLHttpRequest();
-  function rds()
-  {
-    xhr.open("GET", "https://listen.radioaktywne.pl:8443/status-json.xsl", true);
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            let title = JSON.parse(this.responseText).icestats.source[1].title;
-  
-            if(title != 'Unknown' && !title.endsWith("- Unknown")) {	
-              state.theme.title = title;
-            }
-        }
-    }
-  
-    xhr.send();
-  }
-  rds();
-  setInterval(function() {rds();}, 10000);
-
-
   // Load the page, but only if the data is ready.
   return data.isReady ? (
     <BigContainer>
@@ -106,6 +84,7 @@ const Container = styled.div`
   }
 `
 
+//styles for wp posts
 const Content = styled.div`
   color: rgba(12, 17, 43, 0.8);
   word-break: break-word;

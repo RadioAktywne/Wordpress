@@ -22,6 +22,8 @@ const raThemeTypeScript: RaThemeTypeScript = {
     theme: {
       autoPrefetch: "in-view",
       title: "Trwa ładowanie...",
+      volume: 1,
+      playing: false,
       menu: [],
       isMobileMenuOpen: false,
     },

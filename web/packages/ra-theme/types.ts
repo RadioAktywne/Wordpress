@@ -39,6 +39,10 @@ interface RaThemeTypeScript extends Package {
 
       title: string,
 
+      volume: number,
+
+      playing: boolean,
+
       /**
        * The menu of the theme. Expresed as an array of arrays that contain the
        * label in the first item and the link in the second.

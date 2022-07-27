@@ -32,6 +32,7 @@ import Recording from "./recording";
 import Head from "./head";
 import Page from "./page";
 import Home from "./home";
+import ReactPlayer from 'react-player'
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -39,9 +40,12 @@ import Home from "./home";
  *
  * @returns The top-level react component representing the theme.
  */
+
 function Theme() {
   const { state } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
+  let ra; //player handle
+  function raReset(){ra.seekTo(1.0, 'fraction');}
 
   return (
     <>
@@ -49,7 +53,7 @@ function Theme() {
       {/* @ts-ignore */}
       <Head>
         <meta name="description" content={state.frontity.description} />
-        <html lang="en" />
+        <html lang="pl" />
       </Head>
 
       {/* Add some global styles for the whole site, like body or a's.
@@ -59,12 +63,12 @@ function Theme() {
       {/* Add the header of the site. */}
       <HeadContainer>
         <Header 
-          logoImg="http://localhost/wp-content/uploads/2022/07/ra-logof.png"
+          logoImg="https://radioaktywne.pl/user/themes/raktywne/images/ra-logof.svg"
 
-          ytImg="http://localhost/wp-content/uploads/2022/07/ytlogo.png"
-          igImg="http://localhost/wp-content/uploads/2022/07/iglogo.png"
-          fbImg="http://localhost/wp-content/uploads/2022/07/fblogo.png"
-          sfImg="http://localhost/wp-content/uploads/2022/07/spotifylogo.png"
+          ytImg="https://radioaktywne.pl/user/themes/raktywne/images/ytlogo.svg"
+          igImg="https://radioaktywne.pl/user/themes/raktywne/images/iglogo.svg"
+          fbImg="https://radioaktywne.pl/user/themes/raktywne/images/fblogo.svg"
+          sfImg="https://radioaktywne.pl/user/themes/raktywne/images/spotifylogo.svg"
 
           yt="https://www.youtube.com/channel/UCWotunR5aYz-A_tM2fcs9eg"
           ig="https://www.instagram.com/radioaktywnepw/"
@@ -73,8 +77,17 @@ function Theme() {
         />
       </HeadContainer>
 
-      {/* Add the main section. It renders a different component depending
-      on the type of URL we are in. */}
+      {/* radio player needs to be on every page - thats why its here */}
+      <ReactPlayer 
+          url='https://listen.radioaktywne.pl:8443/raogg'
+          playing={state.theme.playing}
+          volume={state.theme.volume}
+          width={0}
+          height={0}
+          ref={(ref) => (ra = ref)} //lets us to seekTo
+          onPlay={raReset} //so its live no matter what
+        />
+
       <Main>
         {/* @ts-ignore */}
         <Switch>
@@ -132,20 +145,21 @@ const globalStyles = css`
       "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
       
     background-color: #F7F5F6;
-    font-size: 1rem;
     line-height: 1.7;
     font-family: sans-serif;
+  }
+
+  @media (max-width: 1400px)
+  {
+    body {
+      font-size: 12px;
+    }
   }
 
   a,
   a:visited {
     color: inherit;
     text-decoration: none;
-  }
-
-  @media (max-width: 1400px)
-  html {
-    font-size: 12px;
   }
 `;
 

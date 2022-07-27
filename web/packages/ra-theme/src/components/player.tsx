@@ -8,8 +8,58 @@ import { Packages } from "../../types";
  * @returns The player element.
  */
 
+//radio component
 function Player(props) {
   const { state } = useConnect<Packages>();
+
+  //radio funtions - should be moved to another file
+  function raToggle()
+  {
+    state.theme.playing = !state.theme.playing;
+  }
+
+  function raVolume(vol)
+  {
+    state.theme.volume = vol;
+  }
+
+  function raMute()
+  {
+    document.getElementById("ra-mute").classList.toggle("invisible");
+    document.getElementById("ra-unmute").classList.toggle("invisible");
+    raVolume(0);
+  }
+
+  function raUnmute()
+  {
+    document.getElementById("ra-unmute").classList.toggle("invisible");
+    document.getElementById("ra-mute").classList.toggle("invisible");
+    raVolume(1);
+  }
+
+  //set rds autorefresh
+  let XMLHttpRequest = require('xhr2');
+  let xhr = new XMLHttpRequest();
+  function rds()
+  {
+    xhr.open("GET", "https://listen.radioaktywne.pl:8443/status-json.xsl", true);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let title = JSON.parse(this.responseText).icestats.source[1].title;
+  
+            if(title != 'Unknown' && !title.endsWith("- Unknown")) {	
+              state.theme.title = title;
+            }
+        }
+    }
+  
+    xhr.send();
+  }
+  
+  rds();
+  setInterval(function() {rds();}, 10000);
+
+
   return (
     <>
     <BigContainer>
@@ -20,32 +70,41 @@ function Player(props) {
             <h2>Player</h2>
           </div>
           <PlayerContainer>
-            <div id="jp-live-play">
-              <img src="https://radioaktywne.pl/user/themes/raktywne/images/play-white.svg"/>
+            <div id="ra-left">
+              <div id="ra-play" onClick={raToggle}>
+                <img src={
+                  state.theme.playing ? 
+                  "https://radioaktywne.pl/user/themes/raktywne/images/pause-white.svg" : 
+                  "https://radioaktywne.pl/user/themes/raktywne/images/play-white.svg"} 
+                />
+              </div>
+
+              <div id="rds">
+                Teraz gramy:
+                <div>{state.theme.title}</div>
+              </div>
             </div>
 
-            <div id="jp-live-pause">
-              <img src="https://radioaktywne.pl/user/themes/raktywne/images/pause-white.svg"/>
-            </div>
+            <div id="ra-right">
+              <div id="ra-mute" onClick={raMute}>
+                <img src="https://radioaktywne.pl/user/themes/raktywne/images/guosnik-white.svg"/>
+              </div>
 
-            <div id="rds">
-              Teraz gramy:
-              <div>{state.theme.title}</div>
-            </div>
+              <div id="ra-unmute" className="invisible" onClick={raUnmute}>
+                <img src="https://radioaktywne.pl/user/themes/raktywne/images/guosnik-mute-white.svg"/>
+              </div>
 
-            <div id="jp-live-mute">
-              <img src="https://radioaktywne.pl/user/themes/raktywne/images/guosnik-white.svg"/>
+              <div id="ra-volume-container">
+                <input 
+                  id="ra-volume" 
+                  type="range" 
+                  min="0" max="1" //cause player has such range
+                  step='.05'
+                  value={state.theme.volume}
+                  onChange={e => raVolume(parseFloat(e.target.value))}
+                />
+              </div>
             </div>
-
-            <div id="jp-live-unmute">
-              <img src="https://radioaktywne.pl/user/themes/raktywne/images/guosnik-mute-white.svg"/>
-            </div>
-
-            <div style={{width: '1%'}}></div>
-						<div id="volume-slider">
-                t o d o
-            </div>
-            <div style={{width: '3%'}}></div>
           </PlayerContainer>
         </Container>
       </div>
@@ -133,29 +192,50 @@ const PlayerContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  & > #jp-live-play
+  #ra-left, #ra-right
+  {
+    display: flex;
+    align-items: center;
+  }
+
+  #ra-left
+  {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  #ra-right
+  {
+    justify-content: flex-end;
+  }
+
+  #ra-play
   {
     width: 100px;
     height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 
-  & > #jp-live-pause
+  #ra-mute, #ra-unmute
   {
-    width: 100px;
-    height: 100px;
+    cursor: pointer;
+    margin-right: 50px;
+  }
+
+  .invisible
+  {
+    display: none !important;
+  }
+
+  #rds
+  {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-
-    display: none;
-  }
-
-  & > #rds
-  {
-    flex: auto;
     max-width: 480px;
     margin-left: 20px;
     margin-right: 20px;
@@ -163,34 +243,107 @@ const PlayerContainer = styled.div`
     font-size: 1.25rem;
   }
 
-  & > #rds > div
+  @media (max-width: 1400px)
+  {
+    #rds
+    {
+      font-size: 1rem;
+    }
+  }
+
+  #rds > div
   {
     font-size: 2rem;
     font-weight: bold;
   }
 
-  & > #jp-live-unmute
+  @media (max-width: 1400px)
   {
-    display: none;
+    #rds > div
+    {
+      font-size: 1.5rem;
+    }
   }
 
   @media (max-width: 750px)
   {
     padding: 15px 0;
 
-    & > #rds
+    #rds
     {
       font-size: .95rem;
     }
   
-    & > #rds > div
+    #rds > div
     {
       font-size: 1.5rem;
     }
 
-    & > #jp-live-play
+    #ra-play
     {
       margin-left: 15px;
+    }
+  }
+
+  //range input styles (aka volume)
+  #ra-volume-container
+  {
+    transform: rotate(-90deg);
+    width: 100px;
+    position: absolute;
+    right: 0;
+  }
+
+  input[type=range]
+  {
+    width: 100px;
+    height: 9px;
+
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    border: 1px solid #4A4A4A;
+    border-radius: 3px;
+  }
+
+  input[type=range]:focus 
+  {
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb,
+  input[type=range]::-moz-range-thumb,
+  input[type=range]::-ms-thumb
+  {
+    height: 18px;
+    width: 15px;
+    border-radius: 4px;
+    appearance: none;
+    -webkit-appearance: none; 
+    margin-top: -4px;
+    background: #ff0000;
+  }
+
+  input[type=range]:focus::-webkit-slider-runnable-track,
+  input[type=range]:focus::-ms-fill-lower,
+  input[type=range]:focus::-ms-fill-upper
+  {
+    background: #ff0000;
+  }
+  
+  input[type=range]::-ms-fill-lower, 
+  input[type=range]::-ms-fill-upper
+  {
+    border: 1px solid #4A4A4A;
+    border-radius: 8px;
+    background: #ff0000;
+  }
+
+  @media (max-width: 450px)
+  {
+    #ra-volume-container
+    {
+      display: none;
     }
   }
 `

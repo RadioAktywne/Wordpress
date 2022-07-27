@@ -87,6 +87,7 @@ const Title = styled.h1`
  * This component is the parent of the `content.rendered` HTML. We can use nested
  * selectors to style that HTML.
  */
+//styles for wp posts
 const Content = styled.div`
   color: rgba(12, 17, 43, 0.8);
   word-break: break-word;
