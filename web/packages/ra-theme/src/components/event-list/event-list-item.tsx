@@ -24,55 +24,37 @@ interface ItemProps {
  */
 function EventListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  const author = state.source.author[item.author];
-  const date = new Date(item.date);
+  console.log(item);
+  const name = item.title.rendered + ((item.acf.type.toString() === "live") ? "" : " - powtórka");
+  const startTime = item.acf.start_time.substring(0, 5);
+  const endTime = item.acf.end_time.substring(0, 5);
 
   return (
-    <article>
+    <Container>
       <Link link={item.link}>
-        <Title dangerouslySetInnerHTML={{ __html: item.title.rendered }} />
+        <Title>{startTime} - {endTime} {name}</Title>
       </Link>
-
-      <div>
-        {/* If the event post has an author, we render a clickable author text. */}
-        {author && (
-          <StyledLink link={author.link}>
-            <AuthorName>
-              By <b>{author.name}</b>
-            </AuthorName>
-          </StyledLink>
-        )}
-        <PublishDate>
-          {" "}
-          on <b>{date.toDateString()}</b>
-        </PublishDate>
-      </div>
-    </article>
+    </Container>
   );
 }
 
 // Connect the EventListItem to gain access to `state` as a prop
 export default connect(EventListItem);
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: rgba(12, 17, 43);
+const Container = styled.div`
+  &:nth-of-type(2n+1) {
+    background-color: rgba(60, 60, 76, 0.1);
+  }
+`
+
+const Title = styled.div`
   margin: 0;
-  padding-top: 24px;
-  padding-bottom: 8px;
-  box-sizing: border-box;
-`;
+  padding: 0;
+  padding-left: 15px;
+  color: #3c3c4c;
 
-const AuthorName = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-`;
-
-const StyledLink = styled(Link)`
-  padding: 15px 0;
-`;
-
-const PublishDate = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
+  &:hover
+  {
+    color: #6ABA9C;
+  }
 `;

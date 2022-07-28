@@ -8,33 +8,20 @@ import { HomeData, PageData, PageEntity } from "@frontity/source/types";
  * Properties received by the `Home` component.
  */
 interface HomeProps {
-  /**
-   * Data element representing a URL in your frontity site.
-   */
   data: HomeData & PageData;
-
-  /**
-   * Whether to render this component.
-   */
   when?: boolean;
 }
 
 /**
  * The Home component that is used to render homepage
- *
- * @param props - The Frontity store (state, actions, and libraries).
- *
- * @example
- * ```js
- * <Switch>
- *   <Home when={data.isHome} />
- * </Switch>
- * ```
- *
- * @returns The {@link Home} element rendered.
  */
 function Home({ data }: HomeProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
+  
+  //info about events for ramówka
+  // const dataEvent = state.source.data["/info/ramowka/"];
+  // console.log(dataEvent);
+
   // Get the data of the homepage.
   const home: PageEntity = state.source[data.type][data.id];
   // Get the html2react component.
@@ -48,6 +35,13 @@ function Home({ data }: HomeProps): JSX.Element {
           bgUrl="https://radioaktywne.pl/user/themes/raktywne/images/studio.jpg"
         />
 
+        {/* <EventDay
+          data={dataEvent}
+          day="monday"
+          className=""
+          onHome={false}
+        /> */}
+        
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
           // processed by the processors we included in the
           // libraries.html2react.processors array.

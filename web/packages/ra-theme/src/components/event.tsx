@@ -40,8 +40,8 @@ function Event({ data }: EventProps): JSX.Element {
   return data.isReady ? (
     <Container>
       <div>
-        <Title>{`${event.acf.show} (${event.acf.type})`}</Title>
-        {`${event.acf.day}, ${event.acf.start_time} - ${event.acf.end_time}`}
+        <Title>{event.acf.show} {event.acf.type}</Title>
+        {event.acf.day}, {event.acf.start_time} - {event.acf.end_time}
       </div>
     </Container>
   ) : null;

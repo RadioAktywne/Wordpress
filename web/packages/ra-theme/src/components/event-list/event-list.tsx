@@ -1,8 +1,7 @@
 import { connect, decode, styled, useConnect } from "frontity";
-import EventListItem from "./event-list-item";
+import EventDay from "./event-day";
 import Pagination from "./pagination";
 import { Packages } from "../../../types";
-import { isAuthor, isTerm } from "@frontity/source";
 import { EventArchiveData } from "../../data";
 
 /**
@@ -33,28 +32,59 @@ function EventList({ data }: ListProps): JSX.Element {
 
   return (
     <Container>
-      {/* If the list is a term, we render a title. */}
-      {isTerm(data) && (
-        <Header>
-          {data.taxonomy}:{" "}
-          <b>{decode(state.source[data.taxonomy][data.id].name)}</b>
-        </Header>
-      )}
+      <div>
+        <Title>
+          <h1>Ramówka</h1>
+        </Title>
 
-      {/* If the list is for a specific author, we render a title. */}
-      {isAuthor(data) && (
-        <Header>
-          Author: <b>{decode(state.source.author[data.id].name)}</b>
-        </Header>
-      )}
+        <Days>
+          <EventDay
+            data={data}
+            day="monday"
+            className=""
+            onHome={false}
+          />
+          <EventDay
+            data={data}
+            day="tuesday"
+            className=""
+            onHome={false}
+          />
+          <EventDay
+            data={data}
+            day="wednesday"
+            className="right"
+            onHome={false}
+          />
+          <EventDay
+            data={data}
+            day="thursday"
+            className=""
+            onHome={false}
+          />
+          <EventDay
+            data={data}
+            day="friday"
+            className=""
+            onHome={false}
+          />
+          <EventDay
+            data={data}
+            day="saturday"
+            className="right"
+            onHome={false}
+          />
+          <EventDay
+            data={data}
+            day="sunday"
+            className=""
+            onHome={false}
+          />
 
-      {/* Iterate over the items of the list. */}
-      {data.items.map(({ type, id }) => {
-        const item = state.source[type][id];
-        // Render one EventListItem component for each one.
-        return <EventListItem key={item.id} item={item} />;
-      })}
-      <Pagination data={data} />
+        </Days>
+
+        <Pagination data={data} />
+      </div>
     </Container>
   );
 }
@@ -62,14 +92,42 @@ function EventList({ data }: ListProps): JSX.Element {
 export default connect(EventList);
 
 const Container = styled.section`
-  width: 800px;
-  margin: 0;
-  padding: 24px;
-  list-style: none;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px 0 0 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  & > div
+  {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  @media (max-width: 750px)
+  {
+    & > div
+    {
+      padding: 0;
+    }
+  }
 `;
 
-const Header = styled.h3`
-  font-weight: 300;
-  text-transform: capitalize;
-  color: rgba(12, 17, 43, 0.9);
-`;
+const Title = styled.div`
+  & > h1
+  {
+    color: #6aba9c;
+    background-color: #3c3c4c;
+    border-bottom: solid 2px #6aba9c;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    font-weight: lighter;
+  }
+`
+
+const Days = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`
