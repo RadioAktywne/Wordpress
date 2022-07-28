@@ -43,7 +43,7 @@ const MenuContent = styled.div`
   height: 100vh;
   overflow: hidden auto;
   position: fixed;
-  top: 81.7px;
+  top: 79.3px;
   left: 0;
   z-index: 3;
   line-height: 1.7;
