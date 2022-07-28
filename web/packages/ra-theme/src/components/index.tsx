@@ -63,13 +63,6 @@ function Theme() {
       {/* Add the header of the site. */}
       <HeadContainer>
         <Header 
-          logoImg="https://radioaktywne.pl/user/themes/raktywne/images/ra-logof.svg"
-
-          ytImg="https://radioaktywne.pl/user/themes/raktywne/images/ytlogo.svg"
-          igImg="https://radioaktywne.pl/user/themes/raktywne/images/iglogo.svg"
-          fbImg="https://radioaktywne.pl/user/themes/raktywne/images/fblogo.svg"
-          sfImg="https://radioaktywne.pl/user/themes/raktywne/images/spotifylogo.svg"
-
           yt="https://www.youtube.com/channel/UCWotunR5aYz-A_tM2fcs9eg"
           ig="https://www.instagram.com/radioaktywnepw/"
           fb="https://www.facebook.com/RadioaktywnePW/"

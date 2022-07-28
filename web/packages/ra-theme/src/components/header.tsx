@@ -5,6 +5,8 @@ import MobileMenu from "./menu";
 import Socials from "./socials";
 import { Packages } from "../../types";
 
+import Logo from '../img/ra-logof.svg';
+
 /**
  * The header of the site, logo, socials and the nav bar.
  *
@@ -19,11 +21,10 @@ function Header(props) {
         <Link link="/">
           <img
               alt="Radio Aktywne" 
-              src={props.logoImg}
+              src={Logo}
             /> 
         </Link>
         <Socials style="padding-left: 20px;"
-          ytImg={props.ytImg} igImg={props.igImg} fbImg={props.fbImg} sfImg={props.sfImg}
           yt={props.yt} ig={props.ig} fb={props.fb} sf={props.sf}/>
         <MobileMenu />
       </Container>

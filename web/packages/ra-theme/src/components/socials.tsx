@@ -1,6 +1,10 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "./link";
 import { Packages } from "../../types";
+import YouTube from '../img/social/ytlogo.svg';
+import Instagram from '../img/social/iglogo.svg';
+import Facebook from '../img/social/fblogo.svg';
+import Spotify from '../img/social/sflogo.svg';
 
 /**
  * Socials icons.
@@ -16,28 +20,28 @@ function Socials(props) {
         <Link link={props.yt} target="_blank">
             <img
                 alt="YouTube" 
-                src={props.ytImg}
+                src={YouTube}
             /> 
         </Link>
 
         <Link link={props.ig} target="_blank">
             <img
                 alt="Instagram" 
-                src={props.igImg}
+                src={Instagram}
             /> 
         </Link>
 
         <Link link={props.fb} target="_blank">
             <img
                 alt="Facebook" 
-                src={props.fbImg}
+                src={Facebook}
             /> 
         </Link>
 
         <Link link={props.sf} target="_blank">
             <img
                 alt="Spotify" 
-                src={props.sfImg}
+                src={Spotify}
             /> 
         </Link>
       </Container>

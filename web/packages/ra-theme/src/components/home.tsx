@@ -31,9 +31,7 @@ function Home({ data }: HomeProps): JSX.Element {
   return data.isReady ? (
     <BigContainer>
       <Container>
-        <Player
-          bgUrl="https://radioaktywne.pl/user/themes/raktywne/images/studio.jpg"
-        />
+        <Player/>
 
         {/* <EventDay
           data={dataEvent}

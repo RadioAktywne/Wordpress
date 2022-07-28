@@ -1,6 +1,12 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "./link";
 import { Packages } from "../../types";
+import PlayerBackground from '../img/bg/studio.jpg';
+
+import Play from '../img/icons/play-white.svg';
+import Pause from '../img/icons/pause-white.svg';
+import Unmute from '../img/icons/guosnik-mute-white.svg';
+import Mute from '../img/icons/guosnik-white.svg';
 
 /**
  * Radio player.
@@ -65,18 +71,14 @@ function Player(props) {
     <BigContainer>
       <div>
         <Container>
-          <div className="player-bg" style={{backgroundImage: 'url(' + props.bgUrl + ')'}}></div>
+          <div className="player-bg" style={{backgroundImage: 'url(' + PlayerBackground + ')'}}></div>
           <div className="player-title">
             <h2>Player</h2>
           </div>
           <PlayerContainer>
             <div id="ra-left">
               <div id="ra-play" onClick={raToggle}>
-                <img src={
-                  state.theme.playing ? 
-                  "https://radioaktywne.pl/user/themes/raktywne/images/pause-white.svg" : 
-                  "https://radioaktywne.pl/user/themes/raktywne/images/play-white.svg"} 
-                />
+                <img src={state.theme.playing ? Pause : Play}/>
               </div>
 
               <div id="rds">
@@ -87,11 +89,11 @@ function Player(props) {
 
             <div id="ra-right">
               <div id="ra-mute" onClick={raMute}>
-                <img src="https://radioaktywne.pl/user/themes/raktywne/images/guosnik-white.svg"/>
+                <img src={Mute}/>
               </div>
 
               <div id="ra-unmute" className="invisible" onClick={raUnmute}>
-                <img src="https://radioaktywne.pl/user/themes/raktywne/images/guosnik-mute-white.svg"/>
+                <img src={Unmute}/>
               </div>
 
               <div id="ra-volume-container">
