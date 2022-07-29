@@ -1,5 +1,6 @@
 import { connect, decode, styled, useConnect } from "frontity";
 import EventListItem from "./event-list-item";
+import Link from "../link";
 import { Packages } from "../../../types";
 
 let daysNames = {
@@ -38,7 +39,7 @@ function EventDay(props) {
   return (
     <Day>
         <div className={props.className}>
-            {props.onHome ? <h2>{daysNames[props.day]}</h2> : <h2><a href="/info/ramowka">{daysNames[props.day]}</a></h2>}
+            {props.onHome ? <Link link="/events"><h2 className="">RAmówka na dziś</h2></Link> : <h2>{daysNames[props.day]}</h2>}
             {eventList.map(({ type, id }) => {
             const item = state.source[type][id];
             if(item.acf.day == props.day)
@@ -73,6 +74,24 @@ const Day = styled.div`
     font-weight: normal;
     padding-left: 15px;
     margin-top: 0;
+  }
+
+  & > div > a > h2
+  {
+    color: #6aba9c;
+    background-color: #3c3c4c;
+    border-bottom: solid 2px #6aba9c;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-weight: lighter;
+  }
+
+  & > div > a:hover > h2
+  {
+    color: #fff;
+    background-color: #6aba9c;
+    border-bottom: solid 2px #3c3c4c;
   }
 
   @media (max-width: 750px)

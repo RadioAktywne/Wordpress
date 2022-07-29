@@ -61,7 +61,8 @@ const bar = (index: number) => css`
 `;
 
 const Container = styled.div`
-  width: 800px;
+  width: 100%; 
+  max-width: 1200px;
   margin: 0;
   padding: 24px;
   display: flex;

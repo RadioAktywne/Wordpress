@@ -126,7 +126,7 @@ const BigContainer = styled.div`
     margin-right: 15px;
   }
 
-  @media (max-width: 900px)
+  @media (max-width: 750px)
   {
     width: 100%;
 
@@ -175,7 +175,7 @@ const Container = styled.div`
     height: unset !important;
   }
 
-  @media (max-width: 900px)
+  @media (max-width: 750px)
   {
     height: 330px;
     margin-right: 0px !important;

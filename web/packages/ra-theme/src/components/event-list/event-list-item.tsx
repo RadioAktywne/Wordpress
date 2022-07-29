@@ -24,7 +24,6 @@ interface ItemProps {
  */
 function EventListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  console.log(item);
   const name = item.title.rendered + ((item.acf.type.toString() === "live") ? "" : " - powtórka");
   const startTime = item.acf.start_time.substring(0, 5);
   const endTime = item.acf.end_time.substring(0, 5);

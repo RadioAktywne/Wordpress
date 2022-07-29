@@ -2,6 +2,7 @@ import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import React from "react";
 import Player from "./player";
+import EventWidget from "./event-list/event-widget";
 import { HomeData, PageData, PageEntity } from "@frontity/source/types";
 
 /**
@@ -18,10 +19,6 @@ interface HomeProps {
 function Home({ data }: HomeProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   
-  //info about events for ramówka
-  // const dataEvent = state.source.data["/info/ramowka/"];
-  // console.log(dataEvent);
-
   // Get the data of the homepage.
   const home: PageEntity = state.source[data.type][data.id];
   // Get the html2react component.
@@ -32,13 +29,7 @@ function Home({ data }: HomeProps): JSX.Element {
     <BigContainer>
       <Container>
         <Player/>
-
-        {/* <EventDay
-          data={dataEvent}
-          day="monday"
-          className=""
-          onHome={false}
-        /> */}
+        <EventWidget/>
         
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
           // processed by the processors we included in the
