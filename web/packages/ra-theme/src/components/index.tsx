@@ -33,6 +33,7 @@ import Head from "./head";
 import Page from "./page";
 import Home from "./home";
 import ReactPlayer from 'react-player'
+import { constants } from "buffer";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -45,7 +46,7 @@ function Theme() {
   const { state } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
   let ra; //player handle
-  function raReset(){ra.seekTo(1.0, 'fraction');}
+  function raReset(){ra.seekTo(1, 'fraction');}
 
   return (
     <>

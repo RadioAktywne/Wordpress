@@ -24,6 +24,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
       title: "Trwa ładowanie...",
       volume: 1,
       playing: false,
+      muted: false,
       menu: [],
       isMobileMenuOpen: false,
     },

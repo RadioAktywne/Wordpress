@@ -27,20 +27,16 @@ function Player(props) {
   function raVolume(vol)
   {
     state.theme.volume = vol;
+    
+    if(vol == 0)
+      state.theme.muted = true;
+    else 
+      state.theme.muted = false;
   }
 
-  function raMute()
+  function raMuteToggle()
   {
-    document.getElementById("ra-mute").classList.toggle("invisible");
-    document.getElementById("ra-unmute").classList.toggle("invisible");
-    raVolume(0);
-  }
-
-  function raUnmute()
-  {
-    document.getElementById("ra-unmute").classList.toggle("invisible");
-    document.getElementById("ra-mute").classList.toggle("invisible");
-    raVolume(1);
+    raVolume(state.theme.muted ? 1 : 0);
   }
 
   //set rds autorefresh
@@ -88,12 +84,8 @@ function Player(props) {
             </div>
 
             <div id="ra-right">
-              <div id="ra-mute" onClick={raMute}>
-                <img src={Mute}/>
-              </div>
-
-              <div id="ra-unmute" className="invisible" onClick={raUnmute}>
-                <img src={Unmute}/>
+              <div id="ra-mute" onClick={raMuteToggle}>
+                <img src={state.theme.muted ? Unmute : Mute}/>
               </div>
 
               <div id="ra-volume-container">
@@ -221,7 +213,7 @@ const PlayerContainer = styled.div`
     cursor: pointer;
   }
 
-  #ra-mute, #ra-unmute
+  #ra-mute
   {
     cursor: pointer;
     margin-right: 50px;
