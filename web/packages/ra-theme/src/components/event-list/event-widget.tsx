@@ -35,12 +35,19 @@ const EventWidget = () => {
             onHome={true}
         />
     ) : (
-        <Container><Loading/></Container>
+        <LoadingContainer><Loading/></LoadingContainer>
     );
 };
   
 export default connect(EventWidget);
 
-const Container = styled.div`
+const LoadingContainer = styled.div`
+    @media (max-width: 750px)
+    {
+        width: 100%;
+        margin-right: 45px;
+        padding: 0;
+    }
+
     width: 33.33%;
 `
