@@ -32,6 +32,9 @@ function Player(props) {
       state.theme.muted = true;
     else 
       state.theme.muted = false;
+
+    //dont touch it, it might explode. And, btw, it makes volume input cooler
+    document.getElementById('ra-volume').style.setProperty('--track-bg', "linear-gradient(90deg, white 0%, white " + state.theme.volume*100 + "%, #3c3c4c " + state.theme.volume*100 + "%, #3c3c4c 100%)");    
   }
 
   function raMuteToggle()
@@ -279,6 +282,9 @@ const PlayerContainer = styled.div`
     }
   }
 
+
+
+
   //range input styles (aka volume)
   #ra-volume-container
   {
@@ -288,50 +294,81 @@ const PlayerContainer = styled.div`
     right: 0;
   }
 
-  input[type=range]
-  {
-    width: 100px;
-    height: 9px;
-
+  //make it ready
+  input[type=range] {
     -webkit-appearance: none;
-    appearance: none;
+    width: 100px;
+    height: 11px;
+
+    background: var(--track-bg, linear-gradient(90deg, white 0%, white 100%, #3c3c4c 100%, #3c3c4c 100%));
+
     cursor: pointer;
-    border: 1px solid #4A4A4A;
+    border: 1px solid white;
     border-radius: 3px;
   }
-
-  input[type=range]:focus 
-  {
-    outline: none;
-  }
-
-  input[type=range]::-webkit-slider-thumb,
-  input[type=range]::-moz-range-thumb,
-  input[type=range]::-ms-thumb
-  {
-    height: 18px;
-    width: 15px;
-    border-radius: 4px;
-    appearance: none;
-    -webkit-appearance: none; 
-    margin-top: -4px;
-    background: #ff0000;
-  }
-
-  input[type=range]:focus::-webkit-slider-runnable-track,
-  input[type=range]:focus::-ms-fill-lower,
-  input[type=range]:focus::-ms-fill-upper
-  {
-    background: #ff0000;
+  
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
   }
   
-  input[type=range]::-ms-fill-lower, 
-  input[type=range]::-ms-fill-upper
-  {
-    border: 1px solid #4A4A4A;
-    border-radius: 8px;
-    background: #ff0000;
+  input[type=range]:focus {
+    outline: none;
   }
+  
+  input[type=range]::-ms-track {
+    width: 100%;
+    cursor: pointer;
+  
+    background: transparent; 
+    border-color: transparent;
+    color: transparent;
+  }
+
+
+  //factual styles
+  //thumb
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid rbga(69, 69, 69);
+    height: 17px;
+    width: 18px;
+    border-radius: 5px;
+    background: #ffffff;
+    cursor: pointer;
+    margin-top: -14px; 
+  }
+  input[type=range]::-moz-range-thumb {
+    border: 1px solid rbga(69, 69, 69);
+    height: 17px;
+    width: 18px;
+    border-radius: 5px;
+    background: #ffffff;
+    cursor: pointer;
+  }
+  input[type=range]::-ms-thumb {
+    border: 1px solid rbga(69, 69, 69);
+    height: 17px;
+    width: 18px;
+    border-radius: 5px;
+    background: #ffffff;
+    cursor: pointer;
+  }
+  input[type=range]::-moz-range-thumb:active
+  {
+    background: #6aba9c;
+    border: 1px solid #003eff;
+  }
+  input[type=range]::-ms-thumb:active
+  {
+    background: #6aba9c;
+    border: 1px solid #003eff;
+  }
+  input[type=range]::-webkit-slider-thumb:active
+  {
+    background: #6aba9c;
+    border: 1px solid #003eff;
+  }
+
 
   @media (max-width: 450px)
   {
