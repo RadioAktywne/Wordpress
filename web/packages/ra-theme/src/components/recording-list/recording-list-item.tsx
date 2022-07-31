@@ -3,6 +3,7 @@ import Link from "../link";
 import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
 import { RecordingEntity } from "../../data";
+import Arrow from '../../img/icons/arrow.svg';
 
 /**
  * The props of the {@link RecordingListItem} component.
@@ -30,26 +31,10 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
 
   return (
     <article>
-      <Link link={item.link}>
-        <Title dangerouslySetInnerHTML={{ __html: item.title.rendered }} />
-      </Link>
-
-      <div>
-        {/* If the recording has an author, we render a clickable author text. */}
-        {author && (
-          <StyledLink link={author.link}>
-            <AuthorName>
-              By <b>{author.name}</b>
-            </AuthorName>
-          </StyledLink>
-        )}
-        <PublishDate>
-          {" "}
-          on <b>{date.toDateString()}</b>
-        </PublishDate>
-      </div>
-
-      {item.acf.image && <FeaturedMedia id={item.acf.image} />}
+      <Container>
+        <Title>{item.title.rendered}</Title>
+        <BackButton><Link link={item.link}><img src={Arrow} alt="pokaż więcej"/></Link></BackButton>
+      </Container>
     </article>
   );
 }
@@ -57,25 +42,53 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
 // Connect the RecordingListItem to gain access to `state` as a prop
 export default connect(RecordingListItem);
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: rgba(12, 17, 43);
-  margin: 0;
-  padding-top: 24px;
-  padding-bottom: 8px;
-  box-sizing: border-box;
-`;
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 40px;
+  color: white;
 
-const AuthorName = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-`;
+  &:nth-of-type(2n+1) > div
+  {
+    background-color: rgba(60, 60, 76, 0.8);
+  }
 
-const StyledLink = styled(Link)`
-  padding: 15px 0;
-`;
+  &:nth-of-type(2n) > div
+  {
+    background-color: #3c3c4c;
+  }
+`
 
-const PublishDate = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-`;
+const Title = styled.div`
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+
+
+  &:hover 
+  {
+    background-color: #6aba9c !important;
+    cursor: pointer;
+  }
+`
+
+const BackButton = styled.div`
+  width: 40px;
+  height: 40px;
+  background-color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: solid #6aba9c 2px;
+
+  & > a > img 
+  {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+  }
+`

@@ -3,7 +3,9 @@ import { Packages } from "../../types";
 import React from "react";
 import Player from "./player";
 import EventWidget from "./event-list/event-widget";
+import RecordingWidget from "./recording-list/recording-widget";
 import { HomeData, PageData, PageEntity } from "@frontity/source/types";
+import { isRecordingArchive } from "../data";
 
 /**
  * Properties received by the `Home` component.
@@ -30,6 +32,10 @@ function Home({ data }: HomeProps): JSX.Element {
       <Container>
         <Player/>
         <EventWidget/>
+        <RecordingWidget/>
+
+        
+
         
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
           // processed by the processors we included in the
@@ -64,6 +70,12 @@ const Container = styled.div`
   @media (max-width: 900px)
   {
     padding: 0 0;
+  }
+
+  & > div
+  {
+    padding-left: 0px;
+    padding-right: 0px;
   }
 `
 
