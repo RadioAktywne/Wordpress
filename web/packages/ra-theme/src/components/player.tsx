@@ -33,13 +33,18 @@ function Player(props) {
     else 
       state.theme.muted = false;
 
-    //dont touch it, it might explode. And, btw, it makes volume input cooler
-    document.getElementById('ra-volume').style.setProperty('--track-bg', "linear-gradient(90deg, white 0%, white " + state.theme.volume*100 + "%, #3c3c4c " + state.theme.volume*100 + "%, #3c3c4c 100%)");    
+    updateVolumeSlider();
   }
 
   function raMuteToggle()
   {
     raVolume(state.theme.muted ? 1 : 0);
+  }
+
+  function updateVolumeSlider()
+  {
+    //dont touch it, it might explode. And, btw, it makes volume input cooler
+    document.getElementById('ra-volume').style.setProperty('--track-bg', "linear-gradient(90deg, white 0%, white " + state.theme.volume*100 + "%, #3c3c4c " + state.theme.volume*100 + "%, #3c3c4c 100%)");    
   }
 
   //set rds autorefresh
@@ -64,7 +69,6 @@ function Player(props) {
   rds();
   setInterval(function() {rds();}, 10000);
 
-
   return (
     <>
     <BigContainer>
@@ -74,7 +78,7 @@ function Player(props) {
           <div className="player-title">
             <h2>Player</h2>
           </div>
-          <PlayerContainer>
+          <PlayerContainer onLoad={updateVolumeSlider}>
             <div id="ra-left">
               <div id="ra-play" onClick={raToggle}>
                 <img src={state.theme.playing ? Pause : Play}/>
