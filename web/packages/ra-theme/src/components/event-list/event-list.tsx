@@ -1,6 +1,5 @@
 import { connect, decode, styled, useConnect } from "frontity";
 import EventDay from "./event-day";
-import Pagination from "./pagination";
 import { Packages } from "../../../types";
 import { EventArchiveData } from "../../data";
 
@@ -28,7 +27,6 @@ interface ListProps {
  * @returns React component.
  */
 function EventList({ data }: ListProps): JSX.Element {
-  const { state } = useConnect<Packages>();
 
   return (
     <Container>
@@ -82,8 +80,6 @@ function EventList({ data }: ListProps): JSX.Element {
           />
 
         </Days>
-
-        <Pagination data={data} />
       </div>
     </Container>
   );

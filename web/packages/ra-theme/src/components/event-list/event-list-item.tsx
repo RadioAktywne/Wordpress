@@ -3,6 +3,10 @@ import Link from "../link";
 import { Packages } from "../../../types";
 import { EventEntity } from "../../data";
 
+const cutSec = function(time) {
+  return time.substring(0, 5);
+}
+
 /**
  * The props of the {@link EventListItem} component.
  */
@@ -23,10 +27,9 @@ interface ItemProps {
  * @returns The rendered event.
  */
 function EventListItem({ item }: ItemProps): JSX.Element {
-  const { state } = useConnect<Packages>();
   const name = item.title.rendered + ((item.acf.type.toString() === "live") ? "" : " - powtórka");
-  const startTime = item.acf.start_time.substring(0, 5);
-  const endTime = item.acf.end_time.substring(0, 5);
+  const startTime = cutSec(item.acf.start_time);
+  const endTime = cutSec(item.acf.end_time);
 
   return (
     <Container>

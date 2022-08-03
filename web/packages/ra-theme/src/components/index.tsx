@@ -46,7 +46,7 @@ function Theme() {
   const { state } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
   let ra; //player handle
-  function raReset(){ra.seekTo(1, 'fraction');}
+  const raReset = function(){ra.seekTo(1, 'fraction');}
 
   return (
     <>
@@ -63,12 +63,7 @@ function Theme() {
 
       {/* Add the header of the site. */}
       <HeadContainer>
-        <Header 
-          yt="https://www.youtube.com/channel/UCWotunR5aYz-A_tM2fcs9eg"
-          ig="https://www.instagram.com/radioaktywnepw/"
-          fb="https://www.facebook.com/RadioaktywnePW/"
-          sf="https://open.spotify.com/show/615XOIPs62nU0f5itBUY8V"
-        />
+        <Header/>
       </HeadContainer>
 
       {/* radio player needs to be on every page - thats why its here */}

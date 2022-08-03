@@ -19,12 +19,12 @@ function Player(props) {
   const { state } = useConnect<Packages>();
 
   //radio funtions - should be moved to another file
-  function raToggle()
+  const raToggle = function()
   {
     state.theme.playing = !state.theme.playing;
   }
 
-  function raVolume(vol)
+  const raVolume = function(vol)
   {
     state.theme.volume = vol;
     
@@ -36,26 +36,26 @@ function Player(props) {
     updateVolumeSlider();
   }
 
-  function raMuteToggle()
+  const raMuteToggle = function()
   {
     raVolume(state.theme.muted ? 1 : 0);
   }
 
-  function updateVolumeSlider()
+  const updateVolumeSlider = function()
   {
     //dont touch it, it might explode. And, btw, it makes volume input cooler
     document.getElementById('ra-volume').style.setProperty('--track-bg', "linear-gradient(90deg, white 0%, white " + state.theme.volume*100 + "%, #3c3c4c " + state.theme.volume*100 + "%, #3c3c4c 100%)");    
   }
 
   //set rds autorefresh
-  let XMLHttpRequest = require('xhr2');
-  let xhr = new XMLHttpRequest();
-  function rds()
+  const XMLHttpRequest = require('xhr2');
+  const xhr = new XMLHttpRequest();
+  const rds = function()
   {
     xhr.open("GET", "https://listen.radioaktywne.pl:8443/status-json.xsl", true);
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let title = JSON.parse(this.responseText).icestats.source[1].title;
+            const title = JSON.parse(this.responseText).icestats.source[1].title;
   
             if(title != 'Unknown' && !title.endsWith("- Unknown")) {	
               state.theme.title = title;

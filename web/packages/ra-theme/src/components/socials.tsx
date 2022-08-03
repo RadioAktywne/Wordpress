@@ -13,32 +13,31 @@ import Spotify from '../img/social/sflogo.svg';
  */
 
 function Socials(props) {
-  const { state } = useConnect<Packages>();
   return (
     <>
       <Container>
-        <Link link={props.yt} target="_blank">
+        <Link link="https://www.youtube.com/channel/UCWotunR5aYz-A_tM2fcs9eg" target="_blank">
             <img
                 alt="YouTube" 
                 src={YouTube}
             /> 
         </Link>
 
-        <Link link={props.ig} target="_blank">
+        <Link link="https://www.instagram.com/radioaktywnepw/" target="_blank">
             <img
                 alt="Instagram" 
                 src={Instagram}
             /> 
         </Link>
 
-        <Link link={props.fb} target="_blank">
+        <Link link="https://www.facebook.com/RadioaktywnePW/" target="_blank">
             <img
                 alt="Facebook" 
                 src={Facebook}
             /> 
         </Link>
 
-        <Link link={props.sf} target="_blank">
+        <Link link="https://open.spotify.com/show/615XOIPs62nU0f5itBUY8V" target="_blank">
             <img
                 alt="Spotify" 
                 src={Spotify}

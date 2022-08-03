@@ -3,7 +3,7 @@ import EventListItem from "./event-list-item";
 import Link from "../link";
 import { Packages } from "../../../types";
 
-let daysNames = {
+const daysNames = {
     "monday": "Poniedziałek",
     "tuesday": "Wtorek",
     "wednesday": "Środa",
@@ -13,28 +13,25 @@ let daysNames = {
     "sunday": "Niedziela",
 }
 
+const isEarlier = function(a, b) {
+  return (
+    parseInt(a.acf.start_time.substring(0, 2)) < parseInt(b.acf.start_time.substring(0, 2)) 
+    || (
+           parseInt(a.acf.start_time.substring(0, 2)) == parseInt(b.acf.start_time.substring(0, 2))
+        && parseInt(a.acf.start_time.substring(3, 2)) < parseInt(b.acf.start_time.substring(3, 2))
+       )
+    ) ? -1 : 1;
+};
+
 
 function EventDay(props) {
   const { state } = useConnect<Packages>();
 
-  let eventList = [];
-
-  props.data.items.map(({ type, id }) => {
-    const item = state.source[type][id];
-    eventList.push(item);
-  });
-
-  eventList.sort(
-    function(a, b) {
-      return (
-        parseInt(a.acf.start_time.substring(0, 2)) < parseInt(b.acf.start_time.substring(0, 2)) 
-        || (
-               parseInt(a.acf.start_time.substring(0, 2)) == parseInt(b.acf.start_time.substring(0, 2))
-            && parseInt(a.acf.start_time.substring(3, 2)) < parseInt(b.acf.start_time.substring(3, 2))
-           )
-        ) ? -1 : 1;
-    }
+  const eventList = props.data.items.map(
+    ({ type, id }) => state.source[type][id]
   );
+
+  eventList.sort(isEarlier);
 
   return (
     <Day>

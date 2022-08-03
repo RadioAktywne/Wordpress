@@ -14,7 +14,6 @@ import Logo from '../img/ra-logof.svg';
  */
 
 function Header(props) {
-  const { state } = useConnect<Packages>();
   return (
     <>
       <Container>
@@ -24,8 +23,7 @@ function Header(props) {
               src={Logo}
             /> 
         </Link>
-        <Socials style="padding-left: 20px;"
-          yt={props.yt} ig={props.ig} fb={props.fb} sf={props.sf}/>
+        <Socials style="padding-left: 20px;"/>
         <MobileMenu />
       </Container>
       <Nav />
