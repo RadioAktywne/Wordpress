@@ -22,7 +22,7 @@ import {
   isRecording,
   isRecordingArchive,
   isShow,
-  isShowArchive
+  isShowArchive,
 } from "../data";
 import Member from "./member";
 import Show from "./show";
@@ -32,7 +32,7 @@ import Recording from "./recording";
 import Head from "./head";
 import Page from "./page";
 import Home from "./home";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
 import { constants } from "buffer";
 
 /**
@@ -46,7 +46,9 @@ function Theme() {
   const { state } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
   let ra; //player handle
-  const raReset = function(){ra.seekTo(1, 'fraction');}
+  const raReset = function () {
+    ra.seekTo(1, "fraction");
+  };
 
   return (
     <>
@@ -63,19 +65,19 @@ function Theme() {
 
       {/* Add the header of the site. */}
       <HeadContainer>
-        <Header/>
+        <Header />
       </HeadContainer>
 
       {/* radio player needs to be on every page - thats why its here */}
-      <ReactPlayer 
-          url='https://listen.radioaktywne.pl:8443/raogg'
-          playing={state.theme.playing}
-          volume={state.theme.volume}
-          width={0}
-          height={0}
-          ref={(ref) => (ra = ref)} //lets us to seekTo
-          onPlay={raReset} //so its live no matter what
-        />
+      <ReactPlayer
+        url="https://listen.radioaktywne.pl:8443/raogg"
+        playing={state.theme.playing}
+        volume={state.theme.volume}
+        width={0}
+        height={0}
+        ref={(ref) => (ra = ref)} //lets us to seekTo
+        onPlay={raReset} //so its live no matter what
+      />
 
       <Main>
         {/* @ts-ignore */}
@@ -132,14 +134,13 @@ const globalStyles = css`
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      
-    background-color: #F7F5F6;
+
+    background-color: #f7f5f6;
     line-height: 1.7;
     font-family: sans-serif;
   }
 
-  @media (max-width: 1400px)
-  {
+  @media (max-width: 1400px) {
     body {
       font-size: 12px;
     }
@@ -157,12 +158,12 @@ const HeadContainer = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   flex-direction: row;
-  background-color: #3C3C4C;
+  background-color: #3c3c4c;
 
   padding: 0 3rem;
 
   @media (max-width: 900px) {
-    padding: 0 .3rem;
+    padding: 0 0.3rem;
   }
 
   @media (max-width: 850px) {

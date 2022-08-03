@@ -37,13 +37,13 @@ interface RaThemeTypeScript extends Package {
        */
       autoPrefetch: AutoPrefetch;
 
-      title: string,
+      title: string;
 
-      volume: number,
+      volume: number;
 
-      playing: boolean,
+      playing: boolean;
 
-      muted: boolean,
+      muted: boolean;
 
       /**
        * The menu of the theme. Expresed as an array of arrays that contain the
@@ -89,8 +89,10 @@ export default RaThemeTypeScript;
 /**
  * Packages required by `RaThemeTypeScript`.
  */
-export type Packages = MergePackages<Frontity,
+export type Packages = MergePackages<
+  Frontity,
   Router,
   Source,
   Html2React,
-  RaThemeTypeScript>;
+  RaThemeTypeScript
+>;

@@ -21,7 +21,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
         <Title>
           <h1>Nagrania</h1>
         </Title>
-      
+
         {data.items.map(({ type, id }) => {
           const item = state.source[type][id];
           // Render one RecordingListItem component for each one.
@@ -41,18 +41,15 @@ const Container = styled.section`
   margin-left: auto;
   margin-right: auto;
 
-  & > div
-  {
+  & > div {
     padding-right: 30px;
     padding-left: 30px;
     width: 66.66%;
     max-width: 755px;
   }
 
-  @media (max-width: 750px)
-  {
-    & > div
-    {
+  @media (max-width: 750px) {
+    & > div {
       padding: 0;
       width: 100%;
     }
@@ -60,8 +57,7 @@ const Container = styled.section`
 `;
 
 const Title = styled.div`
-  & > h1
-  {
+  & > h1 {
     color: #6aba9c;
     background-color: #3c3c4c;
     border-bottom: solid 2px #6aba9c;
@@ -70,4 +66,4 @@ const Title = styled.div`
     margin-bottom: 0px;
     font-weight: lighter;
   }
-`
+`;

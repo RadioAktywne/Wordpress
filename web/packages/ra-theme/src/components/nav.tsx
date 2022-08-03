@@ -15,7 +15,9 @@ function Nav(): JSX.Element {
       {state.theme.menu.map(([name, link]) => {
         // Check if the link matched the current page url.
         const data = state.source.get(state.router.link);
-        const isCurrentPage = (data.route === link || data.route.slice(0, data.route.length - 1) === link);
+        const isCurrentPage =
+          data.route === link ||
+          data.route.slice(0, data.route.length - 1) === link;
 
         return (
           <NavItem key={name}>
@@ -53,7 +55,7 @@ const NavContainer = styled.nav`
 
 const NavItem = styled.div`
   margin: 0;
-  color: #F7F5F6;
+  color: #f7f5f6;
   font-size: 1rem;
 
   @media (max-width: 1400px) {
@@ -72,14 +74,13 @@ const NavItem = styled.div`
     /* Use for semantic approach to style the current link */
 
     &[aria-current="page"] {
-      background-color: #F7F5F6;
+      background-color: #f7f5f6;
       color: #3c3c4c;
     }
   }
 
-  &:hover > a
-  {
+  &:hover > a {
     background-color: #6aba9c;
-    color: #F7F5F6;
-  } 
+    color: #f7f5f6;
+  }
 `;

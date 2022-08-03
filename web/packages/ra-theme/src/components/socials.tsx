@@ -1,10 +1,10 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "./link";
 import { Packages } from "../../types";
-import YouTube from '../img/social/ytlogo.svg';
-import Instagram from '../img/social/iglogo.svg';
-import Facebook from '../img/social/fblogo.svg';
-import Spotify from '../img/social/sflogo.svg';
+import YouTube from "../img/social/ytlogo.svg";
+import Instagram from "../img/social/iglogo.svg";
+import Facebook from "../img/social/fblogo.svg";
+import Spotify from "../img/social/sflogo.svg";
 
 /**
  * Socials icons.
@@ -16,32 +16,26 @@ function Socials(props) {
   return (
     <>
       <Container>
-        <Link link="https://www.youtube.com/channel/UCWotunR5aYz-A_tM2fcs9eg" target="_blank">
-            <img
-                alt="YouTube" 
-                src={YouTube}
-            /> 
+        <Link
+          link="https://www.youtube.com/channel/UCWotunR5aYz-A_tM2fcs9eg"
+          target="_blank"
+        >
+          <img alt="YouTube" src={YouTube} />
         </Link>
 
         <Link link="https://www.instagram.com/radioaktywnepw/" target="_blank">
-            <img
-                alt="Instagram" 
-                src={Instagram}
-            /> 
+          <img alt="Instagram" src={Instagram} />
         </Link>
 
         <Link link="https://www.facebook.com/RadioaktywnePW/" target="_blank">
-            <img
-                alt="Facebook" 
-                src={Facebook}
-            /> 
+          <img alt="Facebook" src={Facebook} />
         </Link>
 
-        <Link link="https://open.spotify.com/show/615XOIPs62nU0f5itBUY8V" target="_blank">
-            <img
-                alt="Spotify" 
-                src={Spotify}
-            /> 
+        <Link
+          link="https://open.spotify.com/show/615XOIPs62nU0f5itBUY8V"
+          target="_blank"
+        >
+          <img alt="Spotify" src={Spotify} />
         </Link>
       </Container>
     </>
@@ -57,17 +51,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
 
-  & > a > img
-  {
+  & > a > img {
     height: 30px;
     width: auto;
     padding-left: 20px;
   }
 
-  @media (max-width: 560px)
-  {
-    & > a > img
-    {
+  @media (max-width: 560px) {
+    & > a > img {
       height: 22px;
     }
 

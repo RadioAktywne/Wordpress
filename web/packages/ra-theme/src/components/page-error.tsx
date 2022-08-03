@@ -28,7 +28,8 @@ const description404 = (
 const description = (
   <>
     Jest problem, ale nie&apos;panikuj! Jeśli nie rozwiąże się,
-    <a href="https://community.frontity.org"> daj nam znać </a> lub odśwież swoją przeglądarkę.
+    <a href="https://community.frontity.org"> daj nam znać </a> lub odśwież
+    swoją przeglądarkę.
   </>
 );
 

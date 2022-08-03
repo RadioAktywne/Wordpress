@@ -3,7 +3,7 @@ import Link from "../link";
 import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
 import { RecordingEntity } from "../../data";
-import Arrow from '../../img/icons/arrow.svg';
+import Arrow from "../../img/icons/arrow.svg";
 
 /**
  * The props of the {@link RecordingListItem} component.
@@ -33,7 +33,11 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
     <article>
       <Container>
         <Title>{item.title.rendered}</Title>
-        <BackButton><Link link={item.link}><img src={Arrow} alt="pokaż więcej"/></Link></BackButton>
+        <BackButton>
+          <Link link={item.link}>
+            <img src={Arrow} alt="pokaż więcej" />
+          </Link>
+        </BackButton>
       </Container>
     </article>
   );
@@ -50,16 +54,14 @@ const Container = styled.div`
   min-height: 40px;
   color: white;
 
-  &:nth-of-type(2n+1) > div
-  {
+  &:nth-of-type(2n + 1) > div {
     background-color: rgba(60, 60, 76, 0.8);
   }
 
-  &:nth-of-type(2n) > div
-  {
+  &:nth-of-type(2n) > div {
     background-color: #3c3c4c;
   }
-`
+`;
 
 const Title = styled.div`
   width: 100%;
@@ -68,13 +70,11 @@ const Title = styled.div`
   align-items: center;
   padding-left: 15px;
 
-
-  &:hover 
-  {
+  &:hover {
     background-color: #6aba9c !important;
     cursor: pointer;
   }
-`
+`;
 
 const BackButton = styled.div`
   width: 40px;
@@ -85,10 +85,9 @@ const BackButton = styled.div`
   justify-content: center;
   border-left: solid #6aba9c 2px;
 
-  & > a > img 
-  {
+  & > a > img {
     width: 30px;
     height: 30px;
     margin-top: 10px;
   }
-`
+`;

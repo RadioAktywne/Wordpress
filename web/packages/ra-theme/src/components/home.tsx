@@ -20,7 +20,7 @@ interface HomeProps {
  */
 function Home({ data }: HomeProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
-  
+
   // Get the data of the homepage.
   const home: PageEntity = state.source[data.type][data.id];
   // Get the html2react component.
@@ -30,13 +30,10 @@ function Home({ data }: HomeProps): JSX.Element {
   return data.isReady ? (
     <BigContainer>
       <Container>
-        <Player/>
-        <EventWidget/>
-        <RecordingWidget/>
+        <Player />
+        <EventWidget />
+        <RecordingWidget />
 
-        
-
-        
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
           // processed by the processors we included in the
           // libraries.html2react.processors array.
@@ -67,18 +64,15 @@ const Container = styled.div`
   padding-left: 30px;
   padding-right: 15px;
 
-  @media (max-width: 900px)
-  {
+  @media (max-width: 900px) {
     padding: 0 0;
   }
 
-  & > div
-  {
+  & > div {
     padding-left: 0px;
     padding-right: 0px;
   }
-`
-
+`;
 
 const Content = styled.div`
   color: rgba(12, 17, 43, 0.8);

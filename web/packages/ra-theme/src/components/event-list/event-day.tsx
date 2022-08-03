@@ -4,25 +4,25 @@ import Link from "../link";
 import { Packages } from "../../../types";
 
 const daysNames = {
-    "monday": "Poniedziałek",
-    "tuesday": "Wtorek",
-    "wednesday": "Środa",
-    "thursday": "Czwartek",
-    "friday": "Piątek",
-    "saturday": "Sobota",
-    "sunday": "Niedziela",
-}
-
-const isEarlier = function(a, b) {
-  return (
-    parseInt(a.acf.start_time.substring(0, 2)) < parseInt(b.acf.start_time.substring(0, 2)) 
-    || (
-           parseInt(a.acf.start_time.substring(0, 2)) == parseInt(b.acf.start_time.substring(0, 2))
-        && parseInt(a.acf.start_time.substring(3, 2)) < parseInt(b.acf.start_time.substring(3, 2))
-       )
-    ) ? -1 : 1;
+  monday: "Poniedziałek",
+  tuesday: "Wtorek",
+  wednesday: "Środa",
+  thursday: "Czwartek",
+  friday: "Piątek",
+  saturday: "Sobota",
+  sunday: "Niedziela",
 };
 
+const isEarlier = function (a, b) {
+  return parseInt(a.acf.start_time.substring(0, 2)) <
+    parseInt(b.acf.start_time.substring(0, 2)) ||
+    (parseInt(a.acf.start_time.substring(0, 2)) ==
+      parseInt(b.acf.start_time.substring(0, 2)) &&
+      parseInt(a.acf.start_time.substring(3, 2)) <
+        parseInt(b.acf.start_time.substring(3, 2)))
+    ? -1
+    : 1;
+};
 
 function EventDay(props) {
   const { state } = useConnect<Packages>();
@@ -35,16 +35,20 @@ function EventDay(props) {
 
   return (
     <Day>
-        <div className={props.className}>
-            {props.onHome ? <Link link="/events"><h2 className="">RAmówka na dziś</h2></Link> : <h2>{daysNames[props.day]}</h2>}
-            {eventList.map(({ type, id }) => {
-            const item = state.source[type][id];
-            if(item.acf.day == props.day)
-                return (
-                    <EventListItem key={item.id} item={item} />
-                );
-            })}
-        </div>
+      <div className={props.className}>
+        {props.onHome ? (
+          <Link link="/events">
+            <h2 className="">RAmówka na dziś</h2>
+          </Link>
+        ) : (
+          <h2>{daysNames[props.day]}</h2>
+        )}
+        {eventList.map(({ type, id }) => {
+          const item = state.source[type][id];
+          if (item.acf.day == props.day)
+            return <EventListItem key={item.id} item={item} />;
+        })}
+      </div>
     </Day>
   );
 }
@@ -99,4 +103,4 @@ const Day = styled.div`
     {
       padding: 0 0 20px 0;
     }
-`
+`;

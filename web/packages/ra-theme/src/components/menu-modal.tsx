@@ -19,26 +19,27 @@ function MenuModal({ ...props }) {
         {isThereLinks &&
           menu.map(([name, link]) => {
             const data = state.source.get(state.router.link);
-            const isCurrentPage = (data.route === link || data.route.slice(0, data.route.length - 1) === link);
-    
+            const isCurrentPage =
+              data.route === link ||
+              data.route.slice(0, data.route.length - 1) === link;
+
             return (
-              <MenuLink 
+              <MenuLink
                 key={name}
                 link={link}
                 aria-current={isCurrentPage ? "page" : undefined}
               >
-                  {name}
+                {name}
               </MenuLink>
             );
-          }
-        )}
+          })}
       </MenuContent>
     </div>
   );
 }
 
 const MenuContent = styled.div`
-  background-color: #3C3C4C;
+  background-color: #3c3c4c;
   width: 200px;
   height: 100vh;
   overflow: hidden auto;
@@ -65,7 +66,7 @@ const MenuLink = styled(Link)`
   &:hover,
   &:focus {
     background-color: #6aba9c;
-    color: #F7F5F6;
+    color: #f7f5f6;
   }
 
   // /* styles for active link */

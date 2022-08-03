@@ -27,7 +27,6 @@ interface ListProps {
  * @returns React component.
  */
 function EventList({ data }: ListProps): JSX.Element {
-
   return (
     <Container>
       <div>
@@ -36,49 +35,23 @@ function EventList({ data }: ListProps): JSX.Element {
         </Title>
 
         <Days>
-          <EventDay
-            data={data}
-            day="monday"
-            className=""
-            onHome={false}
-          />
-          <EventDay
-            data={data}
-            day="tuesday"
-            className=""
-            onHome={false}
-          />
+          <EventDay data={data} day="monday" className="" onHome={false} />
+          <EventDay data={data} day="tuesday" className="" onHome={false} />
           <EventDay
             data={data}
             day="wednesday"
             className="right"
             onHome={false}
           />
-          <EventDay
-            data={data}
-            day="thursday"
-            className=""
-            onHome={false}
-          />
-          <EventDay
-            data={data}
-            day="friday"
-            className=""
-            onHome={false}
-          />
+          <EventDay data={data} day="thursday" className="" onHome={false} />
+          <EventDay data={data} day="friday" className="" onHome={false} />
           <EventDay
             data={data}
             day="saturday"
             className="right"
             onHome={false}
           />
-          <EventDay
-            data={data}
-            day="sunday"
-            className=""
-            onHome={false}
-          />
-
+          <EventDay data={data} day="sunday" className="" onHome={false} />
         </Days>
       </div>
     </Container>
@@ -94,24 +67,20 @@ const Container = styled.section`
   margin-left: auto;
   margin-right: auto;
 
-  & > div
-  {
+  & > div {
     padding-left: 30px;
     padding-right: 30px;
   }
 
-  @media (max-width: 750px)
-  {
-    & > div
-    {
+  @media (max-width: 750px) {
+    & > div {
       padding: 0;
     }
   }
 `;
 
 const Title = styled.div`
-  & > h1
-  {
+  & > h1 {
     color: #6aba9c;
     background-color: #3c3c4c;
     border-bottom: solid 2px #6aba9c;
@@ -120,10 +89,10 @@ const Title = styled.div`
     margin-bottom: 15px;
     font-weight: lighter;
   }
-`
+`;
 
 const Days = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-`
+`;
