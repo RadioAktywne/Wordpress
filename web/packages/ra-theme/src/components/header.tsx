@@ -5,7 +5,7 @@ import MobileMenu from "./menu";
 import Socials from "./socials";
 import { Packages } from "../../types";
 
-import Logo from "../img/ra-logof.svg";
+import Logo from "../img/ra-logo.svg";
 
 /**
  * The header of the site, logo, socials and the nav bar.

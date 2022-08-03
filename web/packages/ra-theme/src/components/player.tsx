@@ -5,8 +5,8 @@ import PlayerBackground from "../img/bg/studio.jpg";
 
 import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
-import Unmute from "../img/icons/guosnik-mute-white.svg";
-import Mute from "../img/icons/guosnik-white.svg";
+import Unmute from "../img/icons/speaker-muted-white.svg";
+import Mute from "../img/icons/speaker-white.svg";
 
 /**
  * Radio player.
