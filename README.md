@@ -7,7 +7,7 @@ RadioAktywne website
 Run from top directory:
 
 ```sh
-docker-compose up
+docker compose up
 ```
 
 By default, website is at [localhost:3000](http://localhost:3000),
