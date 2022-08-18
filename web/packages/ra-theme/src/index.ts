@@ -4,6 +4,7 @@ import image from "@frontity/html2react/processors/image";
 import iframe from "@frontity/html2react/processors/iframe";
 import link from "@frontity/html2react/processors/link";
 import { postTypeHandler } from "@frontity/wp-source/src/libraries/handlers";
+import ReactPlayer from "react-player";
 
 const raThemeTypeScript: RaThemeTypeScript = {
   name: "@frontity/ra-theme",
@@ -22,11 +23,26 @@ const raThemeTypeScript: RaThemeTypeScript = {
     theme: {
       autoPrefetch: "in-view",
       title: "Trwa ładowanie...",
-      volume: 1,
-      playing: false,
-      muted: false,
       menu: [],
       isMobileMenuOpen: false,
+    },
+
+    raplayer: {
+      playing: false,
+      srcUrl: "",
+      muted: false,
+      volume: 1,
+      playerHandle: undefined,
+    },
+
+    recplayer: {
+      playing: false,
+      srcUrl: "",
+      openedRec: -1,
+      muted: false,
+      seeking: false,
+      played: 0,
+      playerHandle: undefined,
     },
   },
 
@@ -53,6 +69,37 @@ const raThemeTypeScript: RaThemeTypeScript = {
             endpoints: ["pages"],
           }),
         });
+      },
+    },
+
+    raplayer: {
+      playerPlay: ({ state }) => {
+        state.recplayer.playing = false;    //turn off recording
+        state.recplayer.openedRec = -1
+
+        state.raplayer.playing = true;      //turn on radio
+      },
+      playerStop: ({ state }) => {
+        state.raplayer.playing = false;
+        state.raplayer.srcUrl = "";
+      },
+    },
+
+    recplayer: {
+      playerPlay: ({ state }) => {
+        state.raplayer.playing = false;     //turn off radio
+        state.raplayer.srcUrl = "";
+
+        state.recplayer.playing = true;     //turn on recording
+      },
+      playerPause: ({ state }) => {
+        state.recplayer.playing = false;
+      },
+      startSeeking: ({state}) => {
+        state.recplayer.seeking = true;
+      },
+      stopSeeking: ({state}) => {
+        state.recplayer.seeking = false;
       },
     },
   },

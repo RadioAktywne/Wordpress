@@ -1,4 +1,5 @@
 import { connect, css, Global, styled, useConnect } from "frontity";
+import { useContext } from "react";
 import Switch from "@frontity/components/switch";
 import { isError, isHome, isPage } from "@frontity/source";
 import Header from "./header";
@@ -45,9 +46,9 @@ import { constants } from "buffer";
 function Theme() {
   const { state } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
-  let ra; //player handle
-  const raReset = function () {
-    ra.seekTo(1, "fraction");
+
+  const handleProgres = (played) => {
+    state.recplayer.played = played
   };
 
   return (
@@ -70,14 +71,35 @@ function Theme() {
 
       {/* radio player needs to be on every page - thats why its here */}
       <ReactPlayer
-        url="https://listen.radioaktywne.pl:8443/raogg"
-        playing={state.theme.playing}
-        volume={state.theme.volume}
+        playing={state.raplayer.playing}
+        url={state.raplayer.srcUrl}
+        volume={state.raplayer.volume}
         width={0}
         height={0}
-        ref={(ref) => (ra = ref)} //lets us to seekTo
-        onPlay={raReset} //so its live no matter what
+        // ref={(ref) => (state.raplayer.playerHandle = ref)}
+        config={{
+          file: {
+            forceAudio: true,
+          },
+        }}
       />
+
+      {/* same with recording player */}
+      <ReactPlayer
+        playing={state.recplayer.playing}
+        url={state.recplayer.srcUrl}
+        volume={1}
+        width={0}
+        height={0}
+        // ref={(ref) => (state.recplayer.playerHandle = ref)}
+        onProgress={(e) => handleProgres(e.played)}
+        config={{
+          file: {
+            forceAudio: true,
+          },
+        }}
+      />
+
 
       <Main>
         {/* @ts-ignore */}

@@ -1,8 +1,9 @@
 import { connect, styled, useConnect } from "frontity";
+import { useContext } from "react";
 import Link from "./link";
 import { Packages } from "../../types";
-import PlayerBackground from "../img/bg/studio.jpg";
 
+import PlayerBackground from "../img/bg/studio.jpg";
 import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
@@ -13,27 +14,27 @@ import Mute from "../img/icons/speaker-white.svg";
  *
  * @returns The player element.
  */
-
-//radio component
 function Player(props) {
-  const { state } = useConnect<Packages>();
+  const { state, actions } = useConnect<Packages>();
 
-  //radio funtions - should be moved to another file
-  const raToggle = function () {
-    state.theme.playing = !state.theme.playing;
+  const playerToggle = function () {
+    if (state.raplayer.playing) actions.raplayer.playerStop();  //erases src, so that it will stop, not only pause
+    else {
+      //now we set src back, but with some random number - it wont play from cache B)
+      state.raplayer.srcUrl = "https://listen.radioaktywne.pl:8443/raogg?c=" + Math.floor(Math.random() * 10000);
+      //and play the stream
+      actions.raplayer.playerPlay();
+    }
   };
 
-  const raVolume = function (vol) {
-    state.theme.volume = vol;
-
-    if (vol == 0) state.theme.muted = true;
-    else state.theme.muted = false;
-
+  const setVolume = function (vol) {
+    state.raplayer.volume = vol;
+    state.raplayer.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
     updateVolumeSlider();
   };
 
-  const raMuteToggle = function () {
-    raVolume(state.theme.muted ? 1 : 0);
+  const muteToggle = function () {
+    setVolume(state.raplayer.muted ? 1 : 0);
   };
 
   const updateVolumeSlider = function () {
@@ -43,9 +44,9 @@ function Player(props) {
       .style.setProperty(
         "--track-bg",
         "linear-gradient(90deg, white 0%, white " +
-          state.theme.volume * 100 +
+          state.raplayer.volume * 100 +
           "%, #3c3c4c " +
-          state.theme.volume * 100 +
+          state.raplayer.volume * 100 +
           "%, #3c3c4c 100%)"
       );
   };
@@ -91,8 +92,8 @@ function Player(props) {
             </div>
             <PlayerContainer onLoad={updateVolumeSlider}>
               <div id="ra-left">
-                <div id="ra-play" onClick={raToggle}>
-                  <img src={state.theme.playing ? Pause : Play} />
+                <div id="ra-play" onClick={playerToggle}>
+                  <img src={state.raplayer.playing ? Pause : Play} />
                 </div>
 
                 <div id="rds">
@@ -102,8 +103,8 @@ function Player(props) {
               </div>
 
               <div id="ra-right">
-                <div id="ra-mute" onClick={raMuteToggle}>
-                  <img src={state.theme.muted ? Unmute : Mute} />
+                <div id="ra-mute" onClick={muteToggle}>
+                  <img src={state.raplayer.muted ? Unmute : Mute} />
                 </div>
 
                 <div id="ra-volume-container">
@@ -113,8 +114,8 @@ function Player(props) {
                     min="0"
                     max="1" //cause player has such range
                     step=".05"
-                    value={state.theme.volume}
-                    onChange={(e) => raVolume(parseFloat(e.target.value))}
+                    value={state.raplayer.volume}
+                    onChange={(e) => setVolume(parseFloat(e.target.value))}
                   />
                 </div>
               </div>

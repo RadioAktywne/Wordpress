@@ -3,6 +3,8 @@ import { AutoPrefetch } from "@frontity/components/link/types";
 import Html2React from "@frontity/html2react/types";
 import Router from "@frontity/router/types";
 import Source from "@frontity/source/types";
+import ReactPlayer from "react-player";
+import { ReactDOM } from "react";
 
 /**
  * A Frontity starter theme designed to learn Frontity.
@@ -37,13 +39,10 @@ interface RaThemeTypeScript extends Package {
        */
       autoPrefetch: AutoPrefetch;
 
+      /**
+       * The title of current song
+       */
       title: string;
-
-      volume: number;
-
-      playing: boolean;
-
-      muted: boolean;
 
       /**
        * The menu of the theme. Expresed as an array of arrays that contain the
@@ -56,6 +55,40 @@ interface RaThemeTypeScript extends Package {
        */
       isMobileMenuOpen: boolean;
     };
+
+    /**
+     * Radio Player namespace.
+     */
+    raplayer: {
+      playing: boolean;     //is radio player playing
+      srcUrl: string;       //src of current radio stream
+      muted: boolean;       //is radio player muted
+      volume: number;       //volume of radio player
+
+      /**
+       * handle of player object, so that we might use functions on it.
+       * Currently not used, but generally pretty useful
+       */
+      playerHandle: object; 
+    }
+
+    /**
+     * Recording Player namespace.
+     */
+     recplayer: {
+      playing: boolean;     //is recording player playing
+      srcUrl: string;       //src of current recording
+      openedRec: number;    //id of current recording
+      muted: boolean;       //is recording player muted
+      seeking: boolean;
+      played: number;
+      
+      /**
+       * handle of player object, so that we might use functions on it.
+       * Currently not used, but generally pretty useful
+       */
+      playerHandle: object;
+    }
   };
 
   /**
@@ -81,6 +114,18 @@ interface RaThemeTypeScript extends Package {
        */
       init: Action<Packages>;
     };
+
+    raplayer: {
+      playerPlay: Action<Packages>;
+      playerStop: Action<Packages>;
+    };
+
+    recplayer: {
+      playerPlay: Action<Packages>;
+      playerPause: Action<Packages>;
+      startSeeking: Action<Packages>;
+      stopSeeking: Action<Packages>;
+    }
   };
 }
 
