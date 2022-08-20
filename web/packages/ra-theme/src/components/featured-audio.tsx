@@ -1,12 +1,13 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import React, { useEffect } from "react";
 import useMedia from "../hooks/useMedia";
 import Loading from "./loading";
 import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
 import Mute from "../img/icons/speaker-white.svg";
+import React from 'react';
+import {PlayerContext} from "./index"
 
 /**
  * Props of the {@link FeaturedAudio} component.
@@ -34,56 +35,65 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
     status,
     value: [media],
   } = useMedia([id]);
+  const playerHandle = React.useContext(PlayerContext);  
+
 
   if (status === "pending") return <Loading />;
   if (!media) return null;
 
-  //player funtions
+  state.recplayer.srcUrl = media.source_url;                      //set source url of media
+  state.recplayer.duration = playerHandle.current.getDuration();  //save duration of current media in state
+  actions.recplayer.updateSeekSliders();                          //update seek sliders
+  actions.recplayer.updateProgressTexts();                        //and progress texts
+
   const recToggle = function () {
     if(state.recplayer.srcUrl != media.source_url) {
-      actions.raplayer.playerStop();
-      
-      state.recplayer.srcUrl = media.source_url;
+      state.recplayer.srcUrl = media.source_url;                      //set source url of media
+      state.recplayer.duration = playerHandle.current.getDuration();  //save duration of current media in state
+      actions.recplayer.updateSeekSliders();                          //update seek sliders
+      actions.recplayer.updateProgressTexts();                        //and progress texts
     }
 
     state.recplayer.playing ? actions.recplayer.playerPause() : actions.recplayer.playerPlay();
   };
 
   /**
-   * that's what happens when user uses the seek bar. Not really working, idk why
-   * need some help
+   * when user uses seek slider
    */
   const handleChange = function(newProgress) {
-    // state.recplayer.playerHandle.seekTo(parseFloat(newProgress));
-    // state.recplayer.played = newProgress;
-    updateSeekSlider();
-  }
-
-  const recMuteToggle = function() {
-    state.recplayer.muted = !state.recplayer.muted;
-  }
-
-  //dont touch it, it might explode. And, btw, it makes seek input cooler 
-  const updateSeekSlider = function () {
-    const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
-
+    playerHandle.current.seekTo(newProgress); //seek
+    
+    const sliders = document.querySelectorAll<HTMLElement>(".rec-seek"); //update the seek slider
     for(let i = 0; i < sliders.length; i++) {
       sliders[i].style.setProperty(
         "--track-bg",
         "linear-gradient(90deg, #6aba9c 0%, #6aba9c " +
-          state.recplayer.played * 100 +
+          newProgress * 100 +
           "%, white " +
-          state.recplayer.played * 100 +
+          newProgress * 100 +
           "%, white 100%)"
       );
     }
-  };
+
+    state.recplayer.played = newProgress;
+    actions.recplayer.updateProgressTexts();                        //update the progress text
+  }
+
+  /**
+   * mute/unmute recording
+   */
+  const recMuteToggle = function() {
+    state.recplayer.muted = !state.recplayer.muted;
+  }
 
   return (
     <Container isAmp={state.frontity.mode === "amp"}>
       <div className="rec-play" onClick={recToggle}>
         <img src={state.recplayer.playing ? Pause : Play} />
       </div>
+
+      <div className="progress-text"></div>
+      {/* <div className="progress-text">{Math.floor(state.recplayer.played * state.recplayer.duration)} / {Math.floor(state.recplayer.duration)}</div> */}
 
       <div id="rec-seek-container">
         <input
@@ -136,8 +146,14 @@ const Container = styled.div<ContainerProps>`
     margin-left: 15px;
   }
 
+  .progress-text
+  {
+    white-space: nowrap;
+    margin-right: 10px;
+  }
 
-  //range input styles (aka seek bar)
+
+  //range input styles (aka seek slider)
   #rec-seek-container
   {
     display: flex;

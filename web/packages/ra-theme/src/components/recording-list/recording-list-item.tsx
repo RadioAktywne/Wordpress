@@ -1,6 +1,5 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "../link";
-import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
 import { RecordingEntity } from "../../data";
 import Arrow from "../../img/icons/arrow.svg";
@@ -27,14 +26,36 @@ interface ItemProps {
  */
 function RecordingListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  const author = state.source.author[item.author];
-  const date = new Date(item.date);
 
+  /**
+   * lists of sliders and progressTexts - will be accessed when a recording is opened
+   */
+  const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
+  const progressTexts = document.querySelectorAll<HTMLElement>(".progress-text");
+
+  /**
+   * this happens when user clicks on some recording from list:
+   *  pause current recording
+   *  open ours by saving its id in state
+   *  set sliders to white
+   *  set progress texts to 0
+   */
   const openRecording = function () {
-    state.recplayer.openedRec = item.id;
     state.recplayer.playing = false;
+    state.recplayer.openedRec = item.id;
+
+    for(let i = 0; i < sliders.length; i++)
+      sliders[i].style.setProperty("--track-bg", "white");
+
+    for(let i = 0; i < progressTexts.length; i++) {
+      progressTexts[i].textContent = "00:00 / ??:??";
+    }
   };
 
+  /**
+   * check if a recording is open.
+   * @returns a boolean
+   */
   function isOpen() {
     return state.recplayer.openedRec == item.id;
   }

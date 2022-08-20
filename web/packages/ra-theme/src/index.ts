@@ -32,7 +32,6 @@ const raThemeTypeScript: RaThemeTypeScript = {
       srcUrl: "",
       muted: false,
       volume: 1,
-      playerHandle: undefined,
     },
 
     recplayer: {
@@ -41,8 +40,8 @@ const raThemeTypeScript: RaThemeTypeScript = {
       openedRec: -1,
       muted: false,
       seeking: false,
-      played: 0,
-      playerHandle: undefined,
+      played: 0.0,
+      duration: 0.0,
     },
   },
 
@@ -80,7 +79,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
         state.raplayer.playing = true;      //turn on radio
       },
       playerStop: ({ state }) => {
-        state.raplayer.playing = false;
+        state.raplayer.playing = false;     //turn off recording
         state.raplayer.srcUrl = "";
       },
     },
@@ -101,6 +100,37 @@ const raThemeTypeScript: RaThemeTypeScript = {
       stopSeeking: ({state}) => {
         state.recplayer.seeking = false;
       },
+      updateSeekSliders: ({state}) => {
+        const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
+
+        if(state.recplayer.playing)
+          for(let i = 0; i < sliders.length; i++) {   //sets gradient which looks like range input
+            sliders[i].style.setProperty(
+              "--track-bg",
+              "linear-gradient(90deg, #6aba9c 0%, #6aba9c " +
+                state.recplayer.played * 100 +
+                "%, white " +
+                state.recplayer.played * 100 +
+                "%, white 100%)"
+            );
+          }
+      },
+      updateProgressTexts: ({state}) => {
+        const secsToTime = function(total)            //for example 80 -> 01:20
+        {
+          const minutes = Math.floor(total/60) >= 10 ? Math.floor(total/60) : ('0' + Math.floor(total/60));
+          const seconds = Math.floor(total)%60 >= 10 ? Math.floor(total)%60 : ('0' + Math.floor(total)%60);
+          return minutes + ":" + seconds;
+        }
+      
+        const progressTexts = document.querySelectorAll<HTMLElement>(".progress-text");
+        for(let i = 0; i < progressTexts.length; i++) { //sets progress texts next to play/pause buttons
+          progressTexts[i].textContent = 
+            secsToTime(state.recplayer.played * state.recplayer.duration) 
+            + " / " 
+            + secsToTime(state.recplayer.duration);
+        }
+      }
     },
   },
   libraries: {

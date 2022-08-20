@@ -64,12 +64,6 @@ interface RaThemeTypeScript extends Package {
       srcUrl: string;       //src of current radio stream
       muted: boolean;       //is radio player muted
       volume: number;       //volume of radio player
-
-      /**
-       * handle of player object, so that we might use functions on it.
-       * Currently not used, but generally pretty useful
-       */
-      playerHandle: object; 
     }
 
     /**
@@ -80,14 +74,9 @@ interface RaThemeTypeScript extends Package {
       srcUrl: string;       //src of current recording
       openedRec: number;    //id of current recording
       muted: boolean;       //is recording player muted
-      seeking: boolean;
-      played: number;
-      
-      /**
-       * handle of player object, so that we might use functions on it.
-       * Currently not used, but generally pretty useful
-       */
-      playerHandle: object;
+      seeking: boolean;     //tells us if the user is currently using the seek bar
+      played: number;       //current progress
+      duration: number;     //duration of recording
     }
   };
 
@@ -125,6 +114,8 @@ interface RaThemeTypeScript extends Package {
       playerPause: Action<Packages>;
       startSeeking: Action<Packages>;
       stopSeeking: Action<Packages>;
+      updateSeekSliders: Action<Packages>;
+      updateProgressTexts: Action<Packages>;  //updated progress texts - those placed next to Play/Pause button
     }
   };
 }
