@@ -41,7 +41,6 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
   if (status === "pending") return <Loading />;
   if (!media) return null;
 
-  state.recplayer.srcUrl = media.source_url;                      //set source url of media
   state.recplayer.duration = playerHandle.current.getDuration();  //save duration of current media in state
   actions.recplayer.updateSeekSliders();                          //update seek sliders
   actions.recplayer.updateProgressTexts();                        //and progress texts
