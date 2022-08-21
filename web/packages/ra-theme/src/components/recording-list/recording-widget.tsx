@@ -13,6 +13,7 @@ const RecordingWidget = () => {
   }, []);
 
   const dataPost = state.source.get("/recordings");
+  let numberOfRecordings = 6; //will be decrementet each time - when it's 0, we already have 6 recordings
 
   return dataPost.isReady ? (
     <Container>
@@ -26,7 +27,11 @@ const RecordingWidget = () => {
         {dataPost.items.map(({ type, id }) => {
           const item = state.source[type][id];
           // Render one RecordingListItem component for each one.
-          return <RecordingListItem key={item.id} item={item} />;
+          if(numberOfRecordings)
+          {
+            numberOfRecordings--;
+            return <RecordingListItem key={item.id} item={item} />;
+          }
         })}
       </div>
     </Container>
