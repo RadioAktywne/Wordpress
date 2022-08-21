@@ -34,13 +34,15 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
 
   /**
    * this happens when user clicks on some recording from list:
-   *  pause current recording
+   *  stop current recording
    *  open ours by saving its id in state
    *  set progress text to 0
    *  set sliders to white
    */
   const openRecording = function () {
+    state.recplayer.srcUrl = "";
     state.recplayer.playing = false;
+    
     state.recplayer.openedRec = item.id;
 
     if(state.recplayer.durations[item.id] != undefined)
