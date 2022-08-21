@@ -47,25 +47,37 @@ function Theme() {
   const data = state.source.get(state.router.link);
 
   /**
-   * Playing recordings:
-   * when recording progresses, update:
-   *  played (recording progress) state
-   *  seek sliders
-   *  progress texts (next to play/pause button)
-   * when recording ends, 
-   *  change play icon to pause
-   *  update seek slider to full (without it there will be a little white bar)
+   * handle for ReactPlayer object (right now undefinied)
    */
-  const recplayer = React.useRef<ReactPlayer>(null); //handle for ReactPlayer object (right now undefinied)
+  const recplayer = React.useRef<ReactPlayer>(null); 
+
+  /**
+   * when recording progresses
+   *  update played (recording progress) state
+   *  update seek sliders if user isnt seeking
+   *  if we dont know duration of current recording, save it 
+   *  update progress texts (next to play/pause button)
+   */
   const handleProgress = (played) => {               
     state.recplayer.played = played;
+
     if(!state.recplayer.seeking)
       actions.recplayer.updateSeekSliders();
 
-    actions.recplayer.updateProgressTexts();
+    if(state.recplayer.durations[state.recplayer.openedRec] == undefined)
+      state.recplayer.durations[state.recplayer.openedRec] = recplayer.current.getDuration();  
+
+    actions.recplayer.updateProgressText();
   };
+
+  /**
+   * when recording ends, 
+   *  change play icon to pause
+   *  update seek slider to full (without that, there will be a little white bar)
+   */
   const recordingEnded = function() {
     actions.recplayer.playerPause();
+
     const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
     for(let i = 0; i < sliders.length; i++) {
       sliders[i].style.setProperty(
@@ -94,7 +106,7 @@ function Theme() {
         <Header />
       </HeadContainer>
 
-      {/* radio player needs to be on every page - thats why its here */}
+      {/* radio player needs to be on each page - thats why its here */}
       <ReactPlayer
         playing={state.raplayer.playing}
         url={state.raplayer.srcUrl}
@@ -117,7 +129,7 @@ function Theme() {
         width={0}
         height={0}
         ref={recplayer}
-        progressInterval={10}
+        progressInterval={50}
         onProgress={(e) => {
           handleProgress(e.played);
         }}

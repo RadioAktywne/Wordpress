@@ -76,7 +76,7 @@ interface RaThemeTypeScript extends Package {
       muted: boolean;       //is recording player muted
       seeking: boolean;     //tells us if the user is currently using the seek bar
       played: number;       //current progress
-      duration: number;     //duration of recording
+      durations: object;    //durations of recordings
     }
   };
 
@@ -115,7 +115,7 @@ interface RaThemeTypeScript extends Package {
       startSeeking: Action<Packages>;
       stopSeeking: Action<Packages>;
       updateSeekSliders: Action<Packages>;
-      updateProgressTexts: Action<Packages>;  //updated progress texts - those placed next to Play/Pause button
+      updateProgressText: Action<Packages>;  //updated progress texts - those placed next to Play/Pause button
     }
   };
 }

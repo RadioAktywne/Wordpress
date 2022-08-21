@@ -37,11 +37,11 @@ const raThemeTypeScript: RaThemeTypeScript = {
     recplayer: {
       playing: false,
       srcUrl: "",
-      openedRec: -1,
+      openedRec: -100,
       muted: false,
       seeking: false,
       played: 0.0,
-      duration: 0.0,
+      durations: [],
     },
   },
 
@@ -115,7 +115,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
             );
           }
       },
-      updateProgressTexts: ({state}) => {
+      updateProgressText: ({state}) => {
         const secsToTime = function(total)            //for example 80 -> 01:20
         {
           const minutes = Math.floor(total/60) >= 10 ? Math.floor(total/60) : ('0' + Math.floor(total/60));
@@ -123,13 +123,10 @@ const raThemeTypeScript: RaThemeTypeScript = {
           return minutes + ":" + seconds;
         }
       
-        const progressTexts = document.querySelectorAll<HTMLElement>(".progress-text");
-        for(let i = 0; i < progressTexts.length; i++) { //sets progress texts next to play/pause buttons
-          progressTexts[i].textContent = 
-            secsToTime(state.recplayer.played * state.recplayer.duration) 
-            + " / " 
-            + secsToTime(state.recplayer.duration);
-        }
+        document.getElementById("prog-text-" + state.recplayer.openedRec).innerText = 
+          secsToTime(state.recplayer.played * state.recplayer.durations[state.recplayer.openedRec]) 
+          + " / " 
+          + secsToTime(state.recplayer.durations[state.recplayer.openedRec]);
       }
     },
   },

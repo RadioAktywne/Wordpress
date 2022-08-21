@@ -35,22 +35,22 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
     status,
     value: [media],
   } = useMedia([id]);
-  const playerHandle = React.useContext(PlayerContext);  
-
 
   if (status === "pending") return <Loading />;
   if (!media) return null;
 
-  state.recplayer.duration = playerHandle.current.getDuration();  //save duration of current media in state
-  actions.recplayer.updateSeekSliders();                          //update seek sliders
-  actions.recplayer.updateProgressTexts();                        //and progress texts
+  /**
+   * ReactPlayer handle from context - lets us to access ReactPlayer object
+   */
+  const playerHandle = React.useContext(PlayerContext);  
 
+  /**
+   * play/pause recording
+   *  
+   */
   const recToggle = function () {
     if(state.recplayer.srcUrl != media.source_url) {
-      state.recplayer.srcUrl = media.source_url;                      //set source url of media
-      state.recplayer.duration = playerHandle.current.getDuration();  //save duration of current media in state
-      actions.recplayer.updateSeekSliders();                          //update seek sliders
-      actions.recplayer.updateProgressTexts();                        //and progress texts
+      state.recplayer.srcUrl = media.source_url;
     }
 
     state.recplayer.playing ? actions.recplayer.playerPause() : actions.recplayer.playerPlay();
@@ -75,7 +75,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
     }
 
     state.recplayer.played = newProgress;
-    actions.recplayer.updateProgressTexts();                        //update the progress text
+    actions.recplayer.updateProgressText();                        //update the progress text
   }
 
   /**
@@ -91,8 +91,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
         <img src={state.recplayer.playing ? Pause : Play} />
       </div>
 
-      <div className="progress-text"></div>
-      {/* <div className="progress-text">{Math.floor(state.recplayer.played * state.recplayer.duration)} / {Math.floor(state.recplayer.duration)}</div> */}
+      <div className="progress-text" id={"prog-text-" + (id - 1)}>00:00 / ??:??</div>
 
       <div id="rec-seek-container">
         <input

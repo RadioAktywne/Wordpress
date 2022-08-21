@@ -28,28 +28,26 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   /**
-   * lists of sliders and progressTexts - will be accessed when a recording is opened
+   * lists of sliders - will be accessed when a recording is opened
    */
   const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
-  const progressTexts = document.querySelectorAll<HTMLElement>(".progress-text");
 
   /**
    * this happens when user clicks on some recording from list:
    *  pause current recording
    *  open ours by saving its id in state
+   *  set progress text to 0
    *  set sliders to white
-   *  set progress texts to 0
    */
   const openRecording = function () {
     state.recplayer.playing = false;
     state.recplayer.openedRec = item.id;
 
+    if(state.recplayer.durations[item.id] != undefined)
+      document.getElementById("prog-text-" + item.id).innerText = "00:00 / " + secsToTime(state.recplayer.durations[item.id]);
+    
     for(let i = 0; i < sliders.length; i++)
       sliders[i].style.setProperty("--track-bg", "white");
-
-    for(let i = 0; i < progressTexts.length; i++) {
-      progressTexts[i].textContent = "00:00 / ??:??";
-    }
   };
 
   /**
@@ -58,6 +56,16 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
    */
   function isOpen() {
     return state.recplayer.openedRec == item.id;
+  }
+
+  /**
+   * convert seconds (number, eg. 80) to minutes and seconds (string, eg. 01:20)
+   */
+  const secsToTime = function(total)
+  {
+    const minutes = Math.floor(total/60) >= 10 ? Math.floor(total/60) : ('0' + Math.floor(total/60));
+    const seconds = Math.floor(total)%60 >= 10 ? Math.floor(total)%60 : ('0' + Math.floor(total)%60);
+    return minutes + ":" + seconds;
   }
 
   return (
