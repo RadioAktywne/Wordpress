@@ -49,7 +49,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
   return (
     <Container>
       <Title onClick={openRecording} className={shouldBeOpened() ? "hidden" : ""}>
-        {item.title.rendered}
+        {item.title.rendered.replace(/&#8211;/g, '-')}
       </Title>
 
       <FeaturedAudio id={item.acf.file} />
