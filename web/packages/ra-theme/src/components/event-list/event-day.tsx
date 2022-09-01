@@ -2,6 +2,7 @@ import { connect, decode, styled, useConnect } from "frontity";
 import EventListItem from "./event-list-item";
 import Link from "../link";
 import { Packages } from "../../../types";
+import { isFunction } from "util";
 
 const daysNames = {
   monday: "Poniedziałek",
@@ -14,24 +15,50 @@ const daysNames = {
 };
 
 const isEarlier = function (a, b) {
-  return parseInt(a.acf.start_time.substring(0, 2)) <
-    parseInt(b.acf.start_time.substring(0, 2)) ||
-    (parseInt(a.acf.start_time.substring(0, 2)) ==
-      parseInt(b.acf.start_time.substring(0, 2)) &&
-      parseInt(a.acf.start_time.substring(3, 2)) <
-        parseInt(b.acf.start_time.substring(3, 2)))
+  return (
+    parseInt(a.acf.start_time.substring(0, 2)) < parseInt(b.acf.start_time.substring(0, 2))
+    ||
+    (
+      parseInt(a.acf.start_time.substring(0, 2)) == parseInt(b.acf.start_time.substring(0, 2)) 
+      &&
+      parseInt(a.acf.start_time.substring(3, 2)) < parseInt(b.acf.start_time.substring(3, 2))
+    )
     ? -1
-    : 1;
+    : 1);
 };
 
 function EventDay(props) {
   const { state } = useConnect<Packages>();
 
-  const eventList = props.data.items.map(
-    ({ type, id }) => state.source[type][id]
+  // const eventList = props.data.items.map(
+  //   ({ type, id }) => {
+  //       const item = state.source[type][id];
+  //       if(item.acf.day == props.day)
+  //         return item;
+  //       else
+  //         return undefined;
+  //   }
+  // );
+
+  // for(let i = 0; i < eventList.length; i++)
+  // {
+  //   const item = state.source[eventList[i].type][eventList[i].id];
+  //   if(item.acf.dat !== props.day)
+  //     console.log("test");
+  //   //   delete eventList[i];
+  // }
+
+  let eventList = [];
+  props.data.items.map(
+    ({ type, id }) => {
+        const item = state.source[type][id];
+        if(item.acf.day == props.day)
+          eventList.push(item);
+    }
   );
 
-  eventList.sort(isEarlier);
+  if(eventList.length > 1)
+    eventList.sort(isEarlier);
 
   return (
     <Day>
@@ -45,8 +72,7 @@ function EventDay(props) {
         )}
         {eventList.map(({ type, id }) => {
           const item = state.source[type][id];
-          if (item.acf.day == props.day)
-            return <EventListItem key={item.id} item={item} />;
+          return <EventListItem key={item.id} item={item} />;
         })}
       </div>
     </Day>
