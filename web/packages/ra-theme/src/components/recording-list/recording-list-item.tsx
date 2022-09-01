@@ -54,7 +54,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
 
       <FeaturedAudio id={item.acf.file} />
 
-      <BackButton onClick={openRecording}>
+      <BackButton onClick={() => {if(item.id !== state.recplayer.openedRec) openRecording()}}>
         <Link link={item.link}>
           <span className="showMore">Więcej...</span>
           <img src={Arrow} alt="pokaż więcej" />

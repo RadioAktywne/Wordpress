@@ -72,14 +72,12 @@ function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
 export default connect(FeaturedImage);
 
 const Container = styled.div<ContainerProps>`
-  margin-top: 16px;
-  height: 300px;
   ${({ isAmp }) => isAmp && "position: relative;"};
+  height: 100%;
 `;
 
 const StyledImage = styled(Image)`
   display: block;
-  height: 100%;
-  width: 100%;
   object-fit: cover;
+  height: 100%;
 `;
