@@ -1,4 +1,4 @@
-import { connect, styled, useConnect } from "frontity";
+import { connect, css, styled, useConnect } from "frontity";
 import { useContext } from "react";
 import Link from "./link";
 import { Packages } from "../../types";
@@ -18,10 +18,13 @@ function Player(props) {
   const { state, actions } = useConnect<Packages>();
 
   const playerToggle = function () {
-    if (state.raplayer.playing) actions.raplayer.playerStop();  //erases src, so that it will stop, not only pause
+    if (state.raplayer.playing)
+      actions.raplayer.playerStop(); //erases src, so that it will stop, not only pause
     else {
       //now we set src back, but with some random number - it wont play from cache B)
-      state.raplayer.srcUrl = "https://listen.radioaktywne.pl:8443/raogg?c=" + Math.floor(Math.random() * 10000);
+      state.raplayer.srcUrl =
+        "https://listen.radioaktywne.pl:8443/raogg?c=" +
+        Math.floor(Math.random() * 10000);
       //and play the stream
       actions.raplayer.playerPlay();
     }
@@ -30,25 +33,10 @@ function Player(props) {
   const setVolume = function (vol) {
     state.raplayer.volume = vol;
     state.raplayer.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
-    updateVolumeSlider();
   };
 
   const muteToggle = function () {
     setVolume(state.raplayer.muted ? 1 : 0);
-  };
-
-  const updateVolumeSlider = function () {
-    //dont touch it, it might explode. And, btw, it makes volume input cooler
-    document
-      .getElementById("ra-volume")
-      .style.setProperty(
-        "--track-bg",
-        "linear-gradient(90deg, white 0%, white " +
-          state.raplayer.volume * 100 +
-          "%, #3c3c4c " +
-          state.raplayer.volume * 100 +
-          "%, #3c3c4c 100%)"
-      );
   };
 
   //set rds autorefresh
@@ -90,7 +78,7 @@ function Player(props) {
             <div className="player-title">
               <h2>Player</h2>
             </div>
-            <PlayerContainer onLoad={updateVolumeSlider}>
+            <PlayerContainer>
               <div id="ra-left">
                 <div id="ra-play" onClick={playerToggle}>
                   <img src={state.raplayer.playing ? Pause : Play} />
@@ -110,6 +98,13 @@ function Player(props) {
                 <div id="ra-volume-container">
                   <input
                     id="ra-volume"
+                    css={css`
+                    background: linear-gradient(90deg, 
+                      white 0%, 
+                      white ${state.raplayer.volume * 100}%, 
+                      #3c3c4c ${state.raplayer.volume * 100}%, 
+                      #3c3c4c 100%);
+                    `}
                     type="range"
                     min="0"
                     max="1" //cause player has such range
@@ -292,11 +287,6 @@ const PlayerContainer = styled.div`
     -webkit-appearance: none;
     width: 100px;
     height: 11px;
-
-    background: var(
-      --track-bg,
-      linear-gradient(90deg, white 0%, white 100%, #3c3c4c 100%, #3c3c4c 100%)
-    );
 
     cursor: pointer;
     border: 1px solid white;

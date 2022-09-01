@@ -30,7 +30,7 @@ function Home({ data }: HomeProps): JSX.Element {
   return data.isReady ? (
     <BigContainer>
       <Container>
-          <Player />
+        <Player />
         <EventWidget />
         <RecordingWidget />
 

@@ -47,46 +47,26 @@ function Theme() {
   const data = state.source.get(state.router.link);
 
   /**
-   * handle for ReactPlayer object (right now undefinied)
+   * Things related to playing audio (needs to be global)
    */
-  const recplayer = React.useRef<ReactPlayer>(null); 
-
+      // handle for ReactPlayer object (right now undefinied)
+      const recplayer = React.useRef<ReactPlayer>(null);
+      // when recording is ready to be played, show its duration
+      const setDuration = function () {
+        state.recplayer.durations[state.recplayer.openedRec] =
+          recplayer.current.getDuration();
+      };
+      // when recording progresses, update played (recording progress) state
+      const handleProgress = (played) => {
+        state.recplayer.played = played;
+      };
+      // when recording ends, change play icon to pause
+      const recordingEnded = function () {
+        actions.recplayer.playerPause();
+      };
   /**
-   * when recording progresses
-   *  update played (recording progress) state
-   *  update seek sliders if user isnt seeking
-   *  if we dont know duration of current recording, save it 
-   *  update progress texts (next to play/pause button)
+   * End of things related to playing audio (needs to be global)
    */
-  const handleProgress = (played) => {               
-    state.recplayer.played = played;
-
-    if(!state.recplayer.seeking)
-      actions.recplayer.updateSeekSliders();
-
-    if(state.recplayer.durations[state.recplayer.openedRec] == undefined)
-      state.recplayer.durations[state.recplayer.openedRec] = recplayer.current.getDuration();  
-
-    actions.recplayer.updateProgressText();
-  };
-
-  /**
-   * when recording ends, 
-   *  change play icon to pause
-   *  update seek slider to full (without that, there will be a little white bar)
-   */
-  const recordingEnded = function() {
-    actions.recplayer.playerPause();
-
-    const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
-    for(let i = 0; i < sliders.length; i++) {
-      sliders[i].style.setProperty(
-        "--track-bg",
-        "#6aba9c"
-      );
-    }
-  }
-
 
   return (
     <>
@@ -130,6 +110,7 @@ function Theme() {
         height={0}
         ref={recplayer}
         progressInterval={50}
+        onReady={setDuration}
         onProgress={(e) => {
           handleProgress(e.played);
         }}

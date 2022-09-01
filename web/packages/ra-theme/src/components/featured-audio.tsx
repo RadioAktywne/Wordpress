@@ -1,4 +1,4 @@
-import { connect, styled, useConnect } from "frontity";
+import { connect, css, Global, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import useMedia from "../hooks/useMedia";
 import Loading from "./loading";
@@ -6,8 +6,25 @@ import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
 import Mute from "../img/icons/speaker-white.svg";
-import React from 'react';
-import {PlayerContext} from "./index"
+import React from "react";
+import { PlayerContext } from "./index";
+
+/**
+ * Formats time
+ * @param total - integer: total seconds
+ * @returns string: "minutes:seconds"
+ */
+const secsToTime = function (total) {
+  const minutes =
+    Math.floor(total / 60) >= 10
+      ? Math.floor(total / 60)
+      : "0" + Math.floor(total / 60);
+  const seconds =
+    Math.floor(total) % 60 >= 10
+      ? Math.floor(total) % 60
+      : "0" + (Math.floor(total) % 60);
+  return minutes + ":" + seconds;
+};
 
 /**
  * Props of the {@link FeaturedAudio} component.
@@ -36,73 +53,121 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
     value: [media],
   } = useMedia([id]);
 
-  if (status === "pending") return <Loading />;
-  if (!media) return null;
-
   /**
    * ReactPlayer handle from context - lets us to access ReactPlayer object
    */
-  const playerHandle = React.useContext(PlayerContext);  
+  const playerHandle = React.useContext(PlayerContext);
 
   /**
-   * play/pause recording
-   *  
+   * wait until media is loaded
+   * if it doesnt exist, return null
    */
-  const recToggle = function () {
-    if(state.recplayer.srcUrl != media.source_url) {
+  if (status === "pending")
+    return (
+      <LoadingContainer>
+        <Loading />
+      </LoadingContainer>
+    );
+  if (!media) return null;
+
+  /**
+   * those functions help us to listen events of opening and closing recordings.
+   * @returns .hidden class name if a recording is being closed
+   */
+  function openRecording() {
+    if (state.recplayer.isOpened[id - 1] !== true) {
+      state.recplayer.isOpened[id - 1] = true;
       state.recplayer.srcUrl = media.source_url;
     }
 
-    state.recplayer.playing ? actions.recplayer.playerPause() : actions.recplayer.playerPlay();
+    return "";
+  }
+  function closeRecording() {
+    if (state.recplayer.isOpened[id - 1] == true) {
+      state.recplayer.isOpened[id - 1] = false;
+    }
+
+    return "hidden";
+  }
+
+  /**
+   * check if a recording should be opened.
+   * @returns a boolean
+   */
+  function shouldBeOpened() {
+    return state.recplayer.openedRec == id - 1;
+  }
+
+  /**
+   * play/pause recording
+   */
+  const recToggle = function () {
+    state.recplayer.playing
+      ? actions.recplayer.playerPause()
+      : actions.recplayer.playerPlay();
   };
 
   /**
    * when user uses seek slider
    */
-  const handleChange = function(newProgress) {
+  const handleChange = function (newProgress) {
     playerHandle.current.seekTo(newProgress); //seek
-    
-    const sliders = document.querySelectorAll<HTMLElement>(".rec-seek"); //update the seek slider
-    for(let i = 0; i < sliders.length; i++) {
-      sliders[i].style.setProperty(
-        "--track-bg",
-        "linear-gradient(90deg, #6aba9c 0%, #6aba9c " +
-          newProgress * 100 +
-          "%, white " +
-          newProgress * 100 +
-          "%, white 100%)"
-      );
-    }
-
     state.recplayer.played = newProgress;
-    actions.recplayer.updateProgressText();                        //update the progress text
-  }
+  };
 
   /**
    * mute/unmute recording
    */
-  const recMuteToggle = function() {
+  const recMuteToggle = function () {
     state.recplayer.muted = !state.recplayer.muted;
-  }
+  };
 
   return (
-    <Container isAmp={state.frontity.mode === "amp"}>
+    <Container
+      isAmp={state.frontity.mode === "amp"}
+      className={shouldBeOpened() ? openRecording() : closeRecording()}
+    >
+      <Global
+        styles={css`
+          .hidden {
+            display: none !important;
+          }
+        `}
+      />
+
       <div className="rec-play" onClick={recToggle}>
         <img src={state.recplayer.playing ? Pause : Play} />
       </div>
 
-      <div className="progress-text" id={"prog-text-" + (id - 1)}>00:00 / ??:??</div>
+      <div className="progress-text">
+        {state.recplayer.durations[id - 1] !== undefined
+          ? secsToTime(
+              Math.floor(
+                state.recplayer.durations[id - 1] * state.recplayer.played
+              )
+            ) +
+            " / " +
+            secsToTime(Math.floor(state.recplayer.durations[id - 1]))
+          : "00:00 / 00:00"}
+      </div>
 
-      <div id="rec-seek-container">
+      <div className="rec-seek-container">
         <input
           className="rec-seek"
           type="range"
           min={0}
           max={1}
-          step='any'
+          step="any"
+          css={css`
+            background: linear-gradient(
+              90deg,
+              #6aba9c 0%,
+              #6aba9c ${state.recplayer.played * 100}%,
+              white ${state.recplayer.played * 100}%,
+              white 100%
+            );
+          `}
           onChange={(e) => handleChange(parseFloat(e.target.value))}
-          onMouseDown={actions.recplayer.startSeeking}
-          onMouseUp={actions.recplayer.stopSeeking}
           value={state.recplayer.played}
         />
       </div>
@@ -144,16 +209,13 @@ const Container = styled.div<ContainerProps>`
     margin-left: 15px;
   }
 
-  .progress-text
-  {
+  .progress-text {
     white-space: nowrap;
     margin-right: 10px;
   }
 
-
   //range input styles (aka seek slider)
-  #rec-seek-container
-  {
+  .rec-seek-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,12 +227,6 @@ const Container = styled.div<ContainerProps>`
     -webkit-appearance: none;
     width: 100%;
     height: 10px;
-
-    background: var(
-      --track-bg,
-      linear-gradient(90deg, #6aba9c 0%, #6aba9c 0%, white 0%, white 100%)
-    );
-
     cursor: pointer;
   }
 
@@ -209,4 +265,15 @@ const Container = styled.div<ContainerProps>`
     width: 0px;
     border: 0px;
   }
+`;
+
+const LoadingContainer = styled.div`
+  & > div {
+    padding: 0 !important;
+    margin-top: -10px !important;
+  }
+
+  position: absolute !important;
+  background: transparent !important;
+  opacity: 0.5 !important;
 `;

@@ -39,9 +39,9 @@ const raThemeTypeScript: RaThemeTypeScript = {
       srcUrl: "",
       openedRec: -100,
       muted: false,
-      seeking: false,
       played: 0.0,
       durations: [],
+      isOpened: [],
     },
   },
 
@@ -73,61 +73,27 @@ const raThemeTypeScript: RaThemeTypeScript = {
 
     raplayer: {
       playerPlay: ({ state }) => {
-        state.recplayer.playing = false;    //turn off recording
-        state.recplayer.openedRec = -1
+        state.recplayer.playing = false; //turn off recording
+        state.recplayer.openedRec = -1;
 
-        state.raplayer.playing = true;      //turn on radio
+        state.raplayer.playing = true; //turn on radio
       },
       playerStop: ({ state }) => {
-        state.raplayer.playing = false;     //turn off recording
+        state.raplayer.playing = false; //turn off recording
         state.raplayer.srcUrl = "";
       },
     },
 
     recplayer: {
       playerPlay: ({ state }) => {
-        state.raplayer.playing = false;     //turn off radio
+        state.raplayer.playing = false; //turn off radio
         state.raplayer.srcUrl = "";
 
-        state.recplayer.playing = true;     //turn on recording
+        state.recplayer.playing = true; //turn on recording
       },
       playerPause: ({ state }) => {
         state.recplayer.playing = false;
       },
-      startSeeking: ({state}) => {
-        state.recplayer.seeking = true;
-      },
-      stopSeeking: ({state}) => {
-        state.recplayer.seeking = false;
-      },
-      updateSeekSliders: ({state}) => {
-        const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
-
-        if(state.recplayer.playing)
-          for(let i = 0; i < sliders.length; i++) {   //sets gradient which looks like range input
-            sliders[i].style.setProperty(
-              "--track-bg",
-              "linear-gradient(90deg, #6aba9c 0%, #6aba9c " +
-                state.recplayer.played * 100 +
-                "%, white " +
-                state.recplayer.played * 100 +
-                "%, white 100%)"
-            );
-          }
-      },
-      updateProgressText: ({state}) => {
-        const secsToTime = function(total)            //for example 80 -> 01:20
-        {
-          const minutes = Math.floor(total/60) >= 10 ? Math.floor(total/60) : ('0' + Math.floor(total/60));
-          const seconds = Math.floor(total)%60 >= 10 ? Math.floor(total)%60 : ('0' + Math.floor(total)%60);
-          return minutes + ":" + seconds;
-        }
-      
-        document.getElementById("prog-text-" + state.recplayer.openedRec).innerText = 
-          secsToTime(state.recplayer.played * state.recplayer.durations[state.recplayer.openedRec]) 
-          + " / " 
-          + secsToTime(state.recplayer.durations[state.recplayer.openedRec]);
-      }
     },
   },
   libraries: {

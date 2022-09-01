@@ -60,24 +60,24 @@ interface RaThemeTypeScript extends Package {
      * Radio Player namespace.
      */
     raplayer: {
-      playing: boolean;     //is radio player playing
-      srcUrl: string;       //src of current radio stream
-      muted: boolean;       //is radio player muted
-      volume: number;       //volume of radio player
-    }
+      playing: boolean; //is radio player playing
+      srcUrl: string; //src of current radio stream
+      muted: boolean; //is radio player muted
+      volume: number; //volume of radio player
+    };
 
     /**
      * Recording Player namespace.
      */
-     recplayer: {
-      playing: boolean;     //is recording player playing
-      srcUrl: string;       //src of current recording
-      openedRec: number;    //id of current recording
-      muted: boolean;       //is recording player muted
-      seeking: boolean;     //tells us if the user is currently using the seek bar
-      played: number;       //current progress
-      durations: object;    //durations of recordings
-    }
+    recplayer: {
+      playing: boolean; //is recording player playing
+      srcUrl: string; //src of current recording
+      openedRec: number; //id of current recording
+      muted: boolean; //is recording player muted
+      played: number; //current progress
+      durations: object; //durations of recordings
+      isOpened: object; //boolans telling if a recording is opened
+    };
   };
 
   /**
@@ -112,11 +112,7 @@ interface RaThemeTypeScript extends Package {
     recplayer: {
       playerPlay: Action<Packages>;
       playerPause: Action<Packages>;
-      startSeeking: Action<Packages>;
-      stopSeeking: Action<Packages>;
-      updateSeekSliders: Action<Packages>;
-      updateProgressText: Action<Packages>;  //updated progress texts - those placed next to Play/Pause button
-    }
+    };
   };
 }
 

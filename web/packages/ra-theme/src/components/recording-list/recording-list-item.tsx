@@ -17,70 +17,44 @@ interface ItemProps {
 
 /**
  * Recording List item Component.
- *
  * It renders the preview of a recording.
  *
  * @param props - Defined in {@link ItemProps}.
- *
  * @returns The rendered recording.
  */
 function RecordingListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   /**
-   * lists of sliders - will be accessed when a recording is opened
-   */
-  const sliders = document.querySelectorAll<HTMLElement>(".rec-seek");
-
-  /**
    * this happens when user clicks on some recording from list:
    *  stop current recording
    *  open ours by saving its id in state
-   *  set progress text to 0
-   *  set sliders to white
    */
   const openRecording = function () {
     state.recplayer.srcUrl = "";
     state.recplayer.playing = false;
-    
-    state.recplayer.openedRec = item.id;
+    state.recplayer.played = 0;
 
-    if(state.recplayer.durations[item.id] != undefined)
-      document.getElementById("prog-text-" + item.id).innerText = "00:00 / " + secsToTime(state.recplayer.durations[item.id]);
-    
-    for(let i = 0; i < sliders.length; i++)
-      sliders[i].style.setProperty("--track-bg", "white");
+    state.recplayer.openedRec = item.id;
   };
 
   /**
    * check if a recording is open.
    * @returns a boolean
    */
-  function isOpen() {
+  function shouldBeOpened() {
     return state.recplayer.openedRec == item.id;
-  }
-
-  /**
-   * convert seconds (number, eg. 80) to minutes and seconds (string, eg. 01:20)
-   */
-  const secsToTime = function(total)
-  {
-    const minutes = Math.floor(total/60) >= 10 ? Math.floor(total/60) : ('0' + Math.floor(total/60));
-    const seconds = Math.floor(total)%60 >= 10 ? Math.floor(total)%60 : ('0' + Math.floor(total)%60);
-    return minutes + ":" + seconds;
   }
 
   return (
     <Container>
-      <Title onClick={openRecording} className={isOpen() ? "hidden" : ""}>
+      <Title onClick={openRecording} className={shouldBeOpened() ? "hidden" : ""}>
         {item.title.rendered}
       </Title>
 
-      <div className={isOpen() ? "" : "hidden"}>
-        <FeaturedAudio id={item.acf.file}/>
-      </div>
+      <FeaturedAudio id={item.acf.file} />
 
-      <BackButton>
+      <BackButton onClick={openRecording}>
         <Link link={item.link}>
           <span className="showMore">Więcej...</span>
           <img src={Arrow} alt="pokaż więcej" />
@@ -111,10 +85,6 @@ const Container = styled.div`
 
   &:nth-of-type(2n + 1) > div {
     background-color: #3c3c4c;
-  }
-
-  & > .hidden {
-    display: none;
   }
 `;
 

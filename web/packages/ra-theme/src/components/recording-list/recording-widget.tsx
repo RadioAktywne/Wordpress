@@ -27,8 +27,7 @@ const RecordingWidget = () => {
         {dataPost.items.map(({ type, id }) => {
           const item = state.source[type][id];
           // Render one RecordingListItem component for each one.
-          if(numberOfRecordings)
-          {
+          if (numberOfRecordings) {
             numberOfRecordings--;
             return <RecordingListItem key={item.id} item={item} />;
           }
