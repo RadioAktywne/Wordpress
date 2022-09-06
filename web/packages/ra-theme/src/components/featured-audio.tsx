@@ -6,8 +6,7 @@ import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
 import Mute from "../img/icons/speaker-white.svg";
-import React from "react";
-import { PlayerContext } from "./index";
+import SeekSlider from "./seek-slider"
 
 /**
  * Formats time
@@ -56,7 +55,6 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
   /**
    * ReactPlayer handle from context - lets us to access ReactPlayer object
    */
-  const playerHandle = React.useContext(PlayerContext);
 
   /**
    * wait until media is loaded
@@ -108,14 +106,6 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
   };
 
   /**
-   * when user uses seek slider
-   */
-  const handleChange = function (newProgress) {
-    playerHandle.current.seekTo(newProgress); //seek
-    state.recplayer.played = newProgress;
-  };
-
-  /**
    * mute/unmute recording
    */
   const recMuteToggle = function () {
@@ -151,26 +141,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
           : "00:00 / 00:00"}
       </div>
 
-      <div className="rec-seek-container">
-        <input
-          className="rec-seek"
-          type="range"
-          min={0}
-          max={1}
-          step="any"
-          css={css`
-            background: linear-gradient(
-              90deg,
-              #6aba9c 0%,
-              #6aba9c ${state.recplayer.played * 100}%,
-              white ${state.recplayer.played * 100}%,
-              white 100%
-            );
-          `}
-          onChange={(e) => handleChange(parseFloat(e.target.value))}
-          value={state.recplayer.played}
-        />
-      </div>
+      <SeekSlider/>
 
       <div className="rec-mute" onClick={recMuteToggle}>
         <img src={state.recplayer.muted ? Unmute : Mute} />
@@ -212,58 +183,6 @@ const Container = styled.div<ContainerProps>`
   .progress-text {
     white-space: nowrap;
     margin-right: 10px;
-  }
-
-  //range input styles (aka seek slider)
-  .rec-seek-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  //make it ready
-  input[type="range"] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 10px;
-    cursor: pointer;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-  }
-
-  input[type="range"]:focus {
-    outline: none;
-  }
-
-  input[type="range"]::-ms-track {
-    width: 100%;
-    cursor: pointer;
-
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-  }
-
-  //factual styles
-  //thumb
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 0px;
-    width: 0px;
-    border: 0px;
-  }
-  input[type="range"]::-moz-range-thumb {
-    height: 0px;
-    width: 0px;
-    border: 0px;
-  }
-  input[type="range"]::-ms-thumb {
-    height: 0px;
-    width: 0px;
-    border: 0px;
   }
 `;
 
