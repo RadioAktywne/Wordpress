@@ -1,6 +1,5 @@
 import { connect, decode, styled, useConnect } from "frontity";
 import RecordingListItem from "./recording-list-item";
-import Pagination from "./pagination";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
 
