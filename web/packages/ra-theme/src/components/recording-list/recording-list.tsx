@@ -1,8 +1,9 @@
 import { connect, decode, styled, useConnect } from "frontity";
-import RecordingListItem from "./recording-list-item";
-import Pagination from "./pagination";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
+import RecordingListPage from "./recording-list-page"
+import { useEffect, useState } from "react";
+import React from "react";
 
 /**
  * Props received by the {@link RecordingList} component.
@@ -14,19 +15,49 @@ interface ListProps {
 
 function RecordingList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
+  
+  /**
+   * viewing next pages, starting from the current one (which is in data)
+   */
+  let page = data;
+  const [pages, setPages] = useState([page.link]); 
+  function nextPage() {   //this function is triggered when users nearly reaches the end
+    if(page.next) //if there is a next page
+    {
+      setPages([...pages, page.next]);  //add it to our list in state
+      page = state.source.get(page.next) as RecordingArchiveData; //and set current page to it
+    }
+  } 
+
+  /**
+   * listening to scroll events (to load next page when users scrolls to the end)
+   */
+  const contentRef = React.useRef<HTMLDivElement>(null);  //reference to the div containing title and recordings list
+  const handleScroll = () => {
+    if(contentRef.current.getBoundingClientRect().bottom - 40 <= window.innerHeight)
+      nextPage();
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    const pagesOnStart = Math.floor((window.innerHeight - contentRef.current.getBoundingClientRect().top) / contentRef.current.clientHeight);
+    for(let i = 0; i < pagesOnStart; i++)
+      handleScroll(); //do it at the beginning - the list might be shorter than the screen length
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
 
   return (
     <Container>
-      <div>
+      <div ref={contentRef}>
         <Title>
           <h1>Nagrania</h1>
         </Title>
 
-        {data.items.map(({ type, id }) => {
-          const item = state.source[type][id];
-          // Render one RecordingListItem component for each one.
-          return <RecordingListItem key={item.id} item={item} />;
-        })}
+        {pages.map((item, i) => ( <RecordingListPage link={item} key={i}/> ))} 
       </div>
     </Container>
   );
