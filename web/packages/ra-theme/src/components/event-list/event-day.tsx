@@ -2,7 +2,6 @@ import { connect, decode, styled, useConnect } from "frontity";
 import EventListItem from "./event-list-item";
 import Link from "../link";
 import { Packages } from "../../../types";
-import { isFunction } from "util";
 
 const daysNames = {
   monday: "Poniedziałek",
@@ -14,6 +13,12 @@ const daysNames = {
   sunday: "Niedziela",
 };
 
+/**
+ * Does event a start before event b?
+ * @param a - event a
+ * @param b - event b
+ * @returns boolean
+ */
 const isEarlier = function (a, b) {
   return (
     parseInt(a.acf.start_time.substring(0, 2)) < parseInt(b.acf.start_time.substring(0, 2))
@@ -30,25 +35,7 @@ const isEarlier = function (a, b) {
 function EventDay(props) {
   const { state } = useConnect<Packages>();
 
-  // const eventList = props.data.items.map(
-  //   ({ type, id }) => {
-  //       const item = state.source[type][id];
-  //       if(item.acf.day == props.day)
-  //         return item;
-  //       else
-  //         return undefined;
-  //   }
-  // );
-
-  // for(let i = 0; i < eventList.length; i++)
-  // {
-  //   const item = state.source[eventList[i].type][eventList[i].id];
-  //   if(item.acf.dat !== props.day)
-  //     console.log("test");
-  //   //   delete eventList[i];
-  // }
-
-  let eventList = [];
+  let eventList = []; //needs to be mutable, as it will be sorted later
   props.data.items.map(
     ({ type, id }) => {
         const item = state.source[type][id];

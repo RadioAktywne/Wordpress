@@ -1,6 +1,5 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "../link";
-import { Packages } from "../../../types";
 import { EventEntity } from "../../data";
 
 const cutSec = function (time) {
@@ -19,11 +18,8 @@ interface ItemProps {
 
 /**
  * Event List item Component.
- *
  * It renders the preview of an event.
- *
  * @param props - Defined in {@link ItemProps}.
- *
  * @returns The rendered event.
  */
 function EventListItem({ item }: ItemProps): JSX.Element {

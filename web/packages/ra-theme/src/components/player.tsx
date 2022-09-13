@@ -1,7 +1,6 @@
 import { connect, css, styled, useConnect } from "frontity";
-import { useContext } from "react";
-import Link from "./link";
 import { Packages } from "../../types";
+import VolumeSlider from "./volume-slider"
 
 import PlayerBackground from "../img/bg/studio.jpg";
 import Play from "../img/icons/play-white.svg";
@@ -14,7 +13,7 @@ import Mute from "../img/icons/speaker-white.svg";
  *
  * @returns The player element.
  */
-function Player(props) {
+function Player() {
   const { state, actions } = useConnect<Packages>();
 
   const playerToggle = function () {
@@ -95,24 +94,7 @@ function Player(props) {
                   <img src={state.raplayer.muted ? Unmute : Mute} />
                 </div>
 
-                <div id="ra-volume-container">
-                  <input
-                    id="ra-volume"
-                    css={css`
-                    background: linear-gradient(90deg, 
-                      white 0%, 
-                      white ${state.raplayer.volume * 100}%, 
-                      #3c3c4c ${state.raplayer.volume * 100}%, 
-                      #3c3c4c 100%);
-                    `}
-                    type="range"
-                    min="0"
-                    max="1" //cause player has such range
-                    step=".05"
-                    value={state.raplayer.volume}
-                    onChange={(e) => setVolume(parseFloat(e.target.value))}
-                  />
-                </div>
+                <VolumeSlider/>
               </div>
             </PlayerContainer>
           </Container>
@@ -271,89 +253,6 @@ const PlayerContainer = styled.div`
 
     #ra-play {
       margin-left: 15px;
-    }
-  }
-
-  //range input styles (aka volume)
-  #ra-volume-container {
-    transform: rotate(-90deg);
-    width: 100px;
-    position: absolute;
-    right: 0;
-  }
-
-  //make it ready
-  input[type="range"] {
-    -webkit-appearance: none;
-    width: 100px;
-    height: 11px;
-
-    cursor: pointer;
-    border: 1px solid white;
-    border-radius: 3px;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-  }
-
-  input[type="range"]:focus {
-    outline: none;
-  }
-
-  input[type="range"]::-ms-track {
-    width: 100%;
-    cursor: pointer;
-
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-  }
-
-  //factual styles
-  //thumb
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: 1px solid rbga(69, 69, 69);
-    height: 17px;
-    width: 18px;
-    border-radius: 5px;
-    background: #ffffff;
-    cursor: pointer;
-    margin-top: -14px;
-  }
-  input[type="range"]::-moz-range-thumb {
-    border: 1px solid rbga(69, 69, 69);
-    height: 17px;
-    width: 18px;
-    border-radius: 5px;
-    background: #ffffff;
-    cursor: pointer;
-  }
-  input[type="range"]::-ms-thumb {
-    border: 1px solid rbga(69, 69, 69);
-    height: 17px;
-    width: 18px;
-    border-radius: 5px;
-    background: #ffffff;
-    cursor: pointer;
-  }
-  input[type="range"]::-moz-range-thumb:active {
-    background: #6aba9c;
-    border: 1px solid #003eff;
-  }
-  input[type="range"]::-ms-thumb:active {
-    background: #6aba9c;
-    border: 1px solid #003eff;
-  }
-  input[type="range"]::-webkit-slider-thumb:active {
-    background: #6aba9c;
-    border: 1px solid #003eff;
-  }
-
-  @media (max-width: 450px) {
-    #ra-volume-container {
-      display: none;
     }
   }
 `;

@@ -29,31 +29,29 @@ interface ListProps {
 function EventList({ data }: ListProps): JSX.Element {
   return (
     <Container>
-      <div>
-        <Title>
-          <h1>Ramówka</h1>
-        </Title>
+      <Title>
+        <h1>Ramówka</h1>
+      </Title>
 
-        <Days>
-          <EventDay data={data} day="monday" className="" onHome={false} />
-          <EventDay data={data} day="tuesday" className="" onHome={false} />
-          <EventDay
-            data={data}
-            day="wednesday"
-            className="right"
-            onHome={false}
-          />
-          <EventDay data={data} day="thursday" className="" onHome={false} />
-          <EventDay data={data} day="friday" className="" onHome={false} />
-          <EventDay
-            data={data}
-            day="saturday"
-            className="right"
-            onHome={false}
-          />
-          <EventDay data={data} day="sunday" className="" onHome={false} />
-        </Days>
-      </div>
+      <Days>
+        <EventDay data={data} day="monday" className="" onHome={false} />
+        <EventDay data={data} day="tuesday" className="" onHome={false} />
+        <EventDay
+          data={data}
+          day="wednesday"
+          className="right"
+          onHome={false}
+        />
+        <EventDay data={data} day="thursday" className="" onHome={false} />
+        <EventDay data={data} day="friday" className="" onHome={false} />
+        <EventDay
+          data={data}
+          day="saturday"
+          className="right"
+          onHome={false}
+        />
+        <EventDay data={data} day="sunday" className="" onHome={false} />
+      </Days>
     </Container>
   );
 }
