@@ -16,22 +16,24 @@ function VolumeSlider() {
 
   return (
     <Container>
-        <input
-            id="ra-volume"
-            css={css`
-            background: linear-gradient(90deg, 
-                white 0%, 
-                white ${state.raplayer.volume * 100}%, 
-                #3c3c4c ${state.raplayer.volume * 100}%, 
-                #3c3c4c 100%);
-            `}
-            type="range"
-            min="0"
-            max="1" //cause player has such range
-            step=".05"
-            value={state.raplayer.volume}
-            onChange={(e) => setVolume(parseFloat(e.target.value))}
-        />
+      <input
+        id="ra-volume"
+        css={css`
+          background: linear-gradient(
+            90deg,
+            white 0%,
+            white ${state.raplayer.volume * 100}%,
+            #3c3c4c ${state.raplayer.volume * 100}%,
+            #3c3c4c 100%
+          );
+        `}
+        type="range"
+        min="0"
+        max="1" //cause player has such range
+        step=".05"
+        value={state.raplayer.volume}
+        onChange={(e) => setVolume(parseFloat(e.target.value))}
+      />
     </Container>
   );
 }
@@ -39,10 +41,10 @@ function VolumeSlider() {
 export default connect(VolumeSlider);
 
 const Container = styled.div`
-    transform: rotate(-90deg);
-    width: 100px;
-    position: absolute;
-    right: 0;
+  transform: rotate(-90deg);
+  width: 100px;
+  position: absolute;
+  right: 0;
 
   //make it ready
   input[type="range"] {

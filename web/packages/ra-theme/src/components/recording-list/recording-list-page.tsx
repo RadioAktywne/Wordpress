@@ -25,13 +25,15 @@ function RecordingListPage({ link }: ListPageProps): JSX.Element {
 
   return data.isReady ? (
     <Container>
-        {(data as RecordingArchiveData).items.map(({ type, id }) => {
-            const item = state.source[type][id];
-            // Render one RecordingListItem component for each one.
-            return <RecordingListItem key={item.id} item={item} />;
-        })}
+      {(data as RecordingArchiveData).items.map(({ type, id }) => {
+        const item = state.source[type][id];
+        // Render one RecordingListItem component for each one.
+        return <RecordingListItem key={item.id} item={item} />;
+      })}
     </Container>
-  ) : <Loading/>;
+  ) : (
+    <Loading />
+  );
 }
 
 export default connect(RecordingListPage);

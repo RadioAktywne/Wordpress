@@ -6,7 +6,7 @@ import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
 import Mute from "../img/icons/speaker-white.svg";
-import SeekSlider from "./seek-slider"
+import SeekSlider from "./seek-slider";
 
 /**
  * Formats time
@@ -141,7 +141,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
           : "00:00 / 00:00"}
       </div>
 
-      <SeekSlider/>
+      <SeekSlider />
 
       <div className="rec-mute" onClick={recMuteToggle}>
         <img src={state.recplayer.muted ? Unmute : Mute} />

@@ -48,13 +48,20 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
 
   return (
     <Container>
-      <Title onClick={openRecording} className={shouldBeOpened() ? "hidden" : ""}>
-        {item.title.rendered.replace(/&#8211;/g, '-')}
+      <Title
+        onClick={openRecording}
+        className={shouldBeOpened() ? "hidden" : ""}
+      >
+        {item.title.rendered.replace(/&#8211;/g, "-")}
       </Title>
 
       <FeaturedAudio id={item.acf.file} />
 
-      <BackButton onClick={() => {if(item.id !== state.recplayer.openedRec) openRecording()}}>
+      <BackButton
+        onClick={() => {
+          if (item.id !== state.recplayer.openedRec) openRecording();
+        }}
+      >
         <Link link={item.link}>
           <span className="showMore">Więcej...</span>
           <img src={Arrow} alt="pokaż więcej" />

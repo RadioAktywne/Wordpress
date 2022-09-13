@@ -1,6 +1,6 @@
 import { connect, css, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import VolumeSlider from "./volume-slider"
+import VolumeSlider from "./volume-slider";
 
 import PlayerBackground from "../img/bg/studio.jpg";
 import Play from "../img/icons/play-white.svg";
@@ -94,7 +94,7 @@ function Player() {
                   <img src={state.raplayer.muted ? Unmute : Mute} />
                 </div>
 
-                <VolumeSlider/>
+                <VolumeSlider />
               </div>
             </PlayerContainer>
           </Container>

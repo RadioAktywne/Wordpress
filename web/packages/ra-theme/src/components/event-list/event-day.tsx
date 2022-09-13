@@ -20,32 +20,26 @@ const daysNames = {
  * @returns boolean
  */
 const isEarlier = function (a, b) {
-  return (
-    parseInt(a.acf.start_time.substring(0, 2)) < parseInt(b.acf.start_time.substring(0, 2))
-    ||
-    (
-      parseInt(a.acf.start_time.substring(0, 2)) == parseInt(b.acf.start_time.substring(0, 2)) 
-      &&
-      parseInt(a.acf.start_time.substring(3, 2)) < parseInt(b.acf.start_time.substring(3, 2))
-    )
+  return parseInt(a.acf.start_time.substring(0, 2)) <
+    parseInt(b.acf.start_time.substring(0, 2)) ||
+    (parseInt(a.acf.start_time.substring(0, 2)) ==
+      parseInt(b.acf.start_time.substring(0, 2)) &&
+      parseInt(a.acf.start_time.substring(3, 2)) <
+        parseInt(b.acf.start_time.substring(3, 2)))
     ? -1
-    : 1);
+    : 1;
 };
 
 function EventDay(props) {
   const { state } = useConnect<Packages>();
 
   let eventList = []; //needs to be mutable, as it will be sorted later
-  props.data.items.map(
-    ({ type, id }) => {
-        const item = state.source[type][id];
-        if(item.acf.day == props.day)
-          eventList.push(item);
-    }
-  );
+  props.data.items.map(({ type, id }) => {
+    const item = state.source[type][id];
+    if (item.acf.day == props.day) eventList.push(item);
+  });
 
-  if(eventList.length > 1)
-    eventList.sort(isEarlier);
+  if (eventList.length > 1) eventList.sort(isEarlier);
 
   return (
     <Day>

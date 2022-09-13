@@ -25,24 +25,24 @@ function SeekSlider(): JSX.Element {
 
   return (
     <Container>
-        <input
-          className="rec-seek"
-          type="range"
-          min={0}
-          max={1}
-          step="any"
-          css={css`
-            background: linear-gradient(
-              90deg,
-              #6aba9c 0%,
-              #6aba9c ${state.recplayer.played * 100}%,
-              white ${state.recplayer.played * 100}%,
-              white 100%
-            );
-          `}
-          onChange={(e) => handleChange(parseFloat(e.target.value))}
-          value={state.recplayer.played}
-        />
+      <input
+        className="rec-seek"
+        type="range"
+        min={0}
+        max={1}
+        step="any"
+        css={css`
+          background: linear-gradient(
+            90deg,
+            #6aba9c 0%,
+            #6aba9c ${state.recplayer.played * 100}%,
+            white ${state.recplayer.played * 100}%,
+            white 100%
+          );
+        `}
+        onChange={(e) => handleChange(parseFloat(e.target.value))}
+        value={state.recplayer.played}
+      />
     </Container>
   );
 }

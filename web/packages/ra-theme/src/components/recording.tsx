@@ -44,25 +44,22 @@ function Recording({ data }: RecordingProps): JSX.Element {
         </AudioContainer>
 
         <Description>
-          {
-            parse(                                              //parse html
-              recording.acf.description
-              .replace('<div class="article-containter">', '')  //remove div at the beginning
-              .replace('</div>', '')                            //remove closing div at the end
-              .replace(/(?:\r\n|\r|\n)/g, '<br>')               //convert new lines to breaks
-              .replace(/^(<br>)+|(<br>)+$/g, '')                //remove newlines at the beginning and at the end
-            )
-          }
+          {parse(
+            //parse html
+            recording.acf.description
+              .replace('<div class="article-containter">', "") //remove div at the beginning
+              .replace("</div>", "") //remove closing div at the end
+              .replace(/(?:\r\n|\r|\n)/g, "<br>") //convert new lines to breaks
+              .replace(/^(<br>)+|(<br>)+$/g, "") //remove newlines at the beginning and at the end
+          )}
         </Description>
-        
       </MainContent>
 
-      {recording.acf.image && 
+      {recording.acf.image && (
         <Cover>
-          <FeaturedMedia id={recording.acf.image}/>
-        </Cover> 
-      }
-      
+          <FeaturedMedia id={recording.acf.image} />
+        </Cover>
+      )}
     </Container>
   ) : null;
 }
@@ -98,7 +95,7 @@ const Description = styled.div`
   @media (max-width: 1400px) {
     font-size: 0.8rem;
   }
-`
+`;
 
 const MainContent = styled.div`
   width: 66.6%;
@@ -108,12 +105,12 @@ const MainContent = styled.div`
     width: 100%;
     padding-right: 0;
   }
-`
+`;
 
 const AudioContainer = styled.div`
   background-color: #3c3c4c;
   color: white;
-`
+`;
 
 const Cover = styled.div`
   width: 33.3%;
@@ -130,8 +127,7 @@ const Cover = styled.div`
   @media (max-width: 750px) {
     width: 100%;
 
-    & img
-    {
+    & img {
       width: 100%;
     }
 
@@ -141,7 +137,7 @@ const Cover = styled.div`
     border: none;
     margin-top: 30px;
   }
-`
+`;
 
 const Title = styled.div`
   width: 100%;
@@ -177,10 +173,9 @@ const BackButton = styled.div`
   justify-content: center;
   padding-top: 6px;
 
-  & img
-  {
+  & img {
     height: 30px;
     width: 50px;
     transform: rotateZ(90deg);
   }
-`
+`;

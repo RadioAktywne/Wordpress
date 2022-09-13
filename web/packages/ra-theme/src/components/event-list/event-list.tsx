@@ -44,12 +44,7 @@ function EventList({ data }: ListProps): JSX.Element {
         />
         <EventDay data={data} day="thursday" className="" onHome={false} />
         <EventDay data={data} day="friday" className="" onHome={false} />
-        <EventDay
-          data={data}
-          day="saturday"
-          className="right"
-          onHome={false}
-        />
+        <EventDay data={data} day="saturday" className="right" onHome={false} />
         <EventDay data={data} day="sunday" className="" onHome={false} />
       </Days>
     </Container>

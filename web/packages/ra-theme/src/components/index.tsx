@@ -49,21 +49,21 @@ function Theme() {
   /**
    * Things related to playing audio (needs to be global)
    */
-      // handle for ReactPlayer object (right now undefinied)
-      const recplayer = React.useRef<ReactPlayer>(null);
-      // when recording is ready to be played, show its duration
-      const setDuration = function () {
-        state.recplayer.durations[state.recplayer.openedRec] =
-          recplayer.current.getDuration();
-      };
-      // when recording progresses, update played (recording progress) state
-      const handleProgress = (played) => {
-        state.recplayer.played = played;
-      };
-      // when recording ends, change play icon to pause
-      const recordingEnded = function () {
-        actions.recplayer.playerPause();
-      };
+  // handle for ReactPlayer object (right now undefinied)
+  const recplayer = React.useRef<ReactPlayer>(null);
+  // when recording is ready to be played, show its duration
+  const setDuration = function () {
+    state.recplayer.durations[state.recplayer.openedRec] =
+      recplayer.current.getDuration();
+  };
+  // when recording progresses, update played (recording progress) state
+  const handleProgress = (played) => {
+    state.recplayer.played = played;
+  };
+  // when recording ends, change play icon to pause
+  const recordingEnded = function () {
+    actions.recplayer.playerPause();
+  };
   /**
    * End of things related to playing audio (needs to be global)
    */
