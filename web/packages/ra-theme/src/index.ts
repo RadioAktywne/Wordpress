@@ -4,7 +4,7 @@ import image from "@frontity/html2react/processors/image";
 import iframe from "@frontity/html2react/processors/iframe";
 import link from "@frontity/html2react/processors/link";
 import { postTypeHandler } from "@frontity/wp-source/src/libraries/handlers";
-import ReactPlayer from "react-player";
+import postTypeArchiveHandler from "./handlers/postTypeArchive";
 
 const raThemeTypeScript: RaThemeTypeScript = {
   name: "@frontity/ra-theme",
@@ -66,6 +66,28 @@ const raThemeTypeScript: RaThemeTypeScript = {
           pattern: "/(.*)?",
           func: postTypeHandler({
             endpoints: ["pages"],
+          }),
+        });
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "event handler",
+          priority: 15,
+          pattern: "/event/(.*)?",
+          func: postTypeHandler({
+            endpoints: ["event"],
+          }),
+        });
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "events handler",
+          priority: 15,
+          pattern: "/events/",
+          func: postTypeArchiveHandler({
+            type: "event",
+            endpoint: "event",
+            params: {
+              per_page: 100,
+            },
           }),
         });
       },

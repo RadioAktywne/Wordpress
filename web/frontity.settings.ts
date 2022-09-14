@@ -42,11 +42,6 @@ const settings: Settings<Theme | WpSource> = {
               archive: "/shows",
             },
             {
-              type: "event",
-              endpoint: "event",
-              archive: "/events",
-            },
-            {
               type: "album",
               endpoint: "album",
               archive: "/albums",
