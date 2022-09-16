@@ -84,7 +84,6 @@ const Container = styled.div`
     border-radius: 5px;
     background: #ffffff;
     cursor: pointer;
-    margin-top: -14px;
   }
   input[type="range"]::-moz-range-thumb {
     border: 1px solid rbga(69, 69, 69);
