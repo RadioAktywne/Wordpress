@@ -4,17 +4,28 @@ import { Packages } from "../../../types";
 import Loading from "../loading";
 import Link from "../link";
 import RecordingListItem from "./recording-list-item";
+import { ArchiveData } from "@frontity/source/types";
 
 const RecordingWidget = () => {
   const { actions, state } = useConnect<Packages>();
 
+  /**
+   * fetch recordings
+   */
   useEffect(() => {
     actions.source.fetch("/recordings");
   }, []);
+  const dataPost = state.source.get("/recordings") as ArchiveData;
 
-  const dataPost = state.source.get("/recordings");
-  let numberOfRecordings = 6; //will be decrementet each time - when it's 0, we already have 6 recordings
+  /**
+   * how many recordings should the widget show?
+   * will be decrementet each time - when it's 0, we already have 6 recordings
+   */
+  let numberOfRecordings = 6;
 
+  /**
+   * when recordings are fetched
+   */
   return dataPost.isReady ? (
     <Container>
       <div>

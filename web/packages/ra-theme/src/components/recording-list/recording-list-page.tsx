@@ -1,6 +1,5 @@
 import { connect, decode, styled, useConnect } from "frontity";
 import RecordingListItem from "./recording-list-item";
-import Pagination from "./pagination";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
 import { useEffect } from "react";
@@ -17,12 +16,17 @@ interface ListPageProps {
 function RecordingListPage({ link }: ListPageProps): JSX.Element {
   const { actions, state } = useConnect<Packages>();
 
+  /**
+   * fetch the page
+   */
   useEffect(() => {
     actions.source.fetch(link);
   }, []);
-
   const data = state.source.get(link);
 
+  /**
+   * wait till its fetched
+   */
   return data.isReady ? (
     <Container>
       {(data as RecordingArchiveData).items.map(({ type, id }) => {

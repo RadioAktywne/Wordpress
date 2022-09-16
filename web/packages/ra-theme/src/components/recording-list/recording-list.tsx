@@ -21,10 +21,10 @@ function RecordingList({ data }: ListProps): JSX.Element {
    */
   let page = data;
   const [pages, setPages] = useState([page.link]);
+  //this function is triggered when users nearly reaches the end
   function nextPage() {
-    //this function is triggered when users nearly reaches the end
+    //if there is a next page
     if (page.next) {
-      //if there is a next page
       setPages([...pages, page.next]); //add it to our list in state
       page = state.source.get(page.next) as RecordingArchiveData; //and set current page to it
     }
@@ -33,26 +33,26 @@ function RecordingList({ data }: ListProps): JSX.Element {
   /**
    * listening to scroll events (to load next page when users scrolls to the end)
    */
-  const contentRef = React.useRef<HTMLDivElement>(null); //reference to the div containing title and recordings list
-  const checkIfNextPage = () => {
-    if (
-      contentRef.current.getBoundingClientRect().bottom - 40 <=
-      window.innerHeight
-    )
+  const contentRef = React.useRef<HTMLDivElement>(); //reference to the div containing title and recordings list
+  const tryNextPage = () => {
+    if (contentRef.current.getBoundingClientRect().bottom - 20 <= window.innerHeight)
       nextPage();
   };
   useEffect(() => {
-    window.addEventListener("scroll", checkIfNextPage, { passive: true });
-    window.addEventListener("resize", checkIfNextPage);
+    window.addEventListener("scroll", tryNextPage, { passive: true });
+    window.addEventListener("resize", tryNextPage);
+
+    //load some pages at the beginning - the list might be shorter than the screen length
     const pagesOnStart = Math.floor(
       (window.innerHeight - contentRef.current.getBoundingClientRect().top) /
         contentRef.current.clientHeight
     );
-    for (let i = 0; i < pagesOnStart; i++) checkIfNextPage(); //do it at the beginning - the list might be shorter than the screen length
+    for (let i = 0; i < pagesOnStart; i++) tryNextPage(); 
 
     return () => {
-      window.removeEventListener("scroll", checkIfNextPage);
-    };
+      window.removeEventListener("scroll", tryNextPage);
+      window.removeEventListener("resize", tryNextPage);
+  };
   }, []);
 
   return (

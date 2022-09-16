@@ -63,7 +63,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
   if (status === "pending")
     return (
       <LoadingContainer>
-        <Loading />
+        {/* <Loading /> */}
       </LoadingContainer>
     );
   if (!media) return null;
@@ -190,6 +190,7 @@ const LoadingContainer = styled.div`
   & > div {
     padding: 0 !important;
     margin-top: -10px !important;
+    opacity: .2 !important;
   }
 
   position: absolute !important;
