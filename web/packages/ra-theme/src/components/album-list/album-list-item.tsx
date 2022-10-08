@@ -14,15 +14,6 @@ interface ItemProps {
   item: AlbumEntity;
 }
 
-/**
- * Album List item Component.
- *
- * It renders the preview of an album.
- *
- * @param props - Defined in {@link ItemProps}.
- *
- * @returns The rendered album.
- */
 function AlbumListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
   const author = state.source.author[item.author];

@@ -2,59 +2,34 @@ import { connect, decode, styled, useConnect } from "frontity";
 import AlbumListItem from "./album-list-item";
 import Pagination from "./pagination";
 import { Packages } from "../../../types";
-import { isAuthor, isTerm } from "@frontity/source";
 import { AlbumArchiveData } from "../../data";
+import React from "react";
 
 /**
  * Props received by the {@link AlbumList} component.
  */
 interface ListProps {
-  /**
-   * Data object representing an archive link.
-   */
   data: AlbumArchiveData;
-
-  /**
-   * Flag used by Frontity's {@link Switch} component to decide whether
-   * this component should be rendered.
-   */
   when?: boolean;
 }
 
-/**
- * Component that renders the list of albums,
- * passed as an {@link AlbumArchiveData} object.
- *
- * @param props - Object of type {@link ListProps}.
- * @returns React component.
- */
 function AlbumList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
+  const contentRef = React.useRef<HTMLDivElement>(); //reference to the div containing title and recordings list
+
   return (
     <Container>
-      {/* If the list is a term, we render a title. */}
-      {isTerm(data) && (
-        <Header>
-          {data.taxonomy}:{" "}
-          <b>{decode(state.source[data.taxonomy][data.id].name)}</b>
-        </Header>
-      )}
+      <div ref={contentRef}>
+        <Title>
+          <h1>Płyta Tygodnia</h1>
+        </Title>
 
-      {/* If the list is for a specific author, we render a title. */}
-      {isAuthor(data) && (
-        <Header>
-          Author: <b>{decode(state.source.author[data.id].name)}</b>
-        </Header>
-      )}
-
-      {/* Iterate over the items of the list. */}
-      {data.items.map(({ type, id }) => {
-        const item = state.source[type][id];
-        // Render one AlbumListItem component for each one.
-        return <AlbumListItem key={item.id} item={item} />;
-      })}
-      <Pagination data={data} />
+        {data.items.map(({ type, id }) => {
+          const item = state.source[type][id];
+          return <AlbumListItem key={item.id} item={item} />;
+        })}
+      </div>
     </Container>
   );
 }
@@ -62,14 +37,33 @@ function AlbumList({ data }: ListProps): JSX.Element {
 export default connect(AlbumList);
 
 const Container = styled.section`
-  width: 800px;
-  margin: 0;
-  padding: 24px;
-  list-style: none;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px 0 0 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  & > div {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  @media (max-width: 750px) {
+    & > div {
+      padding: 0;
+      width: 100%;
+    }
+  }
 `;
 
-const Header = styled.h3`
-  font-weight: 300;
-  text-transform: capitalize;
-  color: rgba(12, 17, 43, 0.9);
+const Title = styled.div`
+  & > h1 {
+    color: #6aba9c;
+    background-color: #3c3c4c;
+    border-bottom: solid 2px #6aba9c;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: lighter;
+  }
 `;
