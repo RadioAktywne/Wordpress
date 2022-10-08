@@ -2,19 +2,16 @@ import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import FeaturedMedia from "./featured-image";
 import { AlbumData, AlbumEntity } from "../data";
+import Loading from "./loading";
+import Back from "../img/icons/back.svg";
+import Link from "./link";
+import parse from "html-react-parser";
 
 /**
  * Properties received by the `Album` component.
  */
 interface AlbumProps {
-  /**
-   * Data element representing a URL in your frontity site.
-   */
   data: AlbumData;
-
-  /**
-   * Whether to render this component.
-   */
   when?: boolean;
 }
 
@@ -22,179 +19,162 @@ interface AlbumProps {
  * The Album component that is used to render albums
  *
  * @param props - The Frontity store (state, actions, and libraries).
- *
- * @example
- * ```js
- * <Switch>
- *   <Album when={data.isAlbum} />
- * </Switch>
- * ```
- *
  * @returns The {@link Album} element rendered.
  */
 function Album({ data }: AlbumProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
-  // Get the data of the album.
   const album: AlbumEntity = state.source[data.type][data.id];
 
-  // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
+  // const Html2React = libraries.html2react.Component;
 
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
-      <div>
-        <Title>{album.acf.title}</Title>
-        {album.acf.artist}
-      </div>
+      <MainContent>
+        <Title>
+          <h1>{album.acf.title} - {album.acf.artist}</h1>
 
-      {album.acf.image && <FeaturedMedia id={album.acf.image} />}
+          <BackButton>
+            <Link link="/albums">
+              <img src={Back} alt="cofnij" />
+            </Link>
+          </BackButton>
+        </Title>
 
-      {album.acf.description && ( // Render the content using the Html2React component so the HTML is
-        // processed by the processors we included in the
-        // libraries.html2react.processors array.
-        <Content>
-          <Html2React html={album.acf.description} />
-        </Content>
+        <Description>
+          {/* <Html2React html={album.acf.description} /> //alternative way - it can be styled then below*/}
+          {parse(
+            //parse html
+            album.acf.description
+              .replace('<div class="article-containter">', "") //remove div at the beginning
+              .replace("</div>", "") //remove closing div at the end
+              .replace(/(?:\r\n|\r|\n)/g, "<br>") //convert new lines to breaks
+              .replace(/^(<br>)+|(<br>)+$/g, "") //remove newlines at the beginning and at the end
+          )}
+        </Description>
+      </MainContent>
+
+      {album.acf.image && (
+        <Cover>
+          <FeaturedMedia id={album.acf.image} />
+        </Cover>
       )}
     </Container>
-  ) : null;
+  ) : <Loading/>;
 }
 
 export default connect(Album);
 
 const Container = styled.div`
-  width: 800px;
-  margin: 0;
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 30px;
   padding: 24px;
+
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 1400px) {
+    margin: 0 10px;
+  }
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+    padding: 24px 0;
+    margin: 0;
+  }
 `;
 
-const Title = styled.h1`
-  margin: 24px 0 8px;
-  color: rgba(12, 17, 43);
+const Description = styled.div`
+  color: #3c3c4c;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-top: 20px;
+
+  & ul,
+  & ol {
+    line-height: 1;
+    margin: 0;
+  }
+
+  @media (max-width: 1400px) {
+    font-size: 0.8rem;
+  }
 `;
 
-/**
- * This component is the parent of the `content.rendered` HTML. We can use nested
- * selectors to style that HTML.
- */
+const MainContent = styled.div`
+  width: 66.6%;
+  padding-right: 20px;
 
-const Content = styled.div`
-  color: rgba(12, 17, 43, 0.8);
-  word-break: break-word;
-
-  * {
-    max-width: 100%;
-  }
-
-  p {
-    line-height: 1.6em;
-  }
-
-  img {
+  @media (max-width: 750px) {
     width: 100%;
-    object-fit: cover;
-    object-position: center;
+    padding-right: 0;
   }
+`;
 
-  figure {
-    margin: 24px auto;
+const Cover = styled.div`
+  width: 33.3%;
+  height: auto;
+  aspect-ratio: 1/1;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  @media (max-width: 750px) {
     width: 100%;
 
-    figcaption {
-      font-size: 0.7em;
-    }
-  }
-
-  iframe {
-    display: block;
-    margin: auto;
-  }
-
-  blockquote {
-    margin: 16px 0;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-left: 4px solid rgba(12, 17, 43);
-    padding: 4px 16px;
-  }
-
-  a {
-    color: rgb(31, 56, 197);
-    text-decoration: underline;
-  }
-
-  /* Input fields styles */
-
-  input[type="text"],
-  input[type="email"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="date"],
-  textarea,
-  select {
-    display: block;
-    padding: 6px 12px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    outline-color: transparent;
-    transition: outline-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    margin: 8px 0 4px 0;
-
-    &:focus {
-      outline-color: #1f38c5;
-    }
-  }
-
-  input[type="submit"] {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid #1f38c5;
-    padding: 12px 36px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #1f38c5;
-  }
-
-  /* WordPress Core Align Classes */
-
-  @media (min-width: 420px) {
-    img.aligncenter,
-    img.alignleft,
-    img.alignright {
-      width: auto;
+    & img {
+      width: 100%;
     }
 
-    .aligncenter {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
+    aspect-ratio: auto;
+    height: auto;
+    padding-right: 0;
+    border: none;
+    margin-top: 30px;
+  }
+`;
 
-    .alignright {
-      float: right;
-      margin-left: 24px;
-    }
+const Title = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
-    .alignleft {
-      float: left;
-      margin-right: 24px;
+  & > h1 {
+    color: #6aba9c;
+    background-color: #3c3c4c;
+    border-bottom: solid 2px #6aba9c;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: lighter;
+    font-size: 1.6rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 1400px) {
+      font-size: 1.2rem;
     }
+  }
+`;
+
+const BackButton = styled.div`
+  cursor: pointer;
+  border-left: 2px solid #6aba9c;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6px;
+
+  & img {
+    height: 30px;
+    width: 50px;
+    transform: rotateZ(90deg);
   }
 `;

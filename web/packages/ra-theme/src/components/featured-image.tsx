@@ -75,7 +75,7 @@ const Container = styled.div<ContainerProps>`
   ${({ isAmp }) => isAmp && "position: relative;"};
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 `;
 
