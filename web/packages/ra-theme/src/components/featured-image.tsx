@@ -74,6 +74,9 @@ export default connect(FeaturedImage);
 const Container = styled.div<ContainerProps>`
   ${({ isAmp }) => isAmp && "position: relative;"};
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledImage = styled(Image)`
