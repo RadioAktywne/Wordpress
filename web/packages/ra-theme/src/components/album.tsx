@@ -32,7 +32,9 @@ function Album({ data }: AlbumProps): JSX.Element {
     <Container>
       <MainContent>
         <Title>
-          <h1>{album.acf.title} - {album.acf.artist}</h1>
+          <h1>
+            {album.acf.title} - {album.acf.artist}
+          </h1>
 
           <BackButton>
             <Link link="/albums">
@@ -60,7 +62,9 @@ function Album({ data }: AlbumProps): JSX.Element {
         </Cover>
       )}
     </Container>
-  ) : <Loading/>;
+  ) : (
+    <Loading />
+  );
 }
 
 export default connect(Album);

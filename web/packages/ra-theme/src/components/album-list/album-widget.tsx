@@ -28,8 +28,11 @@ const RecordingWidget = () => {
             <h1>Płyta Tygodnia</h1>
           </Link>
         </Title>
-
-        <AlbumListItem key={0} item={state.source[dataPost.items[0].type][dataPost.items[0].id]} />;
+        <AlbumListItem
+          key={0}
+          item={state.source[dataPost.items[0].type][dataPost.items[0].id]}
+        />
+        ;
       </div>
     </Container>
   ) : (
@@ -45,6 +48,10 @@ const Container = styled.section`
   width: 33.33%;
   padding: 0;
   margin: 0;
+
+  & > div {
+    margin-right: 15px;
+  }
 
   & > div > h1 {
     margin: 0;

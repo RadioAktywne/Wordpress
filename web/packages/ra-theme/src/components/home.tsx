@@ -32,7 +32,7 @@ function Home({ data }: HomeProps): JSX.Element {
         <Player />
         <EventWidget />
         <RecordingWidget />
-        <AlbumWidget/>
+        <AlbumWidget />
 
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
           // processed by the processors we included in the
