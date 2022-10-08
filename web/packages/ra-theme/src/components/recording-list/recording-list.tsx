@@ -66,7 +66,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
 
   return (
     <Container>
-      <div ref={contentRef} onClick={tryNextPage}>
+      <div ref={contentRef}>
         <Title>
           <h1>Nagrania</h1>
         </Title>
