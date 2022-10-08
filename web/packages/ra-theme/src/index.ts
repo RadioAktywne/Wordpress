@@ -49,6 +49,12 @@ const raThemeTypeScript: RaThemeTypeScript = {
       pages: [],
       ready: false,
     },
+
+    albums: {
+      nextPage: undefined,
+      pages: [],
+      ready: false,
+    },
   },
 
   /**

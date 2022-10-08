@@ -84,19 +84,19 @@ interface RaThemeTypeScript extends Package {
      * Recordings list namespace.
      */
     recordings: {
-      nextPage: RecordingArchiveData;  //highest currently loaded recordings page
-      pages: RecordingArchiveData[];  //list of opened pages
-      ready: boolean;   //is the current page loaded
-    }
+      nextPage: RecordingArchiveData; //highest currently loaded recordings page
+      pages: RecordingArchiveData[]; //list of opened pages
+      ready: boolean; //is the current page loaded
+    };
 
     /**
      * Albums list namespace.
      */
-     albums: {
-      nextPage: AlbumArchiveData;  //highest currently loaded albums page
-      pages: string[];  //list of opened pages
-      ready: boolean;   //is the current page loaded
-    }
+    albums: {
+      nextPage: AlbumArchiveData; //highest currently loaded albums page
+      pages: AlbumArchiveData[]; //list of opened pages
+      ready: boolean; //is the current page loaded
+    };
   };
 
   /**

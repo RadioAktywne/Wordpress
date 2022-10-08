@@ -25,11 +25,13 @@ function AlbumListItem({ item }: ItemProps): JSX.Element {
             {item.acf.image && <FeaturedMedia id={item.acf.image} />}
             <Title>
               <ArtistName>
-                {item.title.rendered.replace(/(?<= &#8211; ).*$/, "").replace(" &#8211; ", "")}
+                {item.title.rendered
+                  .replace(/(?<= &#8211; ).*$/, "")
+                  .replace(" &#8211; ", "")}
               </ArtistName>
 
               <SongTitle>
-              {item.title.rendered.replace(/^(.*?)\&#8211; /, "")}
+                {item.title.rendered.replace(/^(.*?)\&#8211; /, "")}
               </SongTitle>
             </Title>
           </Cover>
@@ -51,7 +53,7 @@ const ArtistName = styled.h5`
 
   padding-left: 10px;
   padding-top: 10px;
-`
+`;
 
 const SongTitle = styled.h3`
   color: #fff;
@@ -61,12 +63,13 @@ const SongTitle = styled.h3`
 
   padding-left: 10px;
   padding-bottom: 10px;
-`
+`;
 
 const Container = styled.h1`
   width: 100%;
   height: 275px;
-`
+  margin-bottom: 0px;
+`;
 
 const Title = styled.div`
   background-color: rgba(60, 60, 76, 0.6);
@@ -90,6 +93,5 @@ const Cover = styled.div`
   position: relative;
 
   @media (max-width: 750px) {
-    
   }
 `;

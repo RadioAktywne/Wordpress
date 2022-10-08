@@ -1,8 +1,8 @@
 import { connect, decode, styled, useConnect } from "frontity";
-import AlbumListItem from "./album-list-item";
+import AlbumListPage from "./album-list-page";
 import { Packages } from "../../../types";
 import { AlbumArchiveData } from "../../data";
-import React from "react";
+import React, { useEffect } from "react";
 
 /**
  * Props received by the {@link AlbumList} component.
@@ -14,8 +14,63 @@ interface ListProps {
 
 function AlbumList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
+  const contentRef = React.useRef<HTMLDivElement>(); //reference to the div containing title and albums list
 
-  const contentRef = React.useRef<HTMLDivElement>(); //reference to the div containing title and recordings list
+  /**
+   * viewing next pages
+   */
+  const nextPage = function () {
+    //if there is a next page and album-list-page is ready and the next page is ready
+    if (
+      state.albums.ready &&
+      state.albums.nextPage != undefined &&
+      state.albums.nextPage.isReady
+    ) {
+      state.albums.ready = false; //tell state that the albums page starts to load now
+      state.albums.pages.push(state.albums.nextPage); //add page to our list in state
+    }
+  };
+
+  /**
+   * when user nearly reaches the end, load next page
+   */
+  const tryNextPage = () => {
+    if (
+      contentRef.current.getBoundingClientRect().bottom - 20 <=
+      window.innerHeight
+    )
+      nextPage();
+  };
+
+  useEffect(() => {
+    /**
+     * load first page if it wasnt loaded yet
+     */
+    if (state.albums.pages.length == 0) state.albums.pages.push(data);
+
+    /**
+     * listening to scroll events (to load next page when users scrolls to the end)
+     */
+    window.addEventListener("scroll", tryNextPage, { passive: true });
+    window.addEventListener("resize", tryNextPage, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", tryNextPage);
+      window.removeEventListener("resize", tryNextPage);
+    };
+  }, []);
+
+  /**
+   * load next page if albums dont take all space on screen
+   * (and before that, check if the current albums page is loaded already)
+   */
+  if (
+    state.albums.ready &&
+    state.albums.nextPage != undefined &&
+    state.albums.nextPage.isReady
+  ) {
+    tryNextPage();
+  }
 
   return (
     <Container>
@@ -24,32 +79,15 @@ function AlbumList({ data }: ListProps): JSX.Element {
           <h1>Płyta Tygodnia</h1>
         </Title>
 
-        <Czteropak>
-          {data.items.map(({ type, id }) => {
-            const item = state.source[type][id];
-            return <AlbumListItem key={item.id} item={item} />;
-          })}
-        </Czteropak>
-        
+        {state.albums.pages.map((item, i) => (
+          <AlbumListPage data={item} key={i} />
+        ))}
       </div>
     </Container>
   );
 }
 
 export default connect(AlbumList);
-
-const Czteropak = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: space-between;
-
-  column-gap: 15px;
-
-  @media (max-width: 750px) {
-    column-gap: 0;
-    flex-direction: column;
-  }
-  `
 
 const Container = styled.section`
   width: 100%;
