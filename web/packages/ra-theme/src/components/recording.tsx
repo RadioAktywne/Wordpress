@@ -124,8 +124,6 @@ const Cover = styled.div`
 
   overflow: hidden;
 
-  border: solid 1px black;
-
   display: flex;
   align-items: center;
   justify-content: center;
