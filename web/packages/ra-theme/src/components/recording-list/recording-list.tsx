@@ -19,14 +19,12 @@ function RecordingList({ data }: ListProps): JSX.Element {
   /**
    * viewing next pages, starting from the current one (which is in data)
    */
-  let page = data;
-  const [pages, setPages] = useState([page.link]);
   //this function is triggered when users nearly reaches the end
   function nextPage() {
     //if there is a next page
-    if (page.next) {
-      setPages([...pages, page.next]); //add it to our list in state
-      page = state.source.get(page.next) as RecordingArchiveData; //and set current page to it
+    if (state.recordings.currentPage.next) {
+      state.recordings.currentPage = state.source.get(state.recordings.currentPage.next) as RecordingArchiveData; //and set current page to it
+      state.recordings.pages.push(state.recordings.currentPage.link); //add it to our list in state
     }
   }
 
@@ -38,16 +36,17 @@ function RecordingList({ data }: ListProps): JSX.Element {
     if (contentRef.current.getBoundingClientRect().bottom - 20 <= window.innerHeight)
       nextPage();
   };
+  
   useEffect(() => {
     window.addEventListener("scroll", tryNextPage, { passive: true });
-    window.addEventListener("resize", tryNextPage);
-
+    window.addEventListener("resize", tryNextPage, { passive: true });
+    
     //load some pages at the beginning - the list might be shorter than the screen length
-    const pagesOnStart = Math.floor(
-      (window.innerHeight - contentRef.current.getBoundingClientRect().top) /
-        contentRef.current.clientHeight
-    );
-    for (let i = 0; i < pagesOnStart; i++) tryNextPage(); 
+    // const pagesOnStart = Math.floor(
+    //   (window.innerHeight - contentRef.current.getBoundingClientRect().top) /
+    //     contentRef.current.clientHeight
+    // );
+    // for (let i = 0; i < pagesOnStart; i++) tryNextPage(); 
 
     return () => {
       window.removeEventListener("scroll", tryNextPage);
@@ -57,13 +56,15 @@ function RecordingList({ data }: ListProps): JSX.Element {
 
   return (
     <Container>
-      <div ref={contentRef}>
+      <div ref={contentRef} onClick={nextPage}>
         <Title>
           <h1>Nagrania</h1>
         </Title>
 
-        {pages.map((item, i) => (
-          <RecordingListPage link={item} key={i} />
+        <RecordingListPage link={data.link} key={0} />
+
+        {state.recordings.pages.map((item, i) => (
+          <RecordingListPage link={item} key={i+1} />
         ))}
       </div>
     </Container>

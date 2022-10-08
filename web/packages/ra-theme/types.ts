@@ -5,6 +5,7 @@ import Router from "@frontity/router/types";
 import Source from "@frontity/source/types";
 import ReactPlayer from "react-player";
 import { ReactDOM } from "react";
+import { RecordingArchiveData } from "./src/data";
 
 /**
  * A Frontity starter theme designed to learn Frontity.
@@ -78,6 +79,14 @@ interface RaThemeTypeScript extends Package {
       durations: object; //durations of recordings
       isOpened: object; //boolans telling if a recording is opened
     };
+
+    /**
+     * Recordings list namespace.
+     */
+    recordings: {
+      currentPage: RecordingArchiveData;  //highest currently opened recordings page
+      pages: [string];  //list of opened pages
+    }
   };
 
   /**

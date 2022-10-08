@@ -2,6 +2,7 @@ import { Settings } from "frontity/types";
 import WpSource from "@frontity/wp-source/types";
 import Theme from "@frontity/ra-theme/types";
 
+// @ts-ignore
 const settings: Settings<Theme | WpSource> = {
   name: "radioaktywne",
   state: {
@@ -12,6 +13,7 @@ const settings: Settings<Theme | WpSource> = {
     },
   },
   packages: [
+  // @ts-ignore
     {
       name: "@frontity/ra-theme",
       state: {
@@ -25,6 +27,7 @@ const settings: Settings<Theme | WpSource> = {
         },
       },
     },
+  // @ts-ignore
     {
       name: "@frontity/wp-source",
       state: {
@@ -47,15 +50,15 @@ const settings: Settings<Theme | WpSource> = {
               archive: "/albums",
             },
             {
-              type: "recording",
-              endpoint: "recording",
-              archive: "/recordings",
-            },
-            {
               type: "info",
               endpoint: "info",
               archive: "/info",
             },
+            // {
+            //   type: "recording",
+            //   endpoint: "recording",
+            //   archive: "/recordings",
+            // },
           ],
         },
       },

@@ -43,6 +43,11 @@ const raThemeTypeScript: RaThemeTypeScript = {
       durations: [],
       isOpened: [],
     },
+
+    recordings: {
+      currentPage: undefined,
+      pages: [undefined],
+    },
   },
 
   /**
@@ -68,6 +73,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
             endpoints: ["pages"],
           }),
         });
+
         // @ts-ignore
         libraries.source.handlers.push({
           name: "event handler",
@@ -87,6 +93,29 @@ const raThemeTypeScript: RaThemeTypeScript = {
             endpoint: "event",
             params: {
               per_page: 100,
+            },
+          }),
+        });
+
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "recording handler",
+          priority: 15,
+          pattern: "/recording/(.*)?",
+          func: postTypeHandler({
+            endpoints: ["recording"],
+          }),
+        });
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "recordings handler",
+          priority: 15,
+          pattern: "/recordings/",
+          func: postTypeArchiveHandler({
+            type: "recording",
+            endpoint: "recording",
+            params: {
+              per_page: 4,
             },
           }),
         });
