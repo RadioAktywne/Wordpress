@@ -79,5 +79,6 @@ const Container = styled.div<ContainerProps>`
 const StyledImage = styled(Image)`
   display: block;
   object-fit: cover;
-  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
 `;
