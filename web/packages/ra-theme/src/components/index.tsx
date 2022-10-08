@@ -224,4 +224,6 @@ const HeadContainer = styled.div`
 const Main = styled.div`
   display: flex;
   justify-content: center;
+
+  margin-bottom: 42px; //space for footer + 2px
 `;
