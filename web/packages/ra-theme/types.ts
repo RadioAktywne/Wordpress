@@ -84,8 +84,9 @@ interface RaThemeTypeScript extends Package {
      * Recordings list namespace.
      */
     recordings: {
-      currentPage: RecordingArchiveData;  //highest currently opened recordings page
-      pages: [string];  //list of opened pages
+      nextPage: RecordingArchiveData;  //highest currently loaded recordings page
+      pages: string[];  //list of opened pages
+      ready: boolean;   //is the current page loaded
     }
   };
 

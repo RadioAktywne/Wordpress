@@ -2,7 +2,7 @@ import { connect, decode, styled, useConnect } from "frontity";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
 import RecordingListPage from "./recording-list-page";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import React from "react";
 
 /**
@@ -17,54 +17,62 @@ function RecordingList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   /**
-   * viewing next pages, starting from the current one (which is in data)
+   * viewing next pages
    */
-  //this function is triggered when users nearly reaches the end
-  function nextPage() {
-    //if there is a next page
-    if (state.recordings.currentPage.next) {
-      state.recordings.currentPage = state.source.get(state.recordings.currentPage.next) as RecordingArchiveData; //and set current page to it
-      state.recordings.pages.push(state.recordings.currentPage.link); //add it to our list in state
-    }
+  const nextPage = function() {
+    //if there is a next page and recording-list-page is ready and the next page is ready
+    if (state.recordings.ready && state.recordings.nextPage != undefined && state.recordings.nextPage.isReady) {
+      state.recordings.ready = false; //tell state that the recordings page starts to load now
+      state.recordings.pages.push(state.recordings.nextPage.link); //add page to our list in state
+    } 
   }
 
   /**
-   * listening to scroll events (to load next page when users scrolls to the end)
+   * when user nearly reaches the end, load next page
    */
   const contentRef = React.useRef<HTMLDivElement>(); //reference to the div containing title and recordings list
   const tryNextPage = () => {
     if (contentRef.current.getBoundingClientRect().bottom - 20 <= window.innerHeight)
       nextPage();
   };
-  
+
   useEffect(() => {
+    /**
+     * load first page if it wasnt loaded yet
+     */
+    if(state.recordings.pages.length == 0)
+      state.recordings.pages.push(data.link);
+
+    /**
+     * listening to scroll events (to load next page when users scrolls to the end)
+     */
     window.addEventListener("scroll", tryNextPage, { passive: true });
     window.addEventListener("resize", tryNextPage, { passive: true });
     
-    //load some pages at the beginning - the list might be shorter than the screen length
-    // const pagesOnStart = Math.floor(
-    //   (window.innerHeight - contentRef.current.getBoundingClientRect().top) /
-    //     contentRef.current.clientHeight
-    // );
-    // for (let i = 0; i < pagesOnStart; i++) tryNextPage(); 
-
     return () => {
       window.removeEventListener("scroll", tryNextPage);
       window.removeEventListener("resize", tryNextPage);
   };
   }, []);
 
+  /**
+   * load next page if recordings dont take all space on screen
+   * (and before that, check if the current recordings page is loaded already)
+   */
+  if(state.recordings.ready && state.recordings.nextPage != undefined && state.recordings.nextPage.isReady) 
+  {
+    tryNextPage();
+  }
+
   return (
     <Container>
-      <div ref={contentRef} onClick={nextPage}>
+      <div ref={contentRef} onClick={tryNextPage}>
         <Title>
           <h1>Nagrania</h1>
         </Title>
 
-        <RecordingListPage link={data.link} key={0} />
-
         {state.recordings.pages.map((item, i) => (
-          <RecordingListPage link={item} key={i+1} />
+          <RecordingListPage link={item} key={i} />
         ))}
       </div>
     </Container>

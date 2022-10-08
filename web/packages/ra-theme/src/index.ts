@@ -45,8 +45,9 @@ const raThemeTypeScript: RaThemeTypeScript = {
     },
 
     recordings: {
-      currentPage: undefined,
-      pages: [undefined],
+      nextPage: undefined,
+      pages: [],
+      ready: false,
     },
   },
 
@@ -115,7 +116,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
             type: "recording",
             endpoint: "recording",
             params: {
-              per_page: 4,
+              per_page: 22,
             },
           }),
         });
