@@ -1,10 +1,10 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import { useEffect } from "react";
 import { Packages } from "../../../types";
 import Loading from "../loading";
 import Link from "../link";
-import RecordingListItem from "./recording-list-item";
-import { ArchiveData } from "@frontity/source/types";
+import { AlbumArchiveData } from "../../data";
+import AlbumListItem from "./album-list-item";
 
 const RecordingWidget = () => {
   const { actions, state } = useConnect<Packages>();
@@ -13,36 +13,23 @@ const RecordingWidget = () => {
    * fetch recordings
    */
   useEffect(() => {
-    actions.source.fetch("/recordings");
+    actions.source.fetch("/albums");
   }, []);
-  const dataPost = state.source.get("/recordings") as ArchiveData;
+  const dataPost = state.source.get("/albums") as AlbumArchiveData;
 
   /**
-   * how many recordings should the widget show?
-   * will be decrementet each time - when it's 0, we already have 6 recordings
-   */
-  let numberOfRecordings = 6;
-
-  /**
-   * when recordings are fetched
+   * when albums are fetched
    */
   return dataPost.isReady ? (
     <Container>
       <div>
         <Title>
-          <Link link="/recordings">
-            <h1>Nagrania</h1>
+          <Link link="/albums">
+            <h1>Płyta Tygodnia</h1>
           </Link>
         </Title>
 
-        {dataPost.items.map(({ type, id }) => {
-          const item = state.source[type][id];
-          // Render one RecordingListItem component for each one.
-          if (numberOfRecordings) {
-            numberOfRecordings--;
-            return <RecordingListItem key={item.id} item={item} />;
-          }
-        })}
+        <AlbumListItem key={0} item={state.source[dataPost.items[0].type][dataPost.items[0].id]} />;
       </div>
     </Container>
   ) : (
@@ -55,17 +42,18 @@ const RecordingWidget = () => {
 export default connect(RecordingWidget);
 
 const Container = styled.section`
-  width: 66.66%;
+  width: 33.33%;
   padding: 0;
   margin: 0;
 
-  & > div {
-    padding-right: 15px;
+  & > div > h1 {
+    margin: 0;
   }
 
   @media (max-width: 750px) {
     padding-right: 0px;
     width: 100%;
+    padding-top: 20px !important;
 
     & > div {
       padding: 0;

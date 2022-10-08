@@ -4,6 +4,7 @@ import Player from "./player";
 import EventWidget from "./event-list/event-widget";
 import RecordingWidget from "./recording-list/recording-widget";
 import { HomeData, PageData, PageEntity } from "@frontity/source/types";
+import AlbumWidget from "./album-list/album-widget";
 
 /**
  * Properties received by the `Home` component.
@@ -31,6 +32,7 @@ function Home({ data }: HomeProps): JSX.Element {
         <Player />
         <EventWidget />
         <RecordingWidget />
+        <AlbumWidget/>
 
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
           // processed by the processors we included in the
