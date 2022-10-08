@@ -16,57 +16,80 @@ interface ItemProps {
 
 function AlbumListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  const author = state.source.author[item.author];
-  const date = new Date(item.date);
 
   return (
-    <article>
-      <Link link={item.link}>
-        <Title dangerouslySetInnerHTML={{ __html: item.title.rendered }} />
-      </Link>
+    <Container>
+      <article>
+        <Link link={item.link}>
+          <Cover>
+            {item.acf.image && <FeaturedMedia id={item.acf.image} />}
+            <Title>
+              <ArtistName>
+                {item.title.rendered.replace(/(?<= &#8211; ).*$/, "").replace(" &#8211; ", "")}
+              </ArtistName>
 
-      <div>
-        {/* If the album post has an author, we render a clickable author text. */}
-        {author && (
-          <StyledLink link={author.link}>
-            <AuthorName>
-              By <b>{author.name}</b>
-            </AuthorName>
-          </StyledLink>
-        )}
-        <PublishDate>
-          {" "}
-          on <b>{date.toDateString()}</b>
-        </PublishDate>
-      </div>
-
-      {item.acf.image && <FeaturedMedia id={item.acf.image} />}
-    </article>
+              <SongTitle>
+              {item.title.rendered.replace(/^(.*?)\&#8211; /, "")}
+              </SongTitle>
+            </Title>
+          </Cover>
+        </Link>
+      </article>
+    </Container>
   );
 }
 
 // Connect the AlbumListItem to gain access to `state` as a prop
 export default connect(AlbumListItem);
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: rgba(12, 17, 43);
+const ArtistName = styled.h5`
+  color: #fff;
   margin: 0;
-  padding-top: 24px;
-  padding-bottom: 8px;
-  box-sizing: border-box;
+  padding: 0;
+  font-weight: normal;
+  font-size: 1rem;
+
+  padding-left: 10px;
+  padding-top: 10px;
+`
+
+const SongTitle = styled.h3`
+  color: #fff;
+  margin: 0;
+  font-size: 1.3rem;
+  padding: 0;
+
+  padding-left: 10px;
+  padding-bottom: 10px;
+`
+
+const Container = styled.h1`
+  width: 100%;
+  height: 275px;
+`
+
+const Title = styled.div`
+  background-color: rgba(60, 60, 76, 0.6);
+
+  position: absolute;
+
+  width: 100%;
+  bottom: 0;
 `;
 
-const AuthorName = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-`;
+const Cover = styled.div`
+  height: 275px;
 
-const StyledLink = styled(Link)`
-  padding: 15px 0;
-`;
+  overflow: hidden;
 
-const PublishDate = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  @media (max-width: 750px) {
+    
+  }
 `;

@@ -1,6 +1,5 @@
 import { connect, decode, styled, useConnect } from "frontity";
 import AlbumListItem from "./album-list-item";
-import Pagination from "./pagination";
 import { Packages } from "../../../types";
 import { AlbumArchiveData } from "../../data";
 import React from "react";
@@ -25,16 +24,32 @@ function AlbumList({ data }: ListProps): JSX.Element {
           <h1>Płyta Tygodnia</h1>
         </Title>
 
-        {data.items.map(({ type, id }) => {
-          const item = state.source[type][id];
-          return <AlbumListItem key={item.id} item={item} />;
-        })}
+        <Czteropak>
+          {data.items.map(({ type, id }) => {
+            const item = state.source[type][id];
+            return <AlbumListItem key={item.id} item={item} />;
+          })}
+        </Czteropak>
+        
       </div>
     </Container>
   );
 }
 
 export default connect(AlbumList);
+
+const Czteropak = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+
+  column-gap: 15px;
+
+  @media (max-width: 750px) {
+    column-gap: 0;
+    flex-direction: column;
+  }
+  `
 
 const Container = styled.section`
   width: 100%;
