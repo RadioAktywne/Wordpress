@@ -92,8 +92,8 @@ const Description = styled.div`
   line-height: 1.7;
   margin-top: 20px;
 
-  & ul, & ol
-  {
+  & ul,
+  & ol {
     line-height: 1;
     margin: 0;
   }

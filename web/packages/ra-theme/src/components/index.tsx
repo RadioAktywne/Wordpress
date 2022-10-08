@@ -170,7 +170,7 @@ function Theme() {
         </Main>
       </PlayerContext.Provider>
 
-      <Footer/>
+      <Footer />
     </>
   );
 }

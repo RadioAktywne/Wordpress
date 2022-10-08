@@ -13,7 +13,7 @@ const settings: Settings<Theme | WpSource> = {
     },
   },
   packages: [
-  // @ts-ignore
+    // @ts-ignore
     {
       name: "@frontity/ra-theme",
       state: {
@@ -27,7 +27,7 @@ const settings: Settings<Theme | WpSource> = {
         },
       },
     },
-  // @ts-ignore
+    // @ts-ignore
     {
       name: "@frontity/wp-source",
       state: {

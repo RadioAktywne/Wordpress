@@ -61,11 +61,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
    * if it doesnt exist, return null
    */
   if (status === "pending")
-    return (
-      <LoadingContainer>
-        {/* <Loading /> */}
-      </LoadingContainer>
-    );
+    return <LoadingContainer>{/* <Loading /> */}</LoadingContainer>;
   if (!media) return null;
 
   /**
@@ -132,9 +128,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
       <div className="progress-text">
         {state.recplayer.durations[id] !== undefined
           ? secsToTime(
-              Math.floor(
-                state.recplayer.durations[id] * state.recplayer.played
-              )
+              Math.floor(state.recplayer.durations[id] * state.recplayer.played)
             ) +
             " / " +
             secsToTime(Math.floor(state.recplayer.durations[id]))
@@ -190,7 +184,7 @@ const LoadingContainer = styled.div`
   & > div {
     padding: 0 !important;
     margin-top: -10px !important;
-    opacity: .2 !important;
+    opacity: 0.2 !important;
   }
 
   position: absolute !important;

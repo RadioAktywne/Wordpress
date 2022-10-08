@@ -22,16 +22,16 @@ function RecordingListPage({ data }: ListPageProps): JSX.Element {
    *  preload next page
    *  render items from current page
    */
-  if(data.isReady)
-  {
+  if (data.isReady) {
     state.recordings.ready = true;
 
-    if(data.next)
-    {
+    if (data.next) {
       useEffect(() => {
         actions.source.fetch(data.next);
       }, []);
-      state.recordings.nextPage = state.source.get(data.next) as RecordingArchiveData;
+      state.recordings.nextPage = state.source.get(
+        data.next
+      ) as RecordingArchiveData;
     } else {
       state.recordings.nextPage = undefined;
     }

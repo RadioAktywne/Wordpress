@@ -1,7 +1,6 @@
 import { ServerError } from "@frontity/source";
 import { PostTypeArchiveData, SearchData } from "@frontity/source/types/data";
-import capitalize
-  from "@frontity/wp-source/src/libraries/handlers/utils/capitalize";
+import capitalize from "@frontity/wp-source/src/libraries/handlers/utils/capitalize";
 import { Handler } from "@frontity/wp-source/types";
 
 /**
