@@ -44,11 +44,11 @@ const settings: Settings<Theme | WpSource> = {
               endpoint: "show",
               archive: "/shows",
             },
-            {
-              type: "album",
-              endpoint: "album",
-              archive: "/albums",
-            },
+            // {
+            //   type: "album",
+            //   endpoint: "album",
+            //   archive: "/albums",
+            // },
             {
               type: "info",
               endpoint: "info",

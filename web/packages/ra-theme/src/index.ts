@@ -75,6 +75,9 @@ const raThemeTypeScript: RaThemeTypeScript = {
           }),
         });
 
+        /**
+         * set number of events per page
+         */
         // @ts-ignore
         libraries.source.handlers.push({
           name: "event handler",
@@ -98,6 +101,9 @@ const raThemeTypeScript: RaThemeTypeScript = {
           }),
         });
 
+        /**
+         * set number of recordings per page
+         */
         // @ts-ignore
         libraries.source.handlers.push({
           name: "recording handler",
@@ -117,6 +123,32 @@ const raThemeTypeScript: RaThemeTypeScript = {
             endpoint: "recording",
             params: {
               per_page: 22,
+            },
+          }),
+        });
+
+        /**
+         * set number of albums per page
+         */
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "album handler",
+          priority: 15,
+          pattern: "/album/(.*)?",
+          func: postTypeHandler({
+            endpoints: ["album"],
+          }),
+        });
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "albums handler",
+          priority: 15,
+          pattern: "/albums/",
+          func: postTypeArchiveHandler({
+            type: "album",
+            endpoint: "album",
+            params: {
+              per_page: 4,
             },
           }),
         });
