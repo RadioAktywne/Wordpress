@@ -35,7 +35,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
     state.recplayer.playing = false;
     state.recplayer.played = 0;
 
-    state.recplayer.openedRec = item.id;
+    state.recplayer.openedRec = item.acf.file;
   };
 
   /**
@@ -43,7 +43,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
    * @returns a boolean
    */
   function shouldBeOpened() {
-    return state.recplayer.openedRec == item.id;
+    return state.recplayer.openedRec == item.acf.file;
   }
 
   return (
@@ -59,7 +59,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
 
       <BackButton
         onClick={() => {
-          if (item.id !== state.recplayer.openedRec) openRecording();
+          if (item.acf.file !== state.recplayer.openedRec) openRecording();
         }}
       >
         <Link link={item.link}>

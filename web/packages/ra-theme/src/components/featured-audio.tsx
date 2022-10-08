@@ -73,16 +73,16 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
    * @returns .hidden class name if a recording is being closed
    */
   function openRecording() {
-    if (state.recplayer.isOpened[id - 1] !== true) {
-      state.recplayer.isOpened[id - 1] = true;
+    if (state.recplayer.isOpened[id] !== true) {
+      state.recplayer.isOpened[id] = true;
       state.recplayer.srcUrl = media.source_url;
     }
 
     return "";
   }
   function closeRecording() {
-    if (state.recplayer.isOpened[id - 1] == true) {
-      state.recplayer.isOpened[id - 1] = false;
+    if (state.recplayer.isOpened[id] == true) {
+      state.recplayer.isOpened[id] = false;
     }
 
     return "hidden";
@@ -93,7 +93,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
    * @returns a boolean
    */
   function shouldBeOpened() {
-    return state.recplayer.openedRec == id - 1;
+    return state.recplayer.openedRec == id;
   }
 
   /**
@@ -130,14 +130,14 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
       </div>
 
       <div className="progress-text">
-        {state.recplayer.durations[id - 1] !== undefined
+        {state.recplayer.durations[id] !== undefined
           ? secsToTime(
               Math.floor(
-                state.recplayer.durations[id - 1] * state.recplayer.played
+                state.recplayer.durations[id] * state.recplayer.played
               )
             ) +
             " / " +
-            secsToTime(Math.floor(state.recplayer.durations[id - 1]))
+            secsToTime(Math.floor(state.recplayer.durations[id]))
           : "00:00 / 00:00"}
       </div>
 

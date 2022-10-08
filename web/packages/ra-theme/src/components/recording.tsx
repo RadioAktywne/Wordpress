@@ -92,6 +92,12 @@ const Description = styled.div`
   line-height: 1.7;
   margin-top: 20px;
 
+  & ul, & ol
+  {
+    line-height: 1;
+    margin: 0;
+  }
+
   @media (max-width: 1400px) {
     font-size: 0.8rem;
   }
