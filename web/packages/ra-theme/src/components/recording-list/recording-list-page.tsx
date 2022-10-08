@@ -9,20 +9,12 @@ import Loading from "../loading";
  * Props received by the {@link RecordingListPage} component.
  */
 interface ListPageProps {
-  link: string;
+  data: RecordingArchiveData;
   key: number;
 }
 
-function RecordingListPage({ link }: ListPageProps): JSX.Element {
+function RecordingListPage({ data }: ListPageProps): JSX.Element {
   const { actions, state } = useConnect<Packages>();
-
-  /**
-   * fetch the page
-   */
-  useEffect(() => {
-    actions.source.fetch(link);
-  }, []);
-  const data = state.source.get(link) as RecordingArchiveData;
 
   /**
    * wait till its fetched

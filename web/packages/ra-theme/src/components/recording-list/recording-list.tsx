@@ -23,7 +23,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
     //if there is a next page and recording-list-page is ready and the next page is ready
     if (state.recordings.ready && state.recordings.nextPage != undefined && state.recordings.nextPage.isReady) {
       state.recordings.ready = false; //tell state that the recordings page starts to load now
-      state.recordings.pages.push(state.recordings.nextPage.link); //add page to our list in state
+      state.recordings.pages.push(state.recordings.nextPage); //add page to our list in state
     } 
   }
 
@@ -41,7 +41,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
      * load first page if it wasnt loaded yet
      */
     if(state.recordings.pages.length == 0)
-      state.recordings.pages.push(data.link);
+      state.recordings.pages.push(data);
 
     /**
      * listening to scroll events (to load next page when users scrolls to the end)
@@ -72,7 +72,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
         </Title>
 
         {state.recordings.pages.map((item, i) => (
-          <RecordingListPage link={item} key={i} />
+          <RecordingListPage data={item} key={i} />
         ))}
       </div>
     </Container>
