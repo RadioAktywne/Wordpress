@@ -2,6 +2,7 @@ import { connect, css, Global, styled, useConnect } from "frontity";
 import Switch from "@frontity/components/switch";
 import { isError, isHome, isPage } from "@frontity/source";
 import Header from "./header";
+import Footer from "./footer";
 import MemberList from "./member-list";
 import ShowList from "./show-list";
 import EventList from "./event-list";
@@ -168,6 +169,8 @@ function Theme() {
           </Switch>
         </Main>
       </PlayerContext.Provider>
+
+      <Footer/>
     </>
   );
 }
