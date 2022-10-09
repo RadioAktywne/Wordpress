@@ -2,7 +2,13 @@ import { connect, decode, styled, useConnect } from "frontity";
 import EventListItem from "./event-list-item";
 import Link from "../link";
 import { Packages } from "../../../types";
+import { useEffect } from "react";
+import { EventArchiveData, EventData, EventEntity, ShowArchiveData } from "../../data";
+import Loading from "../loading";
 
+/**
+ * polish names of days
+ */
 const daysNames = {
   monday: "Poniedziałek",
   tuesday: "Wtorek",
@@ -30,34 +36,44 @@ const isEarlier = function (a, b) {
     : 1;
 };
 
-function EventDay(props) {
-  const { state } = useConnect<Packages>();
+interface ListProps {
+  data: EventEntity[];
+  onHome: boolean;
+  day: string;
+}
 
-  let eventList = []; //needs to be mutable, as it will be sorted later
-  props.data.items.map(({ type, id }) => {
-    const item = state.source[type][id];
-    if (item.acf.day == props.day) eventList.push(item);
-  });
+function EventDay({ data, onHome, day }: ListProps): JSX.Element {
+  const { state, actions } = useConnect<Packages>();
 
-  if (eventList.length > 1) eventList.sort(isEarlier);
+  /**
+   * fetch shows to have shows links, not only events links
+   */
+  useEffect(() => {
+    actions.source.fetch("/shows");
+  }, []);
+  const showsData = state.source.get("/shows") as ShowArchiveData;
 
-  return (
+  /**
+   * sort events if there are more than 2
+   */
+  if (data.length > 1) data.sort(isEarlier);
+
+  return showsData.isReady ? (
     <Day>
-      <div className={props.className}>
-        {props.onHome ? (
+      <div>
+        {onHome ? (
           <Link link="/events">
             <h2 className="">RAmówka na dziś</h2>
           </Link>
         ) : (
-          <h2>{daysNames[props.day]}</h2>
+          <h2>{daysNames[day]}</h2>
         )}
-        {eventList.map(({ type, id }) => {
-          const item = state.source[type][id];
-          return <EventListItem key={item.id} item={item} />;
+        {data.map((value, index) => {
+          return <EventListItem item={value} key={index} showsData={showsData}/>
         })}
       </div>
     </Day>
-  );
+  ) : <Day><Loading/></Day>;
 }
 
 export default connect(EventDay);
@@ -70,9 +86,8 @@ const Day = styled.div`
     padding: 0 15px 15px 0;
   }
 
-  .right
-  {
-    padding: 0 0 15px 0;  
+  &:nth-of-type(3n) > div {
+    padding: 0 0 15px 0; 
   }
 
   & > div > h2

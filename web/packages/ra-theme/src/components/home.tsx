@@ -5,6 +5,9 @@ import EventWidget from "./event-list/event-widget";
 import RecordingWidget from "./recording-list/recording-widget";
 import { HomeData, PageData, PageEntity } from "@frontity/source/types";
 import AlbumWidget from "./album-list/album-widget";
+import { useEffect } from "react";
+import { EventArchiveData } from "../data";
+import Loading from "./loading";
 
 /**
  * Properties received by the `Home` component.
@@ -18,20 +21,29 @@ interface HomeProps {
  * The Home component that is used to render homepage
  */
 function Home({ data }: HomeProps): JSX.Element {
-  const { state, libraries } = useConnect<Packages>();
+  const { state, libraries, actions } = useConnect<Packages>();
 
   // Get the data of the homepage.
   const home: PageEntity = state.source[data.type][data.id];
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
+  /**
+   * fetch all events to pass them to EventsWidget
+   */
+  useEffect(() => {
+    actions.source.fetch("/events");
+  }, []);
+  const dataPost = state.source.get("/events") as EventArchiveData;
+
   // Load the page, but only if the data is ready.
   return data.isReady ? (
     <BigContainer>
       <Container>
         <Player />
-        <EventWidget />
+        {dataPost.isReady ? <EventWidget data = {dataPost}/> : <Loading/>}
         <RecordingWidget />
+        
         <AlbumWidget />
 
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is

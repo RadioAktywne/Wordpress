@@ -1,21 +1,13 @@
 import { connect, decode, styled, useConnect } from "frontity";
 import EventDay from "./event-day";
 import { Packages } from "../../../types";
-import { EventArchiveData } from "../../data";
+import { EventArchiveData, EventEntity } from "../../data";
 
 /**
  * Props received by the {@link EventList} component.
  */
 interface ListProps {
-  /**
-   * Data object representing an archive link.
-   */
   data: EventArchiveData;
-
-  /**
-   * Flag used by Frontity's {@link Switch} component to decide whether
-   * this component should be rendered.
-   */
   when?: boolean;
 }
 
@@ -27,6 +19,23 @@ interface ListProps {
  * @returns React component.
  */
 function EventList({ data }: ListProps): JSX.Element {
+  const { state } = useConnect<Packages>();
+
+  let eventsPerDay = {
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: [],
+  };
+
+  data.items.map(({ type, id }) => {
+    const item = state.source[type][id] as EventEntity;
+    eventsPerDay[item.acf.day].push(item);
+  });
+
   return (
     <Container>
       <Title>
@@ -34,18 +43,13 @@ function EventList({ data }: ListProps): JSX.Element {
       </Title>
 
       <Days>
-        <EventDay data={data} day="monday" className="" onHome={false} />
-        <EventDay data={data} day="tuesday" className="" onHome={false} />
-        <EventDay
-          data={data}
-          day="wednesday"
-          className="right"
-          onHome={false}
-        />
-        <EventDay data={data} day="thursday" className="" onHome={false} />
-        <EventDay data={data} day="friday" className="" onHome={false} />
-        <EventDay data={data} day="saturday" className="right" onHome={false} />
-        <EventDay data={data} day="sunday" className="" onHome={false} />
+        <EventDay data={eventsPerDay["monday"]} onHome={false} day={"monday"}/>
+        <EventDay data={eventsPerDay["tuesday"]} onHome={false} day={"tuesday"}/>
+        <EventDay data={eventsPerDay["wednesday"]} onHome={false} day={"wednesday"}/>
+        <EventDay data={eventsPerDay["thursday"]} onHome={false} day={"thursday"}/>
+        <EventDay data={eventsPerDay["friday"]} onHome={false} day={"friday"}/>
+        <EventDay data={eventsPerDay["saturday"]} onHome={false} day={"saturday"}/>
+        <EventDay data={eventsPerDay["sunday"]} onHome={false} day={"sunday"}/>
       </Days>
     </Container>
   );
