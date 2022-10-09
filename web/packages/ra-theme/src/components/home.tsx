@@ -41,9 +41,9 @@ function Home({ data }: HomeProps): JSX.Element {
     <BigContainer>
       <Container>
         <Player />
-        {dataPost.isReady ? <EventWidget data = {dataPost}/> : <Loading/>}
+        {dataPost.isReady ? <EventWidget data={dataPost} /> : <Loading />}
         <RecordingWidget />
-        
+
         <AlbumWidget />
 
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is

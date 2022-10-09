@@ -3,7 +3,12 @@ import EventListItem from "./event-list-item";
 import Link from "../link";
 import { Packages } from "../../../types";
 import { useEffect } from "react";
-import { EventArchiveData, EventData, EventEntity, ShowArchiveData } from "../../data";
+import {
+  EventArchiveData,
+  EventData,
+  EventEntity,
+  ShowArchiveData,
+} from "../../data";
 import Loading from "../loading";
 
 /**
@@ -69,11 +74,17 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
           <h2>{daysNames[day]}</h2>
         )}
         {data.map((value, index) => {
-          return <EventListItem item={value} key={index} showsData={showsData}/>
+          return (
+            <EventListItem item={value} key={index} showsData={showsData} />
+          );
         })}
       </div>
     </Day>
-  ) : <Day><Loading/></Day>;
+  ) : (
+    <Day>
+      <Loading />
+    </Day>
+  );
 }
 
 export default connect(EventDay);

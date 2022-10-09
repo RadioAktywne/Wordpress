@@ -32,7 +32,6 @@ const RecordingWidget = () => {
           key={0}
           item={state.source[dataPost.items[0].type][dataPost.items[0].id]}
         />
-        ;
       </div>
     </Container>
   ) : (

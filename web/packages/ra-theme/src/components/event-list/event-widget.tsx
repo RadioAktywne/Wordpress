@@ -29,19 +29,12 @@ function EventWidget({ data }: ListProps): JSX.Element {
   /**
    * choose just today's events
    */
-   data.items.map(({ type, id }) => {
+  data.items.map(({ type, id }) => {
     const item = state.source[type][id] as EventEntity;
-    if(item.acf.day == englishDays[day])
-      eventsToday.push(item);
+    if (item.acf.day == englishDays[day]) eventsToday.push(item);
   });
 
-  return (
-    <EventDay
-      data={eventsToday}
-      day={englishDays[day]}
-      onHome={true}
-    />
-  );
-};
+  return <EventDay data={eventsToday} day={englishDays[day]} onHome={true} />;
+}
 
 export default connect(EventWidget);

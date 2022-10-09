@@ -43,13 +43,29 @@ function EventList({ data }: ListProps): JSX.Element {
       </Title>
 
       <Days>
-        <EventDay data={eventsPerDay["monday"]} onHome={false} day={"monday"}/>
-        <EventDay data={eventsPerDay["tuesday"]} onHome={false} day={"tuesday"}/>
-        <EventDay data={eventsPerDay["wednesday"]} onHome={false} day={"wednesday"}/>
-        <EventDay data={eventsPerDay["thursday"]} onHome={false} day={"thursday"}/>
-        <EventDay data={eventsPerDay["friday"]} onHome={false} day={"friday"}/>
-        <EventDay data={eventsPerDay["saturday"]} onHome={false} day={"saturday"}/>
-        <EventDay data={eventsPerDay["sunday"]} onHome={false} day={"sunday"}/>
+        <EventDay data={eventsPerDay["monday"]} onHome={false} day={"monday"} />
+        <EventDay
+          data={eventsPerDay["tuesday"]}
+          onHome={false}
+          day={"tuesday"}
+        />
+        <EventDay
+          data={eventsPerDay["wednesday"]}
+          onHome={false}
+          day={"wednesday"}
+        />
+        <EventDay
+          data={eventsPerDay["thursday"]}
+          onHome={false}
+          day={"thursday"}
+        />
+        <EventDay data={eventsPerDay["friday"]} onHome={false} day={"friday"} />
+        <EventDay
+          data={eventsPerDay["saturday"]}
+          onHome={false}
+          day={"saturday"}
+        />
+        <EventDay data={eventsPerDay["sunday"]} onHome={false} day={"sunday"} />
       </Days>
     </Container>
   );
