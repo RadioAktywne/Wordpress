@@ -25,16 +25,12 @@ interface ItemProps {
  */
 function InfoTileListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  const author = state.source.author[item.author];
-  const date = new Date(item.date);
 
   return (
     <article>
       <Link link={item.acf.link}>
-        <Title dangerouslySetInnerHTML={{ __html: item.title.rendered }} />
+        {item.acf.image && <FeaturedMedia id={item.acf.image} />}
       </Link>
-
-      {item.acf.image && <FeaturedMedia id={item.acf.image} />}
     </article>
   );
 }
@@ -49,18 +45,4 @@ const Title = styled.h1`
   padding-top: 24px;
   padding-bottom: 8px;
   box-sizing: border-box;
-`;
-
-const AuthorName = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-`;
-
-const StyledLink = styled(Link)`
-  padding: 15px 0;
-`;
-
-const PublishDate = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
 `;
