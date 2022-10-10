@@ -609,6 +609,13 @@ function ra_custom_types_register_info_tile()
         'title' => 'Info Tile',
         'fields' => [
             [
+                'key' => 'info_tile_field_id',
+                'label' => 'Identifier',
+                'name' => 'id',
+                'type' => 'text',
+                'required' => true,
+            ],
+            [
                 'key' => 'info_tile_field_title',
                 'label' => 'Title',
                 'name' => 'title',

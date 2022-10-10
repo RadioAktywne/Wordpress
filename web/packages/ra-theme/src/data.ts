@@ -328,6 +328,11 @@ export interface InfoTileArchiveData extends ArchiveData {
 export interface InfoTileEntity extends PostTypeEntity {
   acf: {
     /**
+     * Info tile identifier.
+     */
+    id: string;
+
+    /**
      * Info tile title.
      */
     title: string;
