@@ -3,20 +3,16 @@ import { Packages } from "../../types";
 import FeaturedMedia from "./featured-image";
 import { ShowData, ShowEntity } from "../data";
 import useMembers from "../hooks/useMembers";
+import Back from "../img/icons/back.svg";
 import Loading from "./loading";
+import parse from "html-react-parser";
+import Link from "./link";
 
 /**
  * Properties received by the `Show` component.
  */
 interface ShowProps {
-  /**
-   * Data element representing a URL in your frontity site.
-   */
   data: ShowData;
-
-  /**
-   * Whether to render this component.
-   */
   when?: boolean;
 }
 
@@ -24,24 +20,12 @@ interface ShowProps {
  * The Show component that is used to render shows
  *
  * @param props - The Frontity store (state, actions, and libraries).
- *
- * @example
- * ```js
- * <Switch>
- *   <Show when={data.isShow} />
- * </Switch>
- * ```
- *
  * @returns The {@link Show} element rendered.
  */
 function Show({ data }: ShowProps): JSX.Element {
-  const { state, libraries } = useConnect<Packages>();
+  const { state } = useConnect<Packages>();
   // Get the data of the show.
-  const show: ShowEntity = state.source[data.type][data.id];
-
-  // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
-
+  const show = state.source[data.type][data.id] as ShowEntity;
   const { status, value: hosts } = useMembers(show.acf.hosts);
 
   if (status === "pending") return <Loading />;
@@ -49,23 +33,51 @@ function Show({ data }: ShowProps): JSX.Element {
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
-      <div>
-        <Title>{show.acf.title}</Title>
-        {hosts
-          .filter((host) => host)
-          .map((host) => host.acf.name)
-          .join(", ")}
-      </div>
+      <MainContent>
+        <Title>
+          <h1>{show.acf.title}</h1>
 
-      {show.acf.image && <FeaturedMedia id={show.acf.image} />}
+          <BackButton>
+            <Link link="/events">
+              <img src={Back} alt="cofnij" />
+            </Link>
+          </BackButton>
+        </Title>
 
-      {show.acf.description && ( // Render the content using the Html2React component so the HTML is
-        // processed by the processors we included in the
-        // libraries.html2react.processors array.
-        <Content>
-          <Html2React html={show.acf.description} />
-        </Content>
-      )}
+        <Description>
+          {parse(
+            //parse html
+            show.acf.description
+              .replace('<div class="article-containter">', "") //remove div at the beginning
+              .replace("</div>", "") //remove closing div at the end
+              .replace(/(?:\r\n|\r|\n)/g, "<br>") //convert new lines to breaks
+              .replace(/^(<br>)+|(<br>)+$/g, "") //remove newlines at the beginning and at the end
+          )}
+        </Description>
+      </MainContent>
+
+      <AboutContent>
+        {show.acf.image && (
+          <Cover>
+            <FeaturedMedia id={show.acf.image} />
+          </Cover>
+        )}
+
+        <Title>
+          <h1>Redaktorzy</h1>
+        </Title>
+
+        <List>
+          {hosts.map((value, id) => {
+            if(value != undefined)
+              return (
+                <Link link={value.link}>{value.acf.name}</Link>
+              )
+          })}
+        </List>
+      </AboutContent>
+
+      
     </Container>
   ) : null;
 }
@@ -73,137 +85,145 @@ function Show({ data }: ShowProps): JSX.Element {
 export default connect(Show);
 
 const Container = styled.div`
-  width: 800px;
-  margin: 0;
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 30px;
   padding: 24px;
-`;
 
-const Title = styled.h1`
-  margin: 24px 0 8px;
-  color: rgba(12, 17, 43);
-`;
+  display: flex;
+  flex-direction: row;
 
-/**
- * This component is the parent of the `content.rendered` HTML. We can use nested
- * selectors to style that HTML.
- */
-
-const Content = styled.div`
-  color: rgba(12, 17, 43, 0.8);
-  word-break: break-word;
-
-  * {
-    max-width: 100%;
+  @media (max-width: 1400px) {
+    margin: 0 10px;
   }
 
-  p {
-    line-height: 1.6em;
+  @media (max-width: 750px) {
+    flex-direction: column;
+    padding: 24px 0;
+    margin: 0;
+  }
+`;
+
+const Description = styled.div`
+  color: #3c3c4c;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-top: 20px;
+
+  & ul,
+  & ol {
+    line-height: 1;
+    margin: 0;
   }
 
-  img {
+  @media (max-width: 1400px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const MainContent = styled.div`
+  width: 66.6%;
+  padding-right: 20px;
+
+  @media (max-width: 750px) {
     width: 100%;
-    object-fit: cover;
-    object-position: center;
+    padding-right: 0;
   }
+`;
 
-  figure {
-    margin: 24px auto;
+const AboutContent = styled.div`
+  width: 33.33%;
+  @media (max-width: 750px) {
     width: 100%;
-
-    figcaption {
-      font-size: 0.7em;
-    }
   }
+`
 
-  iframe {
-    display: block;
-    margin: auto;
-  }
+const Cover = styled.div`
+  width: 100%;
+  aspect-ratio: 1/1;
 
-  blockquote {
-    margin: 16px 0;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-left: 4px solid rgba(12, 17, 43);
-    padding: 4px 16px;
-  }
+  overflow: hidden;
 
-  a {
-    color: rgb(31, 56, 197);
-    text-decoration: underline;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  /* Input fields styles */
-
-  input[type="text"],
-  input[type="email"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="date"],
-  textarea,
-  select {
-    display: block;
-    padding: 6px 12px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    outline-color: transparent;
-    transition: outline-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    margin: 8px 0 4px 0;
-
-    &:focus {
-      outline-color: #1f38c5;
-    }
-  }
-
-  input[type="submit"] {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid #1f38c5;
-    padding: 12px 36px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #1f38c5;
-  }
-
-  /* WordPress Core Align Classes */
-
-  @media (min-width: 420px) {
-    img.aligncenter,
-    img.alignleft,
-    img.alignright {
-      width: auto;
+  @media (max-width: 750px) {
+    & img {
+      width: 100%;
     }
 
-    .aligncenter {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
+    aspect-ratio: auto;
+    height: auto;
+    padding-right: 0;
+    border: none;
+    margin-top: 30px;
+  }
 
-    .alignright {
-      float: right;
-      margin-left: 24px;
-    }
+  margin-bottom: 15px;
+`;
 
-    .alignleft {
-      float: left;
-      margin-right: 24px;
+const Title = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  & > h1 {
+    color: #6aba9c;
+    background-color: #3c3c4c;
+    border-bottom: solid 2px #6aba9c;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: lighter;
+    font-size: 1.6rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 1400px) {
+      font-size: 1.2rem;
     }
   }
 `;
+
+const BackButton = styled.div`
+  cursor: pointer;
+  border-left: 2px solid #6aba9c;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6px;
+
+  & img {
+    height: 30px;
+    width: 50px;
+    transform: rotateZ(90deg);
+  }
+`;
+
+const List = styled.div`
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+
+  & > a {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+    padding-left: 15px;
+    color: #3c3c4c;
+
+    &:hover {
+      color: #6aba9c;
+    }
+  }
+
+  & > a:nth-of-type(2n + 1) {
+    background-color: rgba(60, 60, 76, 0.1);
+  }
+`
