@@ -38,37 +38,70 @@ function ShowEvents({ live, showId }: ShowEventsProps): JSX.Element {
   /**
    * check if and what time event happens for each day
    */
-   let isDay = {
-        monday: undefined,
-        tuesday: undefined,
-        wednesday: undefined,
-        thursday: undefined,
-        friday: undefined,
-        saturday: undefined,
-        sunday: undefined,
-    };
-//   let isDay = {};
-  if(eventsData.isReady)
-  {
-    eventsData.items.map(({type, id}) => {
-        const item = state.source[type][id] as EventEntity;
-        if(item.acf.show == showId && (live == true ? item.acf.type == "live" : item.acf.type == "replay"))
-          isDay[item.acf.day] = cutSec(item.acf.start_time) + " do " + cutSec(item.acf.end_time);
-    })
+  let isDay = {
+    monday: undefined,
+    tuesday: undefined,
+    wednesday: undefined,
+    thursday: undefined,
+    friday: undefined,
+    saturday: undefined,
+    sunday: undefined,
+  };
+  //   let isDay = {};
+  if (eventsData.isReady) {
+    eventsData.items.map(({ type, id }) => {
+      const item = state.source[type][id] as EventEntity;
+      if (
+        item.acf.show == showId &&
+        (live == true ? item.acf.type == "live" : item.acf.type == "replay")
+      )
+        isDay[item.acf.day] =
+          cutSec(item.acf.start_time) + " do " + cutSec(item.acf.end_time);
+    });
   }
 
   // Load events, but only if the data is ready.
   return eventsData.isReady ? (
     <>
-        {isDay.monday != undefined ? <div><span>Poniedziałki, od {isDay.monday}</span></div> : null}
-        {isDay.tuesday != undefined ? <div><span>Wtorki, od {isDay.tuesday}</span></div> : null}
-        {isDay.wednesday != undefined ? <div><span>Środy, od {isDay.wednesday}</span></div> : null}
-        {isDay.thursday != undefined ? <div><span>Czawrtki, od {isDay.thursday}</span></div> : null}
-        {isDay.friday != undefined ? <div><span>Piątki, od {isDay.friday}</span></div> : null}
-        {isDay.saturday != undefined ? <div><span>Soboty, od {isDay.saturday}</span></div> : null}
-        {isDay.sunday != undefined ? <div><span>Niedziele, od {isDay.sunday}</span></div> : null}
+      {isDay.monday != undefined ? (
+        <div>
+          <span>Poniedziałki, od {isDay.monday}</span>
+        </div>
+      ) : null}
+      {isDay.tuesday != undefined ? (
+        <div>
+          <span>Wtorki, od {isDay.tuesday}</span>
+        </div>
+      ) : null}
+      {isDay.wednesday != undefined ? (
+        <div>
+          <span>Środy, od {isDay.wednesday}</span>
+        </div>
+      ) : null}
+      {isDay.thursday != undefined ? (
+        <div>
+          <span>Czawrtki, od {isDay.thursday}</span>
+        </div>
+      ) : null}
+      {isDay.friday != undefined ? (
+        <div>
+          <span>Piątki, od {isDay.friday}</span>
+        </div>
+      ) : null}
+      {isDay.saturday != undefined ? (
+        <div>
+          <span>Soboty, od {isDay.saturday}</span>
+        </div>
+      ) : null}
+      {isDay.sunday != undefined ? (
+        <div>
+          <span>Niedziele, od {isDay.sunday}</span>
+        </div>
+      ) : null}
     </>
-  ) : <Loading/>;
+  ) : (
+    <Loading />
+  );
 }
 
 export default connect(ShowEvents);

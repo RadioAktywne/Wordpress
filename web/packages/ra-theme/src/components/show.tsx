@@ -7,7 +7,7 @@ import Back from "../img/icons/back.svg";
 import Loading from "./loading";
 import parse from "html-react-parser";
 import Link from "./link";
-import ShowEvents from "./showEvents"
+import ShowEvents from "./showEvents";
 
 /**
  * Properties received by the `Show` component.
@@ -68,14 +68,14 @@ function Show({ data }: ShowProps): JSX.Element {
           <h1>Na żywo</h1>
         </Title>
         <List>
-          <ShowEvents live={true} showId={show.id}/>
+          <ShowEvents live={true} showId={show.id} />
         </List>
 
         <Title>
           <h1>Powtórki</h1>
         </Title>
         <List>
-          <ShowEvents live={false} showId={show.id}/>
+          <ShowEvents live={false} showId={show.id} />
         </List>
 
         <Title>
@@ -84,7 +84,11 @@ function Show({ data }: ShowProps): JSX.Element {
         <List>
           {hosts.map((value, id) => {
             if (value != undefined)
-              return <div key={id}><Link link={value.link}>{value.acf.name}</Link></div>;
+              return (
+                <div key={id}>
+                  <Link link={value.link}>{value.acf.name}</Link>
+                </div>
+              );
           })}
         </List>
       </AboutContent>
@@ -236,7 +240,8 @@ const List = styled.div`
     margin-left: 0;
   }
 
-  & > div > a, & > div > span {
+  & > div > a,
+  & > div > span {
     padding-left: 15px;
     display: block;
     &:hover {
@@ -244,7 +249,8 @@ const List = styled.div`
     }
   }
 
-  & > div:nth-of-type(2n + 1) > a, & > div:nth-of-type(2n + 1) > span  {
+  & > div:nth-of-type(2n + 1) > a,
+  & > div:nth-of-type(2n + 1) > span {
     background-color: rgba(60, 60, 76, 0.1);
   }
 `;
