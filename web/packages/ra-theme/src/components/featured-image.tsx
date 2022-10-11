@@ -77,6 +77,10 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   align-items: flex-start;
   justify-content: center;
+
+  @media (max-width: 750px) {
+    max-height: 100vw;
+  }
 `;
 
 const StyledImage = styled(Image)`

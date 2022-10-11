@@ -1,12 +1,13 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import FeaturedMedia from "./featured-image";
-import { ShowData, ShowEntity } from "../data";
+import { EventArchiveData, ShowData, ShowEntity } from "../data";
 import useMembers from "../hooks/useMembers";
 import Back from "../img/icons/back.svg";
 import Loading from "./loading";
 import parse from "html-react-parser";
 import Link from "./link";
+import ShowEvents from "./showEvents"
 
 /**
  * Properties received by the `Show` component.
@@ -64,20 +65,29 @@ function Show({ data }: ShowProps): JSX.Element {
         )}
 
         <Title>
+          <h1>Na żywo</h1>
+        </Title>
+        <List>
+          <ShowEvents live={true} showId={show.id}/>
+        </List>
+
+        <Title>
+          <h1>Powtórki</h1>
+        </Title>
+        <List>
+          <ShowEvents live={false} showId={show.id}/>
+        </List>
+
+        <Title>
           <h1>Redaktorzy</h1>
         </Title>
-
         <List>
           {hosts.map((value, id) => {
-            if(value != undefined)
-              return (
-                <Link link={value.link}>{value.acf.name}</Link>
-              )
+            if (value != undefined)
+              return <div key={id}><Link link={value.link}>{value.acf.name}</Link></div>;
           })}
         </List>
       </AboutContent>
-
-      
     </Container>
   ) : null;
 }
@@ -119,6 +129,10 @@ const Description = styled.div`
   @media (max-width: 1400px) {
     font-size: 0.8rem;
   }
+
+  @media (max-width: 750px) {
+    margin-left: 20px;
+  }
 `;
 
 const MainContent = styled.div`
@@ -136,7 +150,7 @@ const AboutContent = styled.div`
   @media (max-width: 750px) {
     width: 100%;
   }
-`
+`;
 
 const Cover = styled.div`
   width: 100%;
@@ -206,24 +220,31 @@ const BackButton = styled.div`
 
 const List = styled.div`
   width: 100%;
-  margin-top: 10px;
+  margin: 10px 10px 10px 0;
   display: flex;
   flex-direction: column;
 
-  & > a {
+  & > div {
     width: 100%;
 
     margin: 0;
     padding: 0;
-    padding-left: 15px;
     color: #3c3c4c;
+  }
 
+  @media (max-width: 750px) {
+    margin-left: 0;
+  }
+
+  & > div > a, & > div > span {
+    padding-left: 15px;
+    display: block;
     &:hover {
       color: #6aba9c;
     }
   }
 
-  & > a:nth-of-type(2n + 1) {
+  & > div:nth-of-type(2n + 1) > a, & > div:nth-of-type(2n + 1) > span  {
     background-color: rgba(60, 60, 76, 0.1);
   }
-`
+`;
