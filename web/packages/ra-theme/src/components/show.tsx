@@ -1,13 +1,13 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import FeaturedMedia from "./featured-image";
-import { EventArchiveData, ShowData, ShowEntity } from "../data";
+import { ShowData, ShowEntity } from "../data";
 import useMembers from "../hooks/useMembers";
 import Back from "../img/icons/back.svg";
 import Loading from "./loading";
 import parse from "html-react-parser";
 import Link from "./link";
-import ShowEvents from "./showEvents";
+import ShowEvents from "./show-events";
 
 /**
  * Properties received by the `Show` component.

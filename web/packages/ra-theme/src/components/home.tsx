@@ -34,16 +34,21 @@ function Home({ data }: HomeProps): JSX.Element {
   useEffect(() => {
     actions.source.fetch("/events");
   }, []);
-  const dataPost = state.source.get("/events") as EventArchiveData;
+  const eventsData = state.source.get("/events") as EventArchiveData;
 
   // Load the page, but only if the data is ready.
   return data.isReady ? (
     <BigContainer>
       <Container>
         <Player />
-        {dataPost.isReady ? <EventWidget data={dataPost} /> : <Loading />}
+        {eventsData.isReady ? (
+          <EventWidget data={eventsData} />
+        ) : (
+          <EventsLoadingContainer>
+            <Loading />
+          </EventsLoadingContainer>
+        )}
         <RecordingWidget />
-
         <AlbumWidget />
 
         {home.content?.rendered && ( // Render the content using the Html2React component so the HTML is
@@ -59,6 +64,13 @@ function Home({ data }: HomeProps): JSX.Element {
 }
 
 export default connect(Home);
+
+const EventsLoadingContainer = styled.div`
+  width: 33.33%;
+  @media (max-width: 750px) {
+    width: 100%;
+  }
+`;
 
 const BigContainer = styled.div`
   padding-bottom: 50px;

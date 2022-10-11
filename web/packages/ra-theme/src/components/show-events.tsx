@@ -47,7 +47,6 @@ function ShowEvents({ live, showId }: ShowEventsProps): JSX.Element {
     saturday: undefined,
     sunday: undefined,
   };
-  //   let isDay = {};
   if (eventsData.isReady) {
     eventsData.items.map(({ type, id }) => {
       const item = state.source[type][id] as EventEntity;
@@ -80,7 +79,7 @@ function ShowEvents({ live, showId }: ShowEventsProps): JSX.Element {
       ) : null}
       {isDay.thursday != undefined ? (
         <div>
-          <span>Czawrtki, od {isDay.thursday}</span>
+          <span>Czwartki, od {isDay.thursday}</span>
         </div>
       ) : null}
       {isDay.friday != undefined ? (
