@@ -25,10 +25,12 @@ interface ItemProps {
  */
 function InfoTileListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
+  const noReloadLinkParts = item.acf.link.split('/');
+  const noReloadLink = '/' + noReloadLinkParts[noReloadLinkParts.length-2];
 
   return (
     <article>
-      <Link link={item.acf.link}>
+      <Link link={noReloadLink}>
         {item.acf.image && <FeaturedMedia id={item.acf.image} />}
       </Link>
     </article>
