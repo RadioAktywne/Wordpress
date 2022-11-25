@@ -2,7 +2,7 @@ import { Action, Frontity, MergePackages, Package } from "frontity/types";
 import { AutoPrefetch } from "@frontity/components/link/types";
 import Html2React from "@frontity/html2react/types";
 import Router from "@frontity/router/types";
-import Source from "@frontity/source/types";
+import Source, { ArchiveData } from "@frontity/source/types";
 import ReactPlayer from "react-player";
 import { ReactDOM } from "react";
 import { AlbumArchiveData, RecordingArchiveData } from "./src/data";
@@ -95,6 +95,15 @@ interface RaThemeTypeScript extends Package {
     albums: {
       nextPage: AlbumArchiveData; //highest currently loaded albums page
       pages: AlbumArchiveData[]; //list of opened pages
+      ready: boolean; //is the current page loaded
+    };
+
+    /**
+     * Posts list namespace.
+     */
+     posts: {
+      nextPage: ArchiveData; //highest currently loaded posts page
+      pages: ArchiveData[]; //list of opened posts
       ready: boolean; //is the current page loaded
     };
   };

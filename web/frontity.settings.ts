@@ -22,6 +22,7 @@ const settings: Settings<Theme | WpSource> = {
             ["Radio Aktywne", "/"],
             ["Nagrania", "/recordings"],
             ["Płyta Tygodnia", "/albums"],
+            ["Publicystyka", "/publicystyka"],
             ["Radio", "/info"],
           ],
         },

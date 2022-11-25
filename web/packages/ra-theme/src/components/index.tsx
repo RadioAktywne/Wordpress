@@ -15,11 +15,13 @@ import { Packages } from "../../types";
 import {
   isAlbum,
   isAlbumArchive,
+  isArchive,
   isEvent,
   isEventArchive,
   isInfoTileArchive,
   isMember,
   isMemberArchive,
+  isPostType,
   isRecording,
   isRecordingArchive,
   isShow,
@@ -35,6 +37,8 @@ import Page from "./page";
 import Home from "./home";
 import ReactPlayer from "react-player";
 import React from "react";
+import PostList from "./post-list/post-list";
+import Post from "./post";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -166,6 +170,8 @@ function Theme() {
               when={isRecording(data)}
               data={isRecording(data) && data}
             />
+            <PostList when={isArchive(data)} data={isArchive(data) && data} />
+            <Post when={isPostType(data)} data={isPostType(data) && data} />
           </Switch>
         </Main>
       </PlayerContext.Provider>

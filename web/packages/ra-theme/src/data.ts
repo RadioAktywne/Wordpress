@@ -293,6 +293,14 @@ export interface RecordingEntity extends PostTypeEntity {
   };
 }
 
+export function isArchive(data: Data): data is ArchiveData {
+  return (data as ArchiveData).isArchive === true;
+}
+
+export function isPostType(data: Data): data is PostTypeData {
+  return (data as PostTypeData).isPostType === true;
+}
+
 export function isRecording(data: Data): data is RecordingData {
   return (data as RecordingData).isRecording === true;
 }

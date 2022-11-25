@@ -1,0 +1,64 @@
+import { connect, styled, useConnect } from "frontity";
+import { Packages } from "../../../types";
+import { useEffect } from "react";
+import Loading from "../loading";
+import { ArchiveData } from "@frontity/source/types";
+import PostListItem from "./post-list-item";
+
+/**
+ * Props received by the {@link AlbumListPage} component.
+ */
+interface ListPageProps {
+  data: ArchiveData;
+  key: number;
+}
+
+function PostListPage({ data }: ListPageProps): JSX.Element {
+  const { actions, state } = useConnect<Packages>();
+
+  /**
+   * wait till its fetched
+   *  tell state if current page is ready
+   *  preload next page
+   *  render items from current page
+   */
+  if (data.isReady) {
+    state.posts.ready = true;
+
+    if (data.next) {
+      useEffect(() => {
+        actions.source.fetch(data.next);
+      }, []);
+      state.posts.nextPage = state.source.get(data.next) as ArchiveData;
+    } else {
+      state.posts.nextPage = undefined;
+    }
+  }
+
+  return data.isReady ? (
+    <Container>
+      {data.items.map(({ type, id }) => {
+        const item = state.source[type][id];
+        // Render one PostListItem component for each one.
+        return <PostListItem key={item.id} item={item} />;
+      })}
+    </Container>
+  ) : (
+    <Loading />
+  );
+}
+
+export default connect(PostListPage);
+
+const Container = styled.section`
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+
+  column-gap: 15px;
+
+  @media (max-width: 750px) {
+    column-gap: 0;
+    flex-direction: column;
+  }
+`;
