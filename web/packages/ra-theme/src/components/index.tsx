@@ -51,6 +51,8 @@ function Theme() {
   const { state, actions } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
 
+  console.log(data);
+
   /**
    * Things related to playing audio (needs to be global)
    */
@@ -137,6 +139,7 @@ function Theme() {
               when={isHome(data) && isPage(data)}
               data={isHome(data) && isPage(data) && data}
             />
+            <PostList when={isArchive(data) && isPage(data)} data={isArchive(data) && isPage(data) && data} />
             <Page when={isPage(data)} data={isPage(data) && data} />
             <MemberList
               when={isMemberArchive(data)}
@@ -170,7 +173,6 @@ function Theme() {
               when={isRecording(data)}
               data={isRecording(data) && data}
             />
-            <PostList when={isArchive(data)} data={isArchive(data) && data} />
             <Post when={isPostType(data)} data={isPostType(data) && data} />
           </Switch>
         </Main>

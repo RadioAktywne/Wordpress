@@ -27,7 +27,7 @@ function Post({ data }: PostProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   const post: PostTypeEntity = state.source[data.type][data.id];
 
-//   const Html2React = libraries.html2react.Component;
+  const Html2React = libraries.html2react.Component;
 
   // Load the post, but only if the data is ready.
   return data.isReady ? (
@@ -45,11 +45,11 @@ function Post({ data }: PostProps): JSX.Element {
           </BackButton>
         </Title>
 
-        {/* <Description>
+        <Description>
             {(isPostEntity(post) || isPageEntity(post)) && (
                 <Html2React html={post.content?.rendered} />
             )}
-        </Description> */}
+        </Description>
       </MainContent>
 
 

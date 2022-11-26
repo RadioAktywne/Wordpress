@@ -34,6 +34,8 @@ const settings: Settings<Theme | WpSource> = {
       state: {
         source: {
           url: process.env.WEB_WORDPRESS_URL || "http://localhost:80",
+          homepage: "/home",
+          postsPage: "/publicystyka",
           postTypes: [
             {
               type: "member",
