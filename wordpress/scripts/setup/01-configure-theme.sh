@@ -2,4 +2,4 @@
 
 echo "Configuring theme..."
 
-wp theme is-active ra-redirect --quiet || wp theme activate ra-redirect
+wp theme is-active ra-theme --quiet || wp theme activate ra-theme
