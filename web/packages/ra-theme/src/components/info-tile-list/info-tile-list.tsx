@@ -31,7 +31,7 @@ function InfoTileList({ data }: ListProps): JSX.Element {
 
   const tileMap = data.items.reduce((acc, { type, id }) => {
     const item = state.source[type][id];
-    const itemType = (item.acf.link as String).split('/');
+    const itemType = (item.acf.link as String).split("/");
     acc[itemType[itemType.length - 2]] = item;
     return acc;
   }, {} as Record<number, InfoTileEntity>);

@@ -23,9 +23,7 @@ function AlbumListItem({ item }: ItemProps): JSX.Element {
         <Link link={item.link}>
           <PostTile>
             {item.featured_media && <FeaturedMedia id={item.featured_media} />}
-            <Title>
-                {item.title.rendered}
-            </Title>
+            <Title>{item.title.rendered}</Title>
           </PostTile>
         </Link>
       </article>
@@ -49,7 +47,6 @@ const Title = styled.div`
 
   width: 100%;
   bottom: 0;
-
 
   color: #fff;
   margin: 0;

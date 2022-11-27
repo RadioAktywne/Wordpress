@@ -139,7 +139,10 @@ function Theme() {
               when={isHome(data) && isPage(data)}
               data={isHome(data) && isPage(data) && data}
             />
-            <PostList when={isPostArchive(data)} data={isPostArchive(data) && data} />
+            <PostList
+              when={isPostArchive(data)}
+              data={isPostArchive(data) && data}
+            />
             <Page when={isPage(data)} data={isPage(data) && data} />
             <MemberList
               when={isMemberArchive(data)}

@@ -36,9 +36,10 @@ function RecordingList({ data }: ListProps): JSX.Element {
    * when user nearly reaches the end, load next page
    */
   const tryNextPage = () => {
-    if (contentRef.current != undefined &&
+    if (
+      contentRef.current != undefined &&
       contentRef.current.getBoundingClientRect().bottom - 20 <=
-      window.innerHeight
+        window.innerHeight
     )
       nextPage();
   };

@@ -6,7 +6,11 @@ import Loading from "./loading";
 import Back from "../img/icons/back.svg";
 import Link from "./link";
 import parse from "html-react-parser";
-import { PostEntity, PostTypeData, PostTypeEntity } from "@frontity/source/types";
+import {
+  PostEntity,
+  PostTypeData,
+  PostTypeEntity,
+} from "@frontity/source/types";
 import { isPageEntity, isPostEntity } from "@frontity/source";
 
 /**
@@ -34,9 +38,7 @@ function Post({ data }: PostProps): JSX.Element {
     <Container>
       <MainContent>
         <Title>
-          <h1>
-            {post.title.rendered}
-          </h1>
+          <h1>{post.title.rendered}</h1>
 
           <BackButton>
             <Link link="/publicystyka">
@@ -46,13 +48,11 @@ function Post({ data }: PostProps): JSX.Element {
         </Title>
 
         <Description>
-            {(isPostEntity(post) || isPageEntity(post)) && (
-                <Html2React html={post.content?.rendered} />
-            )}
+          {(isPostEntity(post) || isPageEntity(post)) && (
+            <Html2React html={post.content?.rendered} />
+          )}
         </Description>
       </MainContent>
-
-
 
       {/* {post.featured_media && isPostEntity(post) || isPageEntity(post) && (
         <Cover>

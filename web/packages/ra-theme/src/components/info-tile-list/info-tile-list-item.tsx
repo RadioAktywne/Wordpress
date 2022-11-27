@@ -25,8 +25,8 @@ interface ItemProps {
  */
 function InfoTileListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  const noReloadLinkParts = item.acf.link.split('/');
-  const noReloadLink = '/' + noReloadLinkParts[noReloadLinkParts.length-2];
+  const noReloadLinkParts = item.acf.link.split("/");
+  const noReloadLink = "/" + noReloadLinkParts[noReloadLinkParts.length - 2];
 
   return (
     <article>
