@@ -30,17 +30,22 @@ interface ListProps {
 function InfoTileList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
+  let tiles = {};
+  if(data.isReady)
+    data.items.map(({ type, id }) => {
+      const item = state.source[type][id];
+      tiles[(item as InfoTileEntity).acf.id] = item;
+    });
+
+  console.log(tiles);
+  
+
   return data.isReady ? (
     <Container>
-      <Grid>
-        {data.items.map(({ type, id }) => {
-          const item = state.source[type][id];
-
-          return (
-            <InfoTileListItem key={item.id} item={item} />
-          );
-        })}
-      </Grid>
+      <TileContainer id="item-0"><InfoTileListItem item={tiles[1]} /></TileContainer>
+      <TileContainer id="item-1"><InfoTileListItem item={tiles[2]} /></TileContainer>
+      <TileContainer id="item-2"><InfoTileListItem item={tiles[3]} /></TileContainer>
+      <TileContainer id="item-3"><InfoTileListItem item={tiles[4]} /></TileContainer>
     </Container>
   ) : <Loading/>;
 }
@@ -48,30 +53,54 @@ function InfoTileList({ data }: ListProps): JSX.Element {
 export default connect(InfoTileList);
 
 const Container = styled.section`
-  width: 800px;
+  width: 1155px;
   margin: 0;
-  padding: 24px;
-  list-style: none;
-`;
+  padding-top: 20px;
+  padding: 20 20 0 20;
 
-const Grid = styled.div`
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 200px;
-  grid-gap: 10px;
-`;
+  display: grid; 
 
-const Span1 = styled.div`
-  grid-column: span 1;
-  width: 100%;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  
+  gap: 15px;
   height: 100%;
-  overflow: hidden;
+
+
+  & #item-0 {
+
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-row-end: 2;
+    grid-column-end: 3;
+    
+ }
+ & #item-1 {
+ 
+    grid-row-start: 2;
+    grid-column-start: 1;
+    grid-row-end: 3;
+    grid-column-end: 3;
+    
+ }
+ & #item-2 {
+ 
+    grid-row-start: 1;
+    grid-column-start: 3;
+    grid-row-end: 2;
+    grid-column-end: 4;
+    
+ }
+ & #item-3 {
+ 
+    grid-row-start: 2;
+    grid-column-start: 3;
+    grid-row-end: 3;
+    grid-column-end: 4;
+    
+ }
 `;
 
-const Span2 = styled.div`
-  grid-column: span 2;
+const TileContainer = styled.div`
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-`;
+`

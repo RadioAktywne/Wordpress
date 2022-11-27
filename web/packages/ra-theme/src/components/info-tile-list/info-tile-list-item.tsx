@@ -36,14 +36,17 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
   //if link is an id of page, it must be the about-us page
   if(/^-?\d+$/.test(link))
   {
-    noReloadLink = "/o-nas";
+    noReloadLink = "/about";
   }
 
   return (
     <article>
-      <Link link={noReloadLink}>
-        {item.acf.image && <FeaturedMedia id={item.acf.image} />}
-      </Link>
+      <Tile>
+        <Link link={noReloadLink}>
+          <Title>{item.acf.title}</Title>
+          {item.acf.image && <FeaturedMedia id={item.acf.image} />}
+        </Link>
+      </Tile>
     </article>
   );
 }
@@ -51,11 +54,25 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
 // Connect the InfoTileListItem to gain access to `state` as a prop
 export default connect(InfoTileListItem);
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: rgba(12, 17, 43);
-  margin: 0;
-  padding-top: 24px;
-  padding-bottom: 8px;
-  box-sizing: border-box;
-`;
+const Tile = styled.div`
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  margin-left: 10px;
+`
+const Title = styled.h2`
+  color: #6aba9c;
+  background-color: #3c3c4c;
+  border-bottom: solid 2px #6aba9c;
+  padding-left: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: lighter;
+
+  &:hover
+  {
+    color: #fff;
+    background-color: #6aba9c;
+    border-bottom: solid 2px #3c3c4c;
+  }
+`
