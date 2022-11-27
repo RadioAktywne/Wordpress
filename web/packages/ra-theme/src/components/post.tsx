@@ -46,7 +46,6 @@ function Post({ data }: PostProps): JSX.Element {
         <Description>
           {(isPostEntity(post) || isPageEntity(post)) && (
               parse(post.content?.rendered)
-              // post.content?.rendered
           )}
         </Description>
       </MainContent>

@@ -51,14 +51,15 @@ function PostListPage({ data }: ListPageProps): JSX.Element {
 export default connect(PostListPage);
 
 const Container = styled.section`
-  display: flex;
-  flex-direction: row;
-  align-items: space-between;
-
-  column-gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(auto-fill, 275px);
+  grid-row-gap: 15px;
+  grid-column-gap: 15px;
 
   @media (max-width: 750px) {
-    column-gap: 0;
+    gap: 0;
+    display: flex;
     flex-direction: column;
   }
 `;

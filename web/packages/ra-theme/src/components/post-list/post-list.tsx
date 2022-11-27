@@ -93,9 +93,9 @@ export default connect(PostList);
 const Container = styled.section`
   width: 100%;
   max-width: 1200px;
-  margin: 20px 0 0 0;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 15px;
 
   & > div {
     padding-right: 30px;
@@ -120,4 +120,6 @@ const Title = styled.div`
     margin-bottom: 0px;
     font-weight: lighter;
   }
+
+  margin-top: 20px
 `;
