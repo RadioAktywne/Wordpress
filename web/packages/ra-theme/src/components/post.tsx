@@ -1,13 +1,11 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import FeaturedMedia from "./featured-image";
-import { AlbumData, AlbumEntity } from "../data";
 import Loading from "./loading";
 import Back from "../img/icons/back.svg";
 import Link from "./link";
 import parse from "html-react-parser";
 import {
-  PostEntity,
   PostTypeData,
   PostTypeEntity,
 } from "@frontity/source/types";
@@ -31,8 +29,6 @@ function Post({ data }: PostProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   const post: PostTypeEntity = state.source[data.type][data.id];
 
-  const Html2React = libraries.html2react.Component;
-
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
@@ -41,7 +37,7 @@ function Post({ data }: PostProps): JSX.Element {
           <h1>{post.title.rendered}</h1>
 
           <BackButton>
-            <Link link="/publicystyka">
+            <Link link="/blog">
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>
@@ -49,16 +45,16 @@ function Post({ data }: PostProps): JSX.Element {
 
         <Description>
           {(isPostEntity(post) || isPageEntity(post)) && (
-            <Html2React html={post.content?.rendered} />
+              parse(post.content?.rendered)
           )}
         </Description>
       </MainContent>
 
-      {/* {post.featured_media && isPostEntity(post) || isPageEntity(post) && (
+      {post.featured_media && (isPostEntity(post) || isPageEntity(post)) && (
         <Cover>
           <FeaturedMedia id={post.featured_media} />
         </Cover>
-      )} */}
+      )}
     </Container>
   ) : (
     <Loading />
@@ -92,6 +88,16 @@ const Description = styled.div`
   font-size: 1rem;
   line-height: 1.7;
   margin-top: 20px;
+  & img
+  {
+    max-width: 760px !important;
+    height: auto;
+  }
+
+  & figure
+  {
+    margin: 0;
+  }
 
   & ul,
   & ol {

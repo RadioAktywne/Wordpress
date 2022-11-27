@@ -22,7 +22,7 @@ const settings: Settings<Theme | WpSource> = {
             ["Radio Aktywne", "/"],
             ["Nagrania", "/recordings"],
             ["Płyta Tygodnia", "/albums"],
-            ["Publicystyka", "/publicystyka"],
+            ["Publicystyka", "/blog"],
             ["Radio", "/info"],
           ],
         },
@@ -35,7 +35,7 @@ const settings: Settings<Theme | WpSource> = {
         source: {
           url: process.env.WEB_WORDPRESS_URL || "http://localhost:80",
           homepage: "/home",
-          postsPage: "/publicystyka",
+          postsPage: "/blog",
           postTypes: [
             {
               type: "member",

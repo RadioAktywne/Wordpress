@@ -57,35 +57,21 @@ function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
       ) || null;
 
   return (
-    <Container isAmp={state.frontity.mode === "amp"}>
-      <StyledImage
-        alt={media.title.rendered}
-        src={media.source_url}
-        srcSet={srcset}
-        width={media?.media_details?.width}
-        height={media?.media_details?.height}
+      <SquareContainer 
+      style={{
+        background: "url(" + media.source_url + ")",
+        backgroundSize: "cover", 
+        backgroundRepeat: "no-repeat", 
+        backgroundPosition: "center", 
+        }}
       />
-    </Container>
   );
 }
 
 export default connect(FeaturedImage);
 
-const Container = styled.div<ContainerProps>`
-  ${({ isAmp }) => isAmp && "position: relative;"};
-  height: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-
-  @media (max-width: 750px) {
-    max-height: 100vw;
-  }
-`;
-
-const StyledImage = styled(Image)`
-  display: block;
-  object-fit: cover;
-  max-height: 100%;
-  max-width: 100%;
-`;
+const SquareContainer = styled.div`
+  height:0;
+  width:100%;
+  padding-bottom:100%;
+`
