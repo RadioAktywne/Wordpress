@@ -46,6 +46,7 @@ function Post({ data }: PostProps): JSX.Element {
         <Description>
           {(isPostEntity(post) || isPageEntity(post)) && (
               parse(post.content?.rendered)
+              // post.content?.rendered
           )}
         </Description>
       </MainContent>
@@ -92,6 +93,10 @@ const Description = styled.div`
   {
     max-width: 760px !important;
     height: auto;
+    object-fit: cover;
+    object-position: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   & figure
@@ -101,13 +106,141 @@ const Description = styled.div`
 
   & ul,
   & ol {
-    line-height: 1;
+    line-height: 1.5;
     margin: 0;
   }
 
   @media (max-width: 1400px) {
     font-size: 0.8rem;
   }
+
+  & .aligncenter,
+  & .alignleft,
+  & .alignright {
+    width: fit-content;
+  }
+
+  & .aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  & .alignright {
+    float: right;
+    margin-left: 24px;
+  }
+
+  & .alignleft {
+    float: left;
+    margin-right: 24px;
+  }
+
+  & iframe {
+    display: block;
+  }
+
+  & blockquote {
+    margin: 16px 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-left: 4px solid rgba(12, 17, 43);
+    padding: 4px 16px;
+  }
+
+  & .has-light-green-cyan-color
+  {
+    color: #7BDCB5;
+  }
+
+  & .has-cyan-bluish-gray-color
+  {
+    color: #abb8c3;
+  }
+
+  & .has-white-color
+  {
+    color: #ffffff;
+  }
+  
+  & .has-pale-pink-color
+  {
+    color: #f78da7;
+  }
+  
+  & .has-vivid-red-color
+  {
+    color: #cf2e2e;
+  }
+  
+  & .has-luminous-vivid-orange-color
+  {
+    color: #ff6900;
+  }
+  
+  & .has-luminous-vivid-amber-color
+  {
+    color: #fcb900;
+  }
+  
+  & .has-vivid-green-cyan-color
+  {
+    color: #00d084;
+  }
+  
+  & .has-pale-cyan-blue-color
+  {
+    color: #8ed1fc;
+  }
+  
+  & .has-vivid-cyan-blue-color
+  {
+    color: #0693e3;
+  }
+  
+  & .has-vivid-purple-color
+  {
+    color: #9b51e0;
+  }
+
+  & .wp-block-table table
+  {
+    border-collapse: collapse;
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  & thead
+  {
+    border-bottom: 3px solid;
+  }
+
+  & .wp-block-table table
+  {
+    border-collapse: collapse;
+  }
+
+  & .wp-block-table td, .wp-block-table th
+  {
+    border: 1px solid;
+    padding: .5em;
+  }
+
+  & figcaption
+  {
+    white-space: pre-wrap;
+    min-width: 1px;
+    color: #555;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  & .wp-block-code {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Menlo,Consolas,monaco,monospace;
+    padding: .8em 1em;
+  }
+}
 `;
 
 const MainContent = styled.div`
