@@ -31,23 +31,30 @@ function InfoTileList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   let tiles = {};
-  if(data.isReady)
+  if (data.isReady)
     data.items.map(({ type, id }) => {
       const item = state.source[type][id];
       tiles[(item as InfoTileEntity).acf.id] = item;
     });
 
-  console.log(tiles);
-  
-
   return data.isReady ? (
     <Container>
-      <TileContainer id="item-0"><InfoTileListItem item={tiles[1]} /></TileContainer>
-      <TileContainer id="item-1"><InfoTileListItem item={tiles[2]} /></TileContainer>
-      <TileContainer id="item-2"><InfoTileListItem item={tiles[3]} /></TileContainer>
-      <TileContainer id="item-3"><InfoTileListItem item={tiles[4]} /></TileContainer>
+      <TileContainer id="item-0">
+        <InfoTileListItem item={tiles[1]} />
+      </TileContainer>
+      <TileContainer id="item-1">
+        <InfoTileListItem item={tiles[2]} />
+      </TileContainer>
+      <TileContainer id="item-2">
+        <InfoTileListItem item={tiles[3]} />
+      </TileContainer>
+      <TileContainer id="item-3">
+        <InfoTileListItem item={tiles[4]} />
+      </TileContainer>
     </Container>
-  ) : <Loading/>;
+  ) : (
+    <Loading />
+  );
 }
 
 export default connect(InfoTileList);
@@ -58,49 +65,40 @@ const Container = styled.section`
   padding-top: 20px;
   padding: 20 20 0 20;
 
-  display: grid; 
+  display: grid;
 
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
-  
+
   gap: 15px;
   height: 100%;
 
-
   & #item-0 {
-
     grid-row-start: 1;
     grid-column-start: 1;
     grid-row-end: 2;
     grid-column-end: 3;
-    
- }
- & #item-1 {
- 
+  }
+  & #item-1 {
     grid-row-start: 2;
     grid-column-start: 1;
     grid-row-end: 3;
     grid-column-end: 3;
-    
- }
- & #item-2 {
- 
+  }
+  & #item-2 {
     grid-row-start: 1;
     grid-column-start: 3;
     grid-row-end: 2;
     grid-column-end: 4;
-    
- }
- & #item-3 {
- 
+  }
+  & #item-3 {
     grid-row-start: 2;
     grid-column-start: 3;
     grid-row-end: 3;
     grid-column-end: 4;
-    
- }
+  }
 `;
 
 const TileContainer = styled.div`
   width: 100%;
-`
+`;

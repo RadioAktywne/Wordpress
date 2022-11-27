@@ -27,15 +27,13 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
   let link = item.acf.link.toString();
   let noReloadLinkParts, noReloadLink;
-  if(link)
-  {
+  if (link) {
     noReloadLinkParts = link.split("/");
-    noReloadLink = "/" + noReloadLinkParts[noReloadLinkParts.length-2];
+    noReloadLink = "/" + noReloadLinkParts[noReloadLinkParts.length - 2];
   }
 
   //if link is an id of page, it must be the about-us page
-  if(/^-?\d+$/.test(link))
-  {
+  if (/^-?\d+$/.test(link)) {
     noReloadLink = "/about";
   }
 
@@ -59,7 +57,7 @@ const Tile = styled.div`
   height: 350px;
   overflow: hidden;
   margin-left: 10px;
-`
+`;
 const Title = styled.h2`
   color: #6aba9c;
   background-color: #3c3c4c;
@@ -69,10 +67,9 @@ const Title = styled.h2`
   margin-bottom: 0px;
   font-weight: lighter;
 
-  &:hover
-  {
+  &:hover {
     color: #fff;
     background-color: #6aba9c;
     border-bottom: solid 2px #3c3c4c;
   }
-`
+`;

@@ -5,10 +5,7 @@ import Loading from "./loading";
 import Back from "../img/icons/back.svg";
 import Link from "./link";
 import parse from "html-react-parser";
-import {
-  PostTypeData,
-  PostTypeEntity,
-} from "@frontity/source/types";
+import { PostTypeData, PostTypeEntity } from "@frontity/source/types";
 import { isPageEntity, isPostEntity } from "@frontity/source";
 
 /**
@@ -44,9 +41,8 @@ function Post({ data }: PostProps): JSX.Element {
         </Title>
 
         <Description>
-          {(isPostEntity(post) || isPageEntity(post)) && (
-              parse(post.content?.rendered)
-          )}
+          {(isPostEntity(post) || isPageEntity(post)) &&
+            parse(post.content?.rendered)}
         </Description>
       </MainContent>
 

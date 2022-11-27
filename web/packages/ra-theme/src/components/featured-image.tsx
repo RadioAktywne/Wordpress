@@ -57,21 +57,21 @@ function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
       ) || null;
 
   return (
-      <SquareContainer 
+    <SquareContainer
       style={{
         background: "url(" + media.source_url + ")",
-        backgroundSize: "cover", 
-        backgroundRepeat: "no-repeat", 
-        backgroundPosition: "center", 
-        }}
-      />
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    />
   );
 }
 
 export default connect(FeaturedImage);
 
 const SquareContainer = styled.div`
-  height:0;
-  width:100%;
-  padding-bottom:100%;
-`
+  height: 0;
+  width: 100%;
+  padding-bottom: 100%;
+`;

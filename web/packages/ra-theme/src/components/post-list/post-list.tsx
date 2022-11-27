@@ -121,5 +121,5 @@ const Title = styled.div`
     font-weight: lighter;
   }
 
-  margin-top: 20px
+  margin-top: 20px;
 `;
