@@ -154,7 +154,6 @@ RUN chmod +x ./scripts/download.sh
 
 # preload plugins
 RUN ./scripts/download.sh plugin disable-comments; \
-    ./scripts/download.sh plugin disable-blog; \
     ./scripts/download.sh plugin advanced-custom-fields
 
 COPY ./entrypoint.sh ./entrypoint.sh
