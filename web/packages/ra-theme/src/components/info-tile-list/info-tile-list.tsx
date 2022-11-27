@@ -1,6 +1,7 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../../types";
 import { InfoTileArchiveData, InfoTileEntity } from "../../data";
+import Loading from "../loading";
 import InfoTileListItem from "./info-tile-list-item";
 
 /**
@@ -29,31 +30,19 @@ interface ListProps {
 function InfoTileList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
-  const tileMap = data.items.reduce((acc, { type, id }) => {
-    const item = state.source[type][id];
-    const itemType = (item.acf.link as String).split("/");
-    acc[itemType[itemType.length - 2]] = item;
-    return acc;
-  }, {} as Record<number, InfoTileEntity>);
-
-  return (
+  return data.isReady ? (
     <Container>
       <Grid>
-        <Span2>
-          {tileMap["events"] && <InfoTileListItem item={tileMap["events"]} />}
-        </Span2>
-        <Span1>
-          {tileMap["members"] && <InfoTileListItem item={tileMap["members"]} />}
-        </Span1>
-        <Span2>
-          {tileMap["members"] && <InfoTileListItem item={tileMap["members"]} />}
-        </Span2>
-        <Span1>
-          {tileMap["events"] && <InfoTileListItem item={tileMap["events"]} />}
-        </Span1>
+        {data.items.map(({ type, id }) => {
+          const item = state.source[type][id];
+
+          return (
+            <InfoTileListItem key={item.id} item={item} />
+          );
+        })}
       </Grid>
     </Container>
-  );
+  ) : <Loading/>;
 }
 
 export default connect(InfoTileList);

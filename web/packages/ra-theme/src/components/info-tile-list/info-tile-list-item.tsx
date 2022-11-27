@@ -25,8 +25,19 @@ interface ItemProps {
  */
 function InfoTileListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  const noReloadLinkParts = item.acf.link.split("/");
-  const noReloadLink = "/" + noReloadLinkParts[noReloadLinkParts.length - 2];
+  let link = item.acf.link.toString();
+  let noReloadLinkParts, noReloadLink;
+  if(link)
+  {
+    noReloadLinkParts = link.split("/");
+    noReloadLink = "/" + noReloadLinkParts[noReloadLinkParts.length-2];
+  }
+
+  //if link is an id of page, it must be the about-us page
+  if(/^-?\d+$/.test(link))
+  {
+    noReloadLink = "/o-nas";
+  }
 
   return (
     <article>

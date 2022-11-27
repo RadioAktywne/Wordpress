@@ -51,8 +51,6 @@ function Theme() {
   const { state, actions } = useConnect<Packages>();
   const data = state.source.get(state.router.link);
 
-  console.log(data);
-
   /**
    * Things related to playing audio (needs to be global)
    */
