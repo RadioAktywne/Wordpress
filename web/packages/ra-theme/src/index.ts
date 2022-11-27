@@ -55,6 +55,12 @@ const raThemeTypeScript: RaThemeTypeScript = {
       pages: [],
       ready: false,
     },
+
+    posts: {
+      nextPage: undefined,
+      pages: [],
+      ready: false,
+    },
   },
 
   /**
@@ -70,17 +76,6 @@ const raThemeTypeScript: RaThemeTypeScript = {
         state.theme.isMobileMenuOpen = false;
       },
       init: ({ libraries }) => {
-        // fix for handling pages
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "page handler",
-          priority: 20,
-          pattern: "/(.*)?",
-          func: postTypeHandler({
-            endpoints: ["pages"],
-          }),
-        });
-
         /**
          * set number of events per page
          */

@@ -1,6 +1,6 @@
 import { connect, css, Global, styled, useConnect } from "frontity";
 import Switch from "@frontity/components/switch";
-import { isError, isHome, isPage } from "@frontity/source";
+import { isError, isHome, isPage, isPostArchive } from "@frontity/source";
 import Header from "./header";
 import Footer from "./footer";
 import MemberList from "./member-list";
@@ -139,7 +139,7 @@ function Theme() {
               when={isHome(data) && isPage(data)}
               data={isHome(data) && isPage(data) && data}
             />
-            <PostList when={isArchive(data) && isPage(data)} data={isArchive(data) && isPage(data) && data} />
+            <PostList when={isPostArchive(data)} data={isPostArchive(data) && data} />
             <Page when={isPage(data)} data={isPage(data) && data} />
             <MemberList
               when={isMemberArchive(data)}

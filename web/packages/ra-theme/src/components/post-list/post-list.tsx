@@ -72,8 +72,6 @@ function PostList({ data }: ListProps): JSX.Element {
     tryNextPage();
   }
 
-  console.log(data);
-
   return (
     <Container>
       <div ref={contentRef}>
