@@ -26,7 +26,7 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
             <Title>
               <MemberName>{item.acf.name}</MemberName>
 
-              <SongTitle>{item.acf.role}</SongTitle>
+              <MemberRole>{item.acf.role}</MemberRole>
             </Title>
           </Cover>
         </Link>
@@ -49,7 +49,7 @@ const MemberName = styled.h5`
   padding-top: 10px;
 `;
 
-const SongTitle = styled.h3`
+const MemberRole = styled.h3`
   color: #fff;
   margin: 0;
   font-size: 1.3rem;
