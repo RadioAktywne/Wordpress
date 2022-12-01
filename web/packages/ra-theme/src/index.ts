@@ -61,6 +61,12 @@ const raThemeTypeScript: RaThemeTypeScript = {
       pages: [],
       ready: false,
     },
+
+    members: {
+      nextPage: undefined,
+      pages: [],
+      ready: false,
+    },
   },
 
   /**

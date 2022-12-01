@@ -106,6 +106,15 @@ interface RaThemeTypeScript extends Package {
       pages: ArchiveData[]; //list of opened posts
       ready: boolean; //is the current page loaded
     };
+
+    /**
+     * Members list namespace.
+     */
+     members: {
+      nextPage: ArchiveData; //highest currently loaded posts page
+      pages: ArchiveData[]; //list of opened posts
+      ready: boolean; //is the current page loaded
+    };
   };
 
   /**

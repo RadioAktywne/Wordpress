@@ -1,20 +1,19 @@
 import { connect, decode, styled, useConnect } from "frontity";
-import AlbumListItem from "./members-list-item";
 import { Packages } from "../../../types";
-import { AlbumArchiveData, MemberArchiveData } from "../../data";
+import { MemberArchiveData } from "../../data";
 import { useEffect } from "react";
 import Loading from "../loading";
-import MemberListItem from "../member-list/member-list-item";
+import MemberListItem from "./member-list-item";
 
 /**
- * Props received by the {@link AlbumListPage} component.
+ * Props received by the {@link MemberListPage} component.
  */
 interface ListPageProps {
   data: MemberArchiveData;
   key: number;
 }
 
-function AlbumListPage({ data }: ListPageProps): JSX.Element {
+function MemberListPage({ data }: ListPageProps): JSX.Element {
   const { actions, state } = useConnect<Packages>();
 
   /**
@@ -24,7 +23,7 @@ function AlbumListPage({ data }: ListPageProps): JSX.Element {
    *  render items from current page
    */
   if (data.isReady) {
-    state.albums.ready = true;
+    state.members.ready = true;
 
     if (data.next) {
       useEffect(() => {
@@ -40,7 +39,7 @@ function AlbumListPage({ data }: ListPageProps): JSX.Element {
     <Container>
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
-        // Render one AlbumListItem component for each one.
+        // Render one MemberListItem component for each one.
         return <MemberListItem key={item.id} item={item} />;
       })}
     </Container>
@@ -49,7 +48,7 @@ function AlbumListPage({ data }: ListPageProps): JSX.Element {
   );
 }
 
-export default connect(AlbumListPage);
+export default connect(MemberListPage);
 
 const Container = styled.section`
   display: grid;

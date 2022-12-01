@@ -5,7 +5,7 @@ import { Packages } from "../../../types";
 import { AlbumEntity, MemberEntity } from "../../data";
 
 /**
- * The props of the {@link AlbumListItem} component.
+ * The props of the {@link MemberListItem} component.
  */
 interface ItemProps {
   /**
@@ -15,7 +15,7 @@ interface ItemProps {
 }
 
 function MemberListItem({ item }: ItemProps): JSX.Element {
-  const { state } = useConnect<Packages>();
+  const { } = useConnect<Packages>();
 
   return (
     <Container>
@@ -24,9 +24,9 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
           <Cover>
             {item.acf.image && <FeaturedMedia id={item.acf.image} />}
             <Title>
-              <ArtistName>
+              <MemberName>
                 {item.acf.name}
-              </ArtistName>
+              </MemberName>
 
               <SongTitle>
                 {item.acf.role}
@@ -39,10 +39,10 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
   );
 }
 
-// Connect the AlbumListItem to gain access to `state` as a prop
+// Connect the MemberListItem to gain access to `state` as a prop
 export default connect(MemberListItem);
 
-const ArtistName = styled.h5`
+const MemberName = styled.h5`
   color: #fff;
   margin: 0;
   padding: 0;
