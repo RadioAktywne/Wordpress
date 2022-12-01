@@ -39,7 +39,7 @@ function Show({ data }: ShowProps): JSX.Element {
           <h1>{show.acf.title}</h1>
 
           <BackButton>
-            <Link link="/events">
+            <Link link="/shows">
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>
