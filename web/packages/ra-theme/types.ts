@@ -5,7 +5,12 @@ import Router from "@frontity/router/types";
 import Source, { ArchiveData } from "@frontity/source/types";
 import ReactPlayer from "react-player";
 import { ReactDOM } from "react";
-import { AlbumArchiveData, MemberArchiveData, RecordingArchiveData, ShowArchiveData } from "./src/data";
+import {
+  AlbumArchiveData,
+  MemberArchiveData,
+  RecordingArchiveData,
+  ShowArchiveData,
+} from "./src/data";
 
 /**
  * A Frontity starter theme designed to learn Frontity.
@@ -119,7 +124,7 @@ interface RaThemeTypeScript extends Package {
     /**
      * Shows list namespace.
      */
-     shows: {
+    shows: {
       nextPage: ShowArchiveData; //highest currently loaded shows archive page
       pages: ShowArchiveData[]; //list of opened pages of show
       ready: boolean; //is the current page loaded

@@ -15,7 +15,6 @@ import { Packages } from "../../types";
 import {
   isAlbum,
   isAlbumArchive,
-  isArchive,
   isEvent,
   isEventArchive,
   isInfoTileArchive,

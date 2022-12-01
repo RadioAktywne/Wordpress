@@ -75,7 +75,7 @@ const Container = styled.div`
   margin: 0 30px;
   padding: 24px;
   padding-top: 20px;
-  
+
   display: flex;
   flex-direction: row;
 
