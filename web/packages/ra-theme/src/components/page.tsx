@@ -1,7 +1,9 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import React from "react";
 import { PageData, PageEntity } from "@frontity/source/types";
+import Loading from "./loading";
+import { isPageEntity } from "@frontity/source";
+import parse from "html-react-parser";
 
 /**
  * Properties received by the `Page` component.
@@ -37,161 +39,231 @@ function Page({ data }: PageProps): JSX.Element {
   // Get the data of the page.
   const page: PageEntity = state.source[data.type][data.id];
 
-  // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
 
-  // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
-      <div>
-        <Title>{page.title.rendered}</Title>
-      </div>
+      <MainContent>
+        <Title>
+          <h1>{page.title.rendered}</h1>
+        </Title>
 
-      {page.content?.rendered && ( // Render the content using the Html2React component so the HTML is
-        // processed by the processors we included in the
-        // libraries.html2react.processors array.
-        <Content>
-          <Html2React html={page.content.rendered} />
-        </Content>
-      )}
+        <Description>
+          {(isPageEntity(page)) &&
+            parse(page.content?.rendered)}
+        </Description>
+      </MainContent>
     </Container>
-  ) : null;
+  ) : (
+    <Loading />
+  );
 }
 
 export default connect(Page);
 
 const Container = styled.div`
-  width: 800px;
-  margin: 0;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 30px;
   padding: 24px;
-`;
 
-const Title = styled.h1`
-  margin: 24px 0 8px;
-  color: rgba(12, 17, 43);
-`;
+  display: flex;
+  flex-direction: row;
 
-/**
- * This component is the parent of the `content.rendered` HTML. We can use nested
- * selectors to style that HTML.
- */
-
-const Content = styled.div`
-  color: rgba(12, 17, 43, 0.8);
-  word-break: break-word;
-
-  * {
-    max-width: 100%;
+  @media (max-width: 1400px) {
+    margin: 0 10px;
   }
 
-  p {
-    line-height: 1.6em;
+  @media (max-width: 750px) {
+    flex-direction: column;
+    padding: 24px 0;
+    margin: 0;
   }
+`;
 
-  img {
-    width: 100%;
+const Description = styled.div`
+  color: #3c3c4c;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-top: 20px;
+  & img
+  {
+    max-width: 760px !important;
+    height: auto;
     object-fit: cover;
     object-position: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  figure {
-    margin: 24px auto;
-    width: 100%;
-
-    figcaption {
-      font-size: 0.7em;
-    }
+  & figure
+  {
+    margin: 0;
   }
 
-  iframe {
+  & ul,
+  & ol {
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 1400px) {
+    font-size: 0.8rem;
+  }
+
+  & .aligncenter,
+  & .alignleft,
+  & .alignright {
+    width: fit-content;
+  }
+
+  & .aligncenter {
     display: block;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  blockquote {
+  & .alignright {
+    float: right;
+    margin-left: 24px;
+  }
+
+  & .alignleft {
+    float: left;
+    margin-right: 24px;
+  }
+
+  & iframe {
+    display: block;
+  }
+
+  & blockquote {
     margin: 16px 0;
     background-color: rgba(0, 0, 0, 0.1);
     border-left: 4px solid rgba(12, 17, 43);
     padding: 4px 16px;
   }
 
-  a {
-    color: rgb(31, 56, 197);
-    text-decoration: underline;
+  & .has-light-green-cyan-color
+  {
+    color: #7BDCB5;
   }
 
-  /* Input fields styles */
-
-  input[type="text"],
-  input[type="email"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="date"],
-  textarea,
-  select {
-    display: block;
-    padding: 6px 12px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    outline-color: transparent;
-    transition: outline-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    margin: 8px 0 4px 0;
-
-    &:focus {
-      outline-color: #1f38c5;
-    }
+  & .has-cyan-bluish-gray-color
+  {
+    color: #abb8c3;
   }
 
-  input[type="submit"] {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
+  & .has-white-color
+  {
+    color: #ffffff;
+  }
+  
+  & .has-pale-pink-color
+  {
+    color: #f78da7;
+  }
+  
+  & .has-vivid-red-color
+  {
+    color: #cf2e2e;
+  }
+  
+  & .has-luminous-vivid-orange-color
+  {
+    color: #ff6900;
+  }
+  
+  & .has-luminous-vivid-amber-color
+  {
+    color: #fcb900;
+  }
+  
+  & .has-vivid-green-cyan-color
+  {
+    color: #00d084;
+  }
+  
+  & .has-pale-cyan-blue-color
+  {
+    color: #8ed1fc;
+  }
+  
+  & .has-vivid-cyan-blue-color
+  {
+    color: #0693e3;
+  }
+  
+  & .has-vivid-purple-color
+  {
+    color: #9b51e0;
+  }
+
+  & .wp-block-table table
+  {
+    border-collapse: collapse;
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  & thead
+  {
+    border-bottom: 3px solid;
+  }
+
+  & .wp-block-table table
+  {
+    border-collapse: collapse;
+  }
+
+  & .wp-block-table td, .wp-block-table th
+  {
+    border: 1px solid;
+    padding: .5em;
+  }
+
+  & figcaption
+  {
+    white-space: pre-wrap;
+    min-width: 1px;
+    color: #555;
+    font-size: 13px;
     text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid #1f38c5;
-    padding: 12px 36px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #1f38c5;
   }
 
-  /* WordPress Core Align Classes */
+  & .wp-block-code {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Menlo,Consolas,monaco,monospace;
+    padding: .8em 1em;
+  }
+}
+`;
 
-  @media (min-width: 420px) {
-    img.aligncenter,
-    img.alignleft,
-    img.alignright {
-      width: auto;
-    }
+const MainContent = styled.div`
+  width: 100%;
+`;
 
-    .aligncenter {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
+const Title = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
-    .alignright {
-      float: right;
-      margin-left: 24px;
-    }
+  & > h1 {
+    color: #6aba9c;
+    background-color: #3c3c4c;
+    border-bottom: solid 2px #6aba9c;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: lighter;
+    font-size: 1.6rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
 
-    .alignleft {
-      float: left;
-      margin-right: 24px;
+    @media (max-width: 1400px) {
+      font-size: 1.2rem;
     }
   }
 `;
