@@ -20,7 +20,7 @@ const RecordingWidget = () => {
   /**
    * when albums are fetched
    */
-  return dataPost.isReady ? (
+  return dataPost.isReady && dataPost.items[0] ? (
     <Container>
       <div>
         <Title>
