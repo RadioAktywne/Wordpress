@@ -14,68 +14,64 @@ interface ItemProps {
   item: ShowEntity;
 }
 
-/**
- * Show List item Component.
- *
- * It renders the preview of a show.
- *
- * @param props - Defined in {@link ItemProps}.
- *
- * @returns The rendered show.
- */
 function ShowListItem({ item }: ItemProps): JSX.Element {
-  const { state } = useConnect<Packages>();
-  const author = state.source.author[item.author];
-  const date = new Date(item.date);
+  const {} = useConnect<Packages>();
 
   return (
-    <article>
-      <Link link={item.link}>
-        <Title dangerouslySetInnerHTML={{ __html: item.title.rendered }} />
-      </Link>
-
-      <div>
-        {/* If the show post has an author, we render a clickable author text. */}
-        {author && (
-          <StyledLink link={author.link}>
-            <AuthorName>
-              By <b>{author.name}</b>
-            </AuthorName>
-          </StyledLink>
-        )}
-        <PublishDate>
-          {" "}
-          on <b>{date.toDateString()}</b>
-        </PublishDate>
-      </div>
-
-      {item.acf.image && <FeaturedMedia id={item.acf.image} />}
-    </article>
+    <Container>
+      <article>
+        <Link link={item.link}>
+          <Cover>
+            {item.acf.image && <FeaturedMedia id={item.acf.image} />}
+            <Title>
+              <ShowName>{item.acf.title}</ShowName>
+            </Title>
+          </Cover>
+        </Link>
+      </article>
+    </Container>
   );
 }
 
 // Connect the ShowListItem to gain access to `state` as a prop
 export default connect(ShowListItem);
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: rgba(12, 17, 43);
+const ShowName = styled.h3`
+  color: #fff;
   margin: 0;
-  padding-top: 24px;
-  padding-bottom: 8px;
-  box-sizing: border-box;
+  padding: 5px;
+  font-size: 1.3rem;
+
+  padding-left: 10px;
 `;
 
-const AuthorName = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
+const Container = styled.h1`
+  width: 100%;
+  height: 275px;
+  margin-bottom: 0px;
 `;
 
-const StyledLink = styled(Link)`
-  padding: 15px 0;
+const Title = styled.div`
+  background-color: rgba(60, 60, 76, 0.6);
+
+  position: absolute;
+
+  width: 100%;
+  bottom: 0;
 `;
 
-const PublishDate = styled.span`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
+const Cover = styled.div`
+  height: 275px;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  @media (max-width: 750px) {
+  }
 `;

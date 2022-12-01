@@ -1,60 +1,89 @@
 import { connect, decode, styled, useConnect } from "frontity";
-import ShowListItem from "./show-list-item";
-import Pagination from "./pagination";
+import ShowListPage from "./show-list-page";
 import { Packages } from "../../../types";
-import { isAuthor, isTerm } from "@frontity/source";
 import { ShowArchiveData } from "../../data";
+import React, { useEffect } from "react";
 
 /**
  * Props received by the {@link ShowList} component.
  */
 interface ListProps {
-  /**
-   * Data object representing an archive link.
-   */
   data: ShowArchiveData;
-
-  /**
-   * Flag used by Frontity's {@link Switch} component to decide whether
-   * this component should be rendered.
-   */
   when?: boolean;
 }
 
-/**
- * Component that renders the list of shows,
- * passed as an {@link ShowArchiveData} object.
- *
- * @param props - Object of type {@link ListProps}.
- * @returns React component.
- */
 function ShowList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
+  const contentRef = React.useRef<HTMLDivElement>(); //reference to the div containing title and shows list
+
+  /**
+   * viewing next pages
+   */
+  const nextPage = function () {
+    //if there is a next page and show-list-page is ready and the next page is ready
+    if (
+      state.shows.ready &&
+      state.shows.nextPage != undefined &&
+      state.shows.nextPage.isReady
+    ) {
+      state.shows.ready = false; //tell state that the shows page starts to load now
+      state.shows.pages.push(state.shows.nextPage); //add page to our list in state
+    }
+  };
+
+  /**
+   * when user nearly reaches the end, load next page
+   */
+  const tryNextPage = () => {
+    if (
+      contentRef.current != undefined &&
+      contentRef.current.getBoundingClientRect().bottom - 20 <=
+        window.innerHeight
+    )
+      nextPage();
+  };
+
+  useEffect(() => {
+    /**
+     * load first page if it wasnt loaded yet
+     */
+    if (state.shows.pages.length == 0) state.shows.pages.push(data);
+
+    /**
+     * listening to scroll events (to load next page when users scrolls to the end)
+     */
+    window.addEventListener("scroll", tryNextPage, { passive: true });
+    window.addEventListener("resize", tryNextPage, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", tryNextPage);
+      window.removeEventListener("resize", tryNextPage);
+    };
+  }, []);
+
+  /**
+   * load next page if shows dont take all space on screen
+   * (and before that, check if the current shows page is loaded already)
+   */
+  if (
+    state.shows.ready &&
+    state.shows.nextPage != undefined &&
+    state.shows.nextPage.isReady
+  ) {
+    tryNextPage();
+  }
 
   return (
     <Container>
-      {/* If the list is a term, we render a title. */}
-      {isTerm(data) && (
-        <Header>
-          {data.taxonomy}:{" "}
-          <b>{decode(state.source[data.taxonomy][data.id].name)}</b>
-        </Header>
-      )}
+      <div ref={contentRef}>
+        <Title>
+          <h1>Audycje</h1>
+        </Title>
 
-      {/* If the list is for a specific author, we render a title. */}
-      {isAuthor(data) && (
-        <Header>
-          Author: <b>{decode(state.source.author[data.id].name)}</b>
-        </Header>
-      )}
-
-      {/* Iterate over the items of the list. */}
-      {data.items.map(({ type, id }) => {
-        const item = state.source[type][id];
-        // Render one ShowListItem component for each one.
-        return <ShowListItem key={item.id} item={item} />;
-      })}
-      <Pagination data={data} />
+        {state.shows.pages.map((item, i) => (
+          <ShowListPage data={item} key={i} />
+        ))}
+      </div>
     </Container>
   );
 }
@@ -62,14 +91,33 @@ function ShowList({ data }: ListProps): JSX.Element {
 export default connect(ShowList);
 
 const Container = styled.section`
-  width: 800px;
-  margin: 0;
-  padding: 24px;
-  list-style: none;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px 0 0 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  & > div {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  @media (max-width: 750px) {
+    & > div {
+      padding: 0;
+      width: 100%;
+    }
+  }
 `;
 
-const Header = styled.h3`
-  font-weight: 300;
-  text-transform: capitalize;
-  color: rgba(12, 17, 43, 0.9);
+const Title = styled.div`
+  & > h1 {
+    color: #6aba9c;
+    background-color: #3c3c4c;
+    border-bottom: solid 2px #6aba9c;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: lighter;
+  }
 `;
