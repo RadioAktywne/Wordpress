@@ -62,8 +62,7 @@ export default connect(InfoTileList);
 const Container = styled.section`
   width: 1140px;
   margin: 0;
-  padding-top: 20px;
-  padding: 20 20 0 20;
+  padding: 20px;
 
   display: grid;
 
@@ -96,6 +95,42 @@ const Container = styled.section`
     grid-column-start: 3;
     grid-row-end: 3;
     grid-column-end: 4;
+  }
+
+  @media (max-width: 1030px) {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+
+    & #item-0 {
+      grid-row-start: 1;
+      grid-column-start: 1;
+      grid-row-end: 2;
+      grid-column-end: 2;
+    }
+    & #item-1 {
+      grid-row-start: 2;
+      grid-column-start: 1;
+      grid-row-end: 3;
+      grid-column-end: 2;
+    }
+    & #item-2 {
+      grid-row-start: 1;
+      grid-column-start: 2;
+      grid-row-end: 2;
+      grid-column-end: 3;
+    }
+    & #item-3 {
+      grid-row-start: 2;
+      grid-column-start: 2;
+      grid-row-end: 3;
+      grid-column-end: 3;
+    }
+  }
+
+  @media (max-width: 750px) {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0 0 0;
   }
 `;
 
