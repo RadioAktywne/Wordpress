@@ -68,6 +68,7 @@ const Container = styled.div`
   width: 800px;
   margin: 0;
   padding: 24px;
+  padding-top: 20px;
 `;
 
 const Title = styled.h1`

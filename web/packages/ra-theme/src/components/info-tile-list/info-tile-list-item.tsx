@@ -56,8 +56,8 @@ const Tile = styled.div`
   width: 100%;
   height: 350px;
   overflow: hidden;
-  margin-left: 10px;
 `;
+
 const Title = styled.h2`
   color: #6aba9c;
   background-color: #3c3c4c;

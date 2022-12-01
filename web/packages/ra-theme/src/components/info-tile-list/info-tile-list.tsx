@@ -60,7 +60,7 @@ function InfoTileList({ data }: ListProps): JSX.Element {
 export default connect(InfoTileList);
 
 const Container = styled.section`
-  width: 1155px;
+  width: 1140px;
   margin: 0;
   padding-top: 20px;
   padding: 20 20 0 20;
