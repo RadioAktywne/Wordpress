@@ -5,7 +5,7 @@ import Router from "@frontity/router/types";
 import Source, { ArchiveData } from "@frontity/source/types";
 import ReactPlayer from "react-player";
 import { ReactDOM } from "react";
-import { AlbumArchiveData, RecordingArchiveData } from "./src/data";
+import { AlbumArchiveData, MemberArchiveData, RecordingArchiveData } from "./src/data";
 
 /**
  * A Frontity starter theme designed to learn Frontity.
@@ -110,9 +110,9 @@ interface RaThemeTypeScript extends Package {
     /**
      * Members list namespace.
      */
-     members: {
-      nextPage: ArchiveData; //highest currently loaded posts page
-      pages: ArchiveData[]; //list of opened posts
+    members: {
+      nextPage: MemberArchiveData; //highest currently loaded members archive page
+      pages: MemberArchiveData[]; //list of opened pages of members
       ready: boolean; //is the current page loaded
     };
   };

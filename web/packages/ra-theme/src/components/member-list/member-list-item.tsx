@@ -15,7 +15,7 @@ interface ItemProps {
 }
 
 function MemberListItem({ item }: ItemProps): JSX.Element {
-  const { } = useConnect<Packages>();
+  const {} = useConnect<Packages>();
 
   return (
     <Container>
@@ -24,13 +24,9 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
           <Cover>
             {item.acf.image && <FeaturedMedia id={item.acf.image} />}
             <Title>
-              <MemberName>
-                {item.acf.name}
-              </MemberName>
+              <MemberName>{item.acf.name}</MemberName>
 
-              <SongTitle>
-                {item.acf.role}
-              </SongTitle>
+              <SongTitle>{item.acf.role}</SongTitle>
             </Title>
           </Cover>
         </Link>

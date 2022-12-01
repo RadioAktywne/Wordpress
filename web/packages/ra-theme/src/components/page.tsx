@@ -39,7 +39,6 @@ function Page({ data }: PageProps): JSX.Element {
   // Get the data of the page.
   const page: PageEntity = state.source[data.type][data.id];
 
-
   return data.isReady ? (
     <Container>
       <MainContent>
@@ -48,8 +47,7 @@ function Page({ data }: PageProps): JSX.Element {
         </Title>
 
         <Description>
-          {(isPageEntity(page)) &&
-            parse(page.content?.rendered)}
+          {isPageEntity(page) && parse(page.content?.rendered)}
         </Description>
       </MainContent>
     </Container>
