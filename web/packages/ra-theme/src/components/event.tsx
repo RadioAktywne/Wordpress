@@ -43,6 +43,6 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  margin: 24px 0 8px;
+  margin: 20px 0 8px;
   color: rgba(12, 17, 43);
 `;

@@ -219,11 +219,11 @@ const HeadContainer = styled.div`
 
   padding: 0 3rem;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1020px) {
     padding: 0 0.3rem;
   }
 
-  @media (max-width: 850px) {
+  @media (max-width: 940px) {
     flex-direction: column;
     align-items: flex-start;
   }

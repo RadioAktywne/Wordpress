@@ -43,7 +43,7 @@ const NavContainer = styled.nav`
   margin: 0;
   overflow-x: auto;
 
-  @media (max-width: 850px) {
+  @media (max-width: 940px) {
   {
     align-self: flex-end;
   }
