@@ -5,22 +5,22 @@ echo "Setting defaults..."
 home="$(wp post list --post_type=page --name=home --field=ID)"
 
 if [ -z "$home" ]; then
-  wp post create --post_type=page --post_title='Strona główna' --post_status=publish
+  wp post create --post_type=page --post_title='Home' --post_status=publish
   home="$(wp post list --post_type=page --name=home --field=ID)"
 fi
 
-blog="$(wp post list --post_type=page --name=publicystyka --field=ID)"
+blog="$(wp post list --post_type=page --name=blog --field=ID)"
 
 if [ -z "$blog" ]; then
-  wp post create --post_type=page --post_title='Publicystyka' --post_status=publish
-  blog="$(wp post list --post_type=page --name=publicystyka --field=ID)"
+  wp post create --post_type=page --post_title='Blog' --post_status=publish
+  blog="$(wp post list --post_type=page --name=blog --field=ID)"
 fi
 
-about="$(wp post list --post_type=page --name=o-nas --field=ID)"
+about="$(wp post list --post_type=page --name=about --field=ID)"
 
 if [ -z "$about" ]; then
-  wp post create --post_type=page --post_title='O nas' --post_status=publish
-  about="$(wp post list --post_type=page --name=o-nas --field=ID)"
+  wp post create --post_type=page --post_title='About' --post_status=publish
+  about="$(wp post list --post_type=page --name=about --field=ID)"
 fi
 
 [ "$(wp option get show_on_front)" == "page" ] || wp option update show_on_front page
