@@ -161,7 +161,59 @@ const raThemeTypeScript: RaThemeTypeScript = {
             type: "album",
             endpoint: "album",
             params: {
-              per_page: 4,
+              per_page: 16,
+            },
+          }),
+        });
+
+        /**
+         * set number of shows per page
+         */
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "show handler",
+          priority: 15,
+          pattern: "/show/(.*)?",
+          func: postTypeHandler({
+            endpoints: ["show"],
+          }),
+        });
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "shows handler",
+          priority: 15,
+          pattern: "/shows/",
+          func: postTypeArchiveHandler({
+            type: "show",
+            endpoint: "show",
+            params: {
+              per_page: 16,
+            },
+          }),
+        });
+
+        /**
+         * set number of members per page
+         */
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "member handler",
+          priority: 15,
+          pattern: "/member/(.*)?",
+          func: postTypeHandler({
+            endpoints: ["member"],
+          }),
+        });
+        // @ts-ignore
+        libraries.source.handlers.push({
+          name: "members handler",
+          priority: 15,
+          pattern: "/members/",
+          func: postTypeArchiveHandler({
+            type: "member",
+            endpoint: "member",
+            params: {
+              per_page: 16,
             },
           }),
         });

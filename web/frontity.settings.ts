@@ -37,16 +37,16 @@ const settings: Settings<Theme | WpSource> = {
           homepage: "/home",
           postsPage: "/blog",
           postTypes: [
-            {
-              type: "member",
-              endpoint: "member",
-              archive: "/members",
-            },
-            {
-              type: "show",
-              endpoint: "show",
-              archive: "/shows",
-            },
+            // {
+            //   type: "member",
+            //   endpoint: "member",
+            //   archive: "/members",
+            // },
+            // {
+            //   type: "show",
+            //   endpoint: "show",
+            //   archive: "/shows",
+            // },
             // {
             //   type: "album",
             //   endpoint: "album",
