@@ -49,6 +49,7 @@ services:
       - /tmp
     volumes:
       - wordpress:/app/wp-content/uploads
+      - .data/php.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - database
   web:
