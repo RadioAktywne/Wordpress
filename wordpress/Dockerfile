@@ -16,6 +16,8 @@ RUN set -eux; \
 # jq and unzip are required to download plugins
         jq \
         unzip \
+# mysql-client is required for wp db cli
+        default-mysql-client \
     ; \
 	rm -rf /var/lib/apt/lists/*
 
