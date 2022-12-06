@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
 
-# https://wordpress.org/support/article/htaccess/
-{
-  echo '# BEGIN WordPress'
-  echo ''
-  echo 'RewriteEngine On'
-  echo 'RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]'
-  echo 'RewriteBase /'
-  echo 'RewriteRule ^index\.php$ - [L]'
-  echo 'RewriteCond %{REQUEST_FILENAME} !-f'
-  echo 'RewriteCond %{REQUEST_FILENAME} !-d'
-  echo 'RewriteRule . /index.php [L]'
-  echo ''
-  echo '# END WordPress'
-} >.htaccess
-
 apache2-foreground &
 pid="$!"
 

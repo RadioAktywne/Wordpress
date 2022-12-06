@@ -169,6 +169,7 @@ COPY ./themes/ ./wp-content/themes/
 COPY ./plugins/ ./wp-content/plugins/
 
 COPY ./wp-config.php ./wp-config.php
+COPY ./.htaccess ./.htaccess
 
 ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_DATABASE_USER=user \
