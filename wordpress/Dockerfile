@@ -16,6 +16,8 @@ RUN set -eux; \
 # jq and unzip are required to download plugins
         jq \
         unzip \
+# mysql-client is required for wp db cli
+        default-mysql-client \
     ; \
 	rm -rf /var/lib/apt/lists/*
 
@@ -166,6 +168,7 @@ COPY ./themes/ ./wp-content/themes/
 COPY ./plugins/ ./wp-content/plugins/
 
 COPY ./wp-config.php ./wp-config.php
+COPY ./.htaccess ./.htaccess
 
 ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_DATABASE_USER=user \
@@ -184,12 +187,12 @@ ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_TABLE_PREFIX=wp_ \
     WORDPRESS_DEBUG='' \
     WORDPRESS_CONFIG_EXTRA='' \
-    WORDPRESS_INITIAL_WEB_URL='http://localhost:3000' \
-    WORDPRESS_INITIAL_ROOT_URL='http://localhost' \
-    WORDPRESS_INITIAL_SITE_TITLE='Radio Aktywne' \
-    WORDPRESS_INITIAL_ADMIN_USERNAME=username \
-    WORDPRESS_INITIAL_ADMIN_PASSWORD=password \
-    WORDPRESS_INITIAL_ADMIN_EMAIL='example@example.com'
+    WORDPRESS_PUBLIC_URL='http://localhost:80' \
+    WORDPRESS_WEB_PUBLIC_URL='http://localhost:3000' \
+    WORDPRESS_SITE_TITLE='Radio Aktywne' \
+    WORDPRESS_ADMIN_USERNAME=username \
+    WORDPRESS_ADMIN_PASSWORD=password \
+    WORDPRESS_ADMIN_EMAIL='example@example.com'
 
 EXPOSE 80
 
