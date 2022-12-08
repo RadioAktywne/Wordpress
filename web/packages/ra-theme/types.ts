@@ -1,16 +1,78 @@
-import { Action, Frontity, MergePackages, Package } from "frontity/types";
+import {
+  Action,
+  Derived,
+  Frontity,
+  MergePackages,
+  Package,
+} from "frontity/types";
 import { AutoPrefetch } from "@frontity/components/link/types";
 import Html2React from "@frontity/html2react/types";
 import Router from "@frontity/router/types";
 import Source, { ArchiveData } from "@frontity/source/types";
-import ReactPlayer from "react-player";
-import { ReactDOM } from "react";
 import {
   AlbumArchiveData,
   MemberArchiveData,
   RecordingArchiveData,
   ShowArchiveData,
 } from "./src/data";
+import { ElementType } from "react";
+import WpSource from "@frontity/wp-source/types";
+
+type PageConfiguration = {
+  /**
+   * Front-facing path of the page.
+   */
+  path: string;
+};
+
+type PostConfiguration = {
+  /**
+   * Endpoint of the post type in WordPress.
+   */
+  endpoint: string;
+
+  /**
+   * WordPress path of the post type.
+   */
+  wpPath: string;
+
+  /**
+   * WordPress path of the post type archive.
+   */
+  wpArchivePath: string;
+
+  /**
+   * Front-facing path of a single post.
+   */
+  path: string;
+
+  /**
+   * Front-facing path of the archive of the post type.
+   */
+  archivePath: string;
+
+  /**
+   * Number of posts per page.
+   */
+  perPage?: number;
+};
+
+type ArchivePageData<A extends ArchiveData> = {
+  /**
+   * Highest currently loaded recordings page
+   */
+  nextPage: A;
+
+  /**
+   * List of opened pages
+   */
+  pages: A[];
+
+  /**
+   * Is the current page loaded
+   */
+  ready: boolean;
+};
 
 /**
  * A Frontity starter theme designed to learn Frontity.
@@ -19,7 +81,7 @@ interface RaThemeTypeScript extends Package {
   /**
    * The name of this package.
    */
-  name: "@frontity/ra-theme";
+  name: "@radioaktywne/ra-theme";
 
   /**
    * Root components exposed by this package.
@@ -29,16 +91,13 @@ interface RaThemeTypeScript extends Package {
      * In Frontity, any package can add React components to the site.
      * We use roots for that, scoped to the `theme` namespace.
      */
-    theme: React.ElementType;
+    theme: ElementType;
   };
 
   /**
    * The state exposed by this package.
    */
   state: {
-    /**
-     * Theme namespace.
-     */
     theme: {
       /**
        * The auto prefetch setting. Defined in {@link AutoPrefetch}.
@@ -51,10 +110,10 @@ interface RaThemeTypeScript extends Package {
       title: string;
 
       /**
-       * The menu of the theme. Expresed as an array of arrays that contain the
+       * The menu of the theme. Expressed as an array of arrays that contain the
        * label in the first item and the link in the second.
        */
-      menu: [string, string][];
+      menu: Derived<Packages, string[][]>;
 
       /**
        * Indicates if the mobile menu is opened or closed.
@@ -62,72 +121,46 @@ interface RaThemeTypeScript extends Package {
       isMobileMenuOpen: boolean;
     };
 
-    /**
-     * Radio Player namespace.
-     */
-    raplayer: {
-      playing: boolean; //is radio player playing
-      srcUrl: string; //src of current radio stream
-      muted: boolean; //is radio player muted
-      volume: number; //volume of radio player
+    configuration: {
+      pages: {
+        home: PageConfiguration;
+        about: PageConfiguration;
+      };
+      posts: {
+        post: PostConfiguration;
+        event: PostConfiguration;
+        recording: PostConfiguration;
+        album: PostConfiguration;
+        show: PostConfiguration;
+        member: PostConfiguration;
+        info: PostConfiguration;
+      };
     };
 
-    /**
-     * Recording Player namespace.
-     */
-    recplayer: {
-      playing: boolean; //is recording player playing
-      srcUrl: string; //src of current recording
-      openedRec: number; //id of current recording
-      muted: boolean; //is recording player muted
-      played: number; //current progress
-      durations: object; //durations of recordings
-      isOpened: object; //boolans telling if a recording is opened
+    players: {
+      main: {
+        playing: boolean; //is radio player playing
+        srcUrl: string; //src of current radio stream
+        muted: boolean; //is radio player muted
+        volume: number; //volume of radio player
+      };
+      recordings: {
+        playing: boolean; //is recording player playing
+        srcUrl: string; //src of current recording
+        openedRec: number; //id of current recording
+        muted: boolean; //is recording player muted
+        played: number; //current progress
+        durations: object; //durations of recordings
+        isOpened: object; //boolean telling if a recording is opened
+      };
     };
 
-    /**
-     * Recordings list namespace.
-     */
-    recordings: {
-      nextPage: RecordingArchiveData; //highest currently loaded recordings page
-      pages: RecordingArchiveData[]; //list of opened pages
-      ready: boolean; //is the current page loaded
-    };
-
-    /**
-     * Albums list namespace.
-     */
-    albums: {
-      nextPage: AlbumArchiveData; //highest currently loaded albums page
-      pages: AlbumArchiveData[]; //list of opened pages
-      ready: boolean; //is the current page loaded
-    };
-
-    /**
-     * Posts list namespace.
-     */
-    posts: {
-      nextPage: ArchiveData; //highest currently loaded posts page
-      pages: ArchiveData[]; //list of opened posts
-      ready: boolean; //is the current page loaded
-    };
-
-    /**
-     * Members list namespace.
-     */
-    members: {
-      nextPage: MemberArchiveData; //highest currently loaded members archive page
-      pages: MemberArchiveData[]; //list of opened pages of members
-      ready: boolean; //is the current page loaded
-    };
-
-    /**
-     * Shows list namespace.
-     */
-    shows: {
-      nextPage: ShowArchiveData; //highest currently loaded shows archive page
-      pages: ShowArchiveData[]; //list of opened pages of show
-      ready: boolean; //is the current page loaded
+    archives: {
+      recordings: ArchivePageData<RecordingArchiveData>;
+      albums: ArchivePageData<AlbumArchiveData>;
+      posts: ArchivePageData<ArchiveData>;
+      members: ArchivePageData<MemberArchiveData>;
+      shows: ArchivePageData<ShowArchiveData>;
     };
   };
 
@@ -155,14 +188,15 @@ interface RaThemeTypeScript extends Package {
       init: Action<Packages>;
     };
 
-    raplayer: {
-      playerPlay: Action<Packages>;
-      playerStop: Action<Packages>;
-    };
-
-    recplayer: {
-      playerPlay: Action<Packages>;
-      playerPause: Action<Packages>;
+    players: {
+      main: {
+        playerPlay: Action<Packages>;
+        playerStop: Action<Packages>;
+      };
+      recordings: {
+        playerPlay: Action<Packages>;
+        playerPause: Action<Packages>;
+      };
     };
   };
 }
@@ -177,5 +211,6 @@ export type Packages = MergePackages<
   Router,
   Source,
   Html2React,
-  RaThemeTypeScript
+  RaThemeTypeScript,
+  WpSource
 >;

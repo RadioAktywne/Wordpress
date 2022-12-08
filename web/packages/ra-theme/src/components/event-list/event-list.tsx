@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import EventDay from "./event-day";
 import { Packages } from "../../../types";
 import { EventArchiveData, EventEntity } from "../../data";
@@ -21,7 +21,7 @@ interface ListProps {
 function EventList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
-  let eventsPerDay = {
+  const eventsPerDay = {
     monday: [],
     tuesday: [],
     wednesday: [],
@@ -43,29 +43,25 @@ function EventList({ data }: ListProps): JSX.Element {
       </Title>
 
       <Days>
-        <EventDay data={eventsPerDay["monday"]} onHome={false} day={"monday"} />
+        <EventDay data={eventsPerDay.monday} onHome={false} day={"monday"} />
+        <EventDay data={eventsPerDay.tuesday} onHome={false} day={"tuesday"} />
         <EventDay
-          data={eventsPerDay["tuesday"]}
-          onHome={false}
-          day={"tuesday"}
-        />
-        <EventDay
-          data={eventsPerDay["wednesday"]}
+          data={eventsPerDay.wednesday}
           onHome={false}
           day={"wednesday"}
         />
         <EventDay
-          data={eventsPerDay["thursday"]}
+          data={eventsPerDay.thursday}
           onHome={false}
           day={"thursday"}
         />
-        <EventDay data={eventsPerDay["friday"]} onHome={false} day={"friday"} />
+        <EventDay data={eventsPerDay.friday} onHome={false} day={"friday"} />
         <EventDay
-          data={eventsPerDay["saturday"]}
+          data={eventsPerDay.saturday}
           onHome={false}
           day={"saturday"}
         />
-        <EventDay data={eventsPerDay["sunday"]} onHome={false} day={"sunday"} />
+        <EventDay data={eventsPerDay.sunday} onHome={false} day={"sunday"} />
       </Days>
     </Container>
   );

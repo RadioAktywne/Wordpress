@@ -55,7 +55,7 @@ function ra_custom_types_register_member()
         "map_meta_cap" => true,
         "can_export" => true,
         "show_in_rest" => true,
-        "rewrite" => ["with_front" => true],
+        "rewrite" => ["with_front" => false],
         "menu_icon" => "dashicons-groups",
         "supports" => ['title'],
     ];
@@ -155,7 +155,7 @@ function ra_custom_types_register_show()
         "map_meta_cap" => true,
         "can_export" => true,
         "show_in_rest" => true,
-        "rewrite" => ["with_front" => true],
+        "rewrite" => ["with_front" => false],
         "menu_icon" => "dashicons-format-audio",
         "supports" => ['title'],
     ];
@@ -260,7 +260,7 @@ function ra_custom_types_register_event()
         "map_meta_cap" => true,
         "can_export" => true,
         "show_in_rest" => true,
-        "rewrite" => ["with_front" => true],
+        "rewrite" => ["with_front" => false],
         "menu_icon" => "dashicons-calendar-alt",
         "supports" => ['title'],
     ];
@@ -397,7 +397,7 @@ function ra_custom_types_register_album()
         "map_meta_cap" => true,
         "can_export" => true,
         "show_in_rest" => true,
-        "rewrite" => ["with_front" => true],
+        "rewrite" => ["with_front" => false],
         "menu_icon" => "dashicons-album",
         "supports" => ['title'],
     ];
@@ -497,7 +497,7 @@ function ra_custom_types_register_recording()
         "map_meta_cap" => true,
         "can_export" => true,
         "show_in_rest" => true,
-        "rewrite" => ["with_front" => true],
+        "rewrite" => ["with_front" => false],
         "menu_icon" => "dashicons-media-audio",
         "supports" => ['title'],
     ];
@@ -599,7 +599,7 @@ function ra_custom_types_register_info_tile()
         "map_meta_cap" => true,
         "can_export" => true,
         "show_in_rest" => true,
-        "rewrite" => ["with_front" => true],
+        "rewrite" => ["with_front" => false],
         "menu_icon" => "dashicons-layout",
         "supports" => ['title'],
     ];
@@ -770,6 +770,14 @@ function ra_custom_types_set_defaults($post_id)
     }
 }
 
+function ra_custom_types_format_links($value_formatted, $post_id, $field, $value, $format)
+{
+    return acf_format_value($value, $post_id, $field);
+}
+
 add_action('admin_head', 'ra_custom_types_hide_titles', 9999);
 add_action('acf/init', 'ra_custom_types_register_types', 9999);
 add_action('acf/save_post', 'ra_custom_types_set_defaults', 9999);
+
+add_filter('acf/rest/format_value_for_rest/type=link', 'ra_custom_types_format_links', 10, 5);
+add_filter('acf/rest/format_value_for_rest/type=page_link', 'ra_custom_types_format_links', 10, 5);

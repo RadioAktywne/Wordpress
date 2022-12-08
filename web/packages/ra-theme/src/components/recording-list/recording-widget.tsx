@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import { useEffect } from "react";
 import { Packages } from "../../../types";
 import Loading from "../loading";
@@ -6,48 +6,48 @@ import Link from "../link";
 import RecordingListItem from "./recording-list-item";
 import { ArchiveData } from "@frontity/source/types";
 
-const RecordingWidget = () => {
+export type RecordingWidgetProps = {
+  length?: number;
+};
+
+const RecordingWidget = ({ length = 6 }) => {
   const { actions, state } = useConnect<Packages>();
 
   /**
    * fetch recordings
    */
   useEffect(() => {
-    actions.source.fetch("/recordings");
+    actions.source.fetch(state.configuration.posts.recording.archivePath);
   }, []);
-  const dataPost = state.source.get("/recordings") as ArchiveData;
 
-  /**
-   * how many recordings should the widget show?
-   * will be decrementet each time - when it's 0, we already have 6 recordings
-   */
-  let numberOfRecordings = 6;
+  const dataPost = state.source.get(
+    state.configuration.posts.recording.archivePath
+  ) as ArchiveData;
+
+  if (!dataPost.isReady)
+    return (
+      <Container>
+        <Loading />
+      </Container>
+    );
 
   /**
    * when recordings are fetched
    */
-  return dataPost.isReady ? (
+  return (
     <Container>
       <div>
         <Title>
-          <Link link="/recordings">
+          <Link link={state.configuration.posts.recording.archivePath}>
             <h1>Nagrania</h1>
           </Link>
         </Title>
 
-        {dataPost.items.map(({ type, id }) => {
+        {dataPost.items.slice(0, length).map(({ type, id }) => {
           const item = state.source[type][id];
-          // Render one RecordingListItem component for each one.
-          if (numberOfRecordings) {
-            numberOfRecordings--;
-            return <RecordingListItem key={item.id} item={item} />;
-          }
+          return <RecordingListItem key={item.id} item={item} />;
         })}
       </div>
-    </Container>
-  ) : (
-    <Container>
-      <Loading />
     </Container>
   );
 };

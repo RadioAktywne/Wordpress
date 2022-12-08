@@ -1,8 +1,6 @@
-import { connect, decode, styled, useConnect } from "frontity";
-import { useEffect } from "react";
+import { connect, useConnect } from "frontity";
 import { Packages } from "../../../types";
 import { EventArchiveData, EventEntity } from "../../data";
-import Loading from "../loading";
 import EventDay from "./event-day";
 
 //we need to check current day in order to show current data in events widget
@@ -24,15 +22,12 @@ interface ListProps {
 function EventWidget({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
-  let eventsToday = [];
-
   /**
    * choose just today's events
    */
-  data.items.map(({ type, id }) => {
-    const item = state.source[type][id] as EventEntity;
-    if (item.acf.day == englishDays[day]) eventsToday.push(item);
-  });
+  const eventsToday = data.items
+    .map(({ type, id }) => state.source[type][id] as EventEntity)
+    .filter((item) => item.acf.day == englishDays[day]);
 
   return <EventDay data={eventsToday} day={englishDays[day]} onHome={true} />;
 }

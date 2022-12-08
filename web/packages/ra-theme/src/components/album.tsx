@@ -37,7 +37,7 @@ function Album({ data }: AlbumProps): JSX.Element {
           </h1>
 
           <BackButton>
-            <Link link="/albums">
+            <Link link={state.configuration.posts.album.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>

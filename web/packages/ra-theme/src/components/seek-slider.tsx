@@ -20,7 +20,7 @@ function SeekSlider(): JSX.Element {
    */
   const handleChange = function (newProgress) {
     playerHandle.current.seekTo(newProgress); //seek
-    state.recplayer.played = newProgress;
+    state.players.recordings.played = newProgress;
   };
 
   return (
@@ -35,13 +35,13 @@ function SeekSlider(): JSX.Element {
           background: linear-gradient(
             90deg,
             #6aba9c 0%,
-            #6aba9c ${state.recplayer.played * 100}%,
-            white ${state.recplayer.played * 100}%,
+            #6aba9c ${state.players.recordings.played * 100}%,
+            white ${state.players.recordings.played * 100}%,
             white 100%
           );
         `}
         onChange={(e) => handleChange(parseFloat(e.target.value))}
-        value={state.recplayer.played}
+        value={state.players.recordings.played}
       />
     </Container>
   );
@@ -88,11 +88,13 @@ const Container = styled.div`
     width: 0px;
     border: 0px;
   }
+
   input[type="range"]::-moz-range-thumb {
     height: 0px;
     width: 0px;
     border: 0px;
   }
+
   input[type="range"]::-ms-thumb {
     height: 0px;
     width: 0px;

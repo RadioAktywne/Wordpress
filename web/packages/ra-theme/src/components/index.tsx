@@ -15,7 +15,6 @@ import { Packages } from "../../types";
 import {
   isAlbum,
   isAlbumArchive,
-  isEvent,
   isEventArchive,
   isInfoTileArchive,
   isMember,
@@ -24,11 +23,10 @@ import {
   isRecording,
   isRecordingArchive,
   isShow,
-  isShowArchive,
+  isShowArchive
 } from "../data";
 import Member from "./member";
 import Show from "./show";
-import Event from "./event";
 import Album from "./album";
 import Recording from "./recording";
 import Head from "./head";
@@ -53,20 +51,20 @@ function Theme() {
   /**
    * Things related to playing audio (needs to be global)
    */
-  // handle for ReactPlayer object (right now undefinied)
+  // handle for ReactPlayer object (right now undefined)
   const recplayer = React.useRef<ReactPlayer>(null);
   // when recording is ready to be played, show its duration
   const setDuration = function () {
-    state.recplayer.durations[state.recplayer.openedRec] =
+    state.players.recordings.durations[state.players.recordings.openedRec] =
       recplayer.current.getDuration();
   };
   // when recording progresses, update played (recording progress) state
   const handleProgress = (played) => {
-    state.recplayer.played = played;
+    state.players.recordings.played = played;
   };
   // when recording ends, change play icon to pause
   const recordingEnded = function () {
-    actions.recplayer.playerPause();
+    actions.players.recordings.playerPause();
   };
   /**
    * End of things related to playing audio (needs to be global)
@@ -92,9 +90,9 @@ function Theme() {
 
       {/* radio player needs to be on each page - thats why its here */}
       <ReactPlayer
-        playing={state.raplayer.playing}
-        url={state.raplayer.srcUrl}
-        volume={state.raplayer.volume}
+        playing={state.players.main.playing}
+        url={state.players.main.srcUrl}
+        volume={state.players.main.volume}
         width={0}
         height={0}
         config={{
@@ -106,10 +104,10 @@ function Theme() {
 
       {/* same with recording player */}
       <ReactPlayer
-        playing={state.recplayer.playing}
-        url={state.recplayer.srcUrl}
+        playing={state.players.recordings.playing}
+        url={state.players.recordings.srcUrl}
         volume={1}
-        muted={state.recplayer.muted}
+        muted={state.players.recordings.muted}
         width={0}
         height={0}
         ref={recplayer}
@@ -167,7 +165,6 @@ function Theme() {
             />
             <Member when={isMember(data)} data={isMember(data) && data} />
             <Show when={isShow(data)} data={isShow(data) && data} />
-            <Event when={isEvent(data)} data={isEvent(data) && data} />
             <Album when={isAlbum(data)} data={isAlbum(data) && data} />
             <Recording
               when={isRecording(data)}

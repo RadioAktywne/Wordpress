@@ -8,6 +8,7 @@ import Loading from "./loading";
 import parse from "html-react-parser";
 import Link from "./link";
 import ShowEvents from "./show-events";
+import { replacePath } from "../lib/utils";
 
 /**
  * Properties received by the `Show` component.
@@ -39,7 +40,7 @@ function Show({ data }: ShowProps): JSX.Element {
           <h1>{show.acf.title}</h1>
 
           <BackButton>
-            <Link link="/shows">
+            <Link link={state.configuration.posts.show.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>
@@ -86,7 +87,9 @@ function Show({ data }: ShowProps): JSX.Element {
             if (value != undefined)
               return (
                 <div key={id}>
-                  <Link link={value.link}>{value.acf.name}</Link>
+                  <Link link={replacePath(value.link, state.configuration)}>
+                    {value.acf.name}
+                  </Link>
                 </div>
               );
           })}
@@ -245,6 +248,7 @@ const List = styled.div`
   & > div > span {
     padding-left: 15px;
     display: block;
+
     &:hover {
       color: #6aba9c;
     }

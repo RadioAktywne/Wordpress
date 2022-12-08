@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import AlbumListPage from "./album-list-page";
 import { Packages } from "../../../types";
 import { AlbumArchiveData } from "../../data";
@@ -22,12 +22,12 @@ function AlbumList({ data }: ListProps): JSX.Element {
   const nextPage = function () {
     //if there is a next page and album-list-page is ready and the next page is ready
     if (
-      state.albums.ready &&
-      state.albums.nextPage != undefined &&
-      state.albums.nextPage.isReady
+      state.archives.albums.ready &&
+      state.archives.albums.nextPage != undefined &&
+      state.archives.albums.nextPage.isReady
     ) {
-      state.albums.ready = false; //tell state that the albums page starts to load now
-      state.albums.pages.push(state.albums.nextPage); //add page to our list in state
+      state.archives.albums.ready = false; //tell state that the albums page starts to load now
+      state.archives.albums.pages.push(state.archives.albums.nextPage); //add page to our list in state
     }
   };
 
@@ -47,7 +47,8 @@ function AlbumList({ data }: ListProps): JSX.Element {
     /**
      * load first page if it wasnt loaded yet
      */
-    if (state.albums.pages.length == 0) state.albums.pages.push(data);
+    if (state.archives.albums.pages.length == 0)
+      state.archives.albums.pages.push(data);
 
     /**
      * listening to scroll events (to load next page when users scrolls to the end)
@@ -66,9 +67,9 @@ function AlbumList({ data }: ListProps): JSX.Element {
    * (and before that, check if the current albums page is loaded already)
    */
   if (
-    state.albums.ready &&
-    state.albums.nextPage != undefined &&
-    state.albums.nextPage.isReady
+    state.archives.albums.ready &&
+    state.archives.albums.nextPage != undefined &&
+    state.archives.albums.nextPage.isReady
   ) {
     tryNextPage();
   }
@@ -80,7 +81,7 @@ function AlbumList({ data }: ListProps): JSX.Element {
           <h1>Płyta Tygodnia</h1>
         </Title>
 
-        {state.albums.pages.map((item, i) => (
+        {state.archives.albums.pages.map((item, i) => (
           <AlbumListPage data={item} key={i} />
         ))}
       </div>

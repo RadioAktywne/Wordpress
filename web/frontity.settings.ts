@@ -1,8 +1,7 @@
 import { Settings } from "frontity/types";
 import WpSource from "@frontity/wp-source/types";
-import Theme from "@frontity/ra-theme/types";
+import Theme from "@radioaktywne/ra-theme/types";
 
-// @ts-ignore
 const settings: Settings<Theme | WpSource> = {
   name: "radioaktywne",
   state: {
@@ -13,56 +12,13 @@ const settings: Settings<Theme | WpSource> = {
     },
   },
   packages: [
-    // @ts-ignore
-    {
-      name: "@frontity/ra-theme",
-      state: {
-        theme: {
-          menu: [
-            ["Radio Aktywne", "/"],
-            ["Nagrania", "/recordings"],
-            ["Płyta Tygodnia", "/albums"],
-            ["Publicystyka", "/blog"],
-            ["Radio", "/info"],
-          ],
-        },
-      },
-    },
-    // @ts-ignore
+    "@radioaktywne/ra-theme",
     {
       name: "@frontity/wp-source",
       state: {
         source: {
           url: process.env.WEB_WORDPRESS_URL || "http://localhost:80",
-          homepage: "/home",
-          postsPage: "/blog",
-          postTypes: [
-            // {
-            //   type: "member",
-            //   endpoint: "member",
-            //   archive: "/members",
-            // },
-            // {
-            //   type: "show",
-            //   endpoint: "show",
-            //   archive: "/shows",
-            // },
-            // {
-            //   type: "album",
-            //   endpoint: "album",
-            //   archive: "/albums",
-            // },
-            {
-              type: "info",
-              endpoint: "info",
-              archive: "/info",
-            },
-            // {
-            //   type: "recording",
-            //   endpoint: "recording",
-            //   archive: "/recordings",
-            // },
-          ],
+          homepage: "home",
         },
       },
     },

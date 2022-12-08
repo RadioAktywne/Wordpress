@@ -17,20 +17,20 @@
   "dependencies": {
     "@frontity/core": "^1.16.0",
     "@frontity/html2react": "^1.7.0",
-    "@frontity/ra-theme": "./packages/ra-theme",
+    "@radioaktywne/ra-theme": "./packages/ra-theme",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
     "frontity": "^1.17.2",
     "html-react-parser": "^3.0.4",
-    "react-player": "^2.10.1",
+    "react-player": "^2.11.0",
     "xhr2": "^0.2.1"
   },
   "devDependencies": {
-    "@types/node": "^18.0.0",
+    "@types/node": "^18.11.11",
     "@types/node-fetch": "^2.6.2",
-    "@types/react": "^18.0.14",
-    "npm-check-updates": "^14.0.1",
-    "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "@types/react": "^18.0.26",
+    "npm-check-updates": "^16.5.1",
+    "prettier": "^2.8.1",
+    "typescript": "^4.9.4"
   }
 }

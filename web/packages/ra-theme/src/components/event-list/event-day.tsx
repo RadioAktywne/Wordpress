@@ -1,15 +1,10 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import EventListItem from "./event-list-item";
 import Link from "../link";
 import { Packages } from "../../../types";
-import { useEffect } from "react";
-import {
-  EventArchiveData,
-  EventData,
-  EventEntity,
-  ShowArchiveData,
-} from "../../data";
+import { EventEntity } from "../../data";
 import Loading from "../loading";
+import useShows from "../../hooks/useShows";
 
 /**
  * polish names of days
@@ -48,41 +43,36 @@ interface ListProps {
 }
 
 function EventDay({ data, onHome, day }: ListProps): JSX.Element {
-  const { state, actions } = useConnect<Packages>();
+  const { state } = useConnect<Packages>();
 
   /**
    * fetch shows to have shows links, not only events links
    */
-  useEffect(() => {
-    actions.source.fetch("/shows");
-  }, []);
-  const showsData = state.source.get("/shows") as ShowArchiveData;
+  const shows = useShows(data.map((item) => item.acf.show));
 
-  /**
-   * sort events if there are more than 2
-   */
-  if (data.length > 1) data.sort(isEarlier);
+  if (shows.status !== "success")
+    return (
+      <Day>
+        <Loading />
+      </Day>
+    );
 
-  return showsData.isReady ? (
+  const sorted = [...data].sort(isEarlier);
+
+  return (
     <Day>
       <div>
         {onHome ? (
-          <Link link="/events">
+          <Link link={state.configuration.posts.event.archivePath}>
             <h2 className="">RAmówka na dziś</h2>
           </Link>
         ) : (
           <h2>{daysNames[day]}</h2>
         )}
-        {data.map((value, index) => {
-          return (
-            <EventListItem item={value} key={index} showsData={showsData} />
-          );
+        {sorted.map((value, index) => {
+          return <EventListItem item={value} key={index} />;
         })}
       </div>
-    </Day>
-  ) : (
-    <Day>
-      <Loading />
     </Day>
   );
 }
@@ -92,17 +82,15 @@ export default connect(EventDay);
 const Day = styled.div`
   width: 33.33%;
 
-  & > div
-  {
+  & > div {
     padding: 0 15px 15px 0;
   }
 
   &:nth-of-type(3n) > div {
-    padding: 0 0 15px 0; 
+    padding: 0 0 15px 0;
   }
 
-  & > div > h2
-  {
+  & > div > h2 {
     color: #3c3c4c;
     border-bottom: solid 2px #3c3c4c;
     font-weight: normal;
@@ -110,8 +98,7 @@ const Day = styled.div`
     margin-top: 0;
   }
 
-  & > div > a > h2
-  {
+  & > div > a > h2 {
     color: #6aba9c;
     background-color: #3c3c4c;
     border-bottom: solid 2px #6aba9c;
@@ -121,19 +108,16 @@ const Day = styled.div`
     font-weight: lighter;
   }
 
-  & > div > a:hover > h2
-  {
+  & > div > a:hover > h2 {
     color: #fff;
     background-color: #6aba9c;
     border-bottom: solid 2px #3c3c4c;
   }
 
-  @media (max-width: 750px)
-  {
+  @media (max-width: 750px) {
     width: 100%;
 
-    & > div
-    {
+    & > div {
       padding: 0 0 20px 0;
     }
 `;

@@ -3,6 +3,7 @@ import Link from "../link";
 import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
 import { InfoTileEntity } from "../../data";
+import { replacePath } from "../../lib/utils";
 
 /**
  * The props of the {@link InfoTileListItem} component.
@@ -25,22 +26,16 @@ interface ItemProps {
  */
 function InfoTileListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
-  let link = item.acf.link.toString();
-  let noReloadLinkParts, noReloadLink;
-  if (link) {
-    noReloadLinkParts = link.split("/");
-    noReloadLink = "/" + noReloadLinkParts[noReloadLinkParts.length - 2];
-  }
 
-  //if link is an id of page, it must be the about-us page
-  if (/^-?\d+$/.test(link)) {
-    noReloadLink = "/about";
-  }
+  const link = item.acf.link.toString();
+  const path = new URL(link).pathname;
+
+  const frontPath = replacePath(path, state.configuration);
 
   return (
     <article>
       <Tile>
-        <Link link={noReloadLink}>
+        <Link link={frontPath}>
           <Title>{item.acf.title}</Title>
           {item.acf.image && <FeaturedMedia id={item.acf.image} />}
         </Link>

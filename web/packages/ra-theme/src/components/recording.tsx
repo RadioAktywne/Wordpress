@@ -33,7 +33,7 @@ function Recording({ data }: RecordingProps): JSX.Element {
           <h1>{recording.acf.title}</h1>
 
           <BackButton>
-            <Link link="/recordings">
+            <Link link={state.configuration.posts.recording.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>

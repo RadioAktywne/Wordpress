@@ -84,8 +84,8 @@ const Description = styled.div`
   font-size: 1rem;
   line-height: 1.7;
   margin-top: 20px;
-  & img
-  {
+
+  & img {
     max-width: 760px !important;
     height: auto;
     object-fit: cover;
@@ -94,8 +94,7 @@ const Description = styled.div`
     margin-right: auto;
   }
 
-  & figure
-  {
+  & figure {
     margin: 0;
   }
 
@@ -142,86 +141,71 @@ const Description = styled.div`
     padding: 4px 16px;
   }
 
-  & .has-light-green-cyan-color
-  {
-    color: #7BDCB5;
+  & .has-light-green-cyan-color {
+    color: #7bdcb5;
   }
 
-  & .has-cyan-bluish-gray-color
-  {
+  & .has-cyan-bluish-gray-color {
     color: #abb8c3;
   }
 
-  & .has-white-color
-  {
+  & .has-white-color {
     color: #ffffff;
   }
-  
-  & .has-pale-pink-color
-  {
+
+  & .has-pale-pink-color {
     color: #f78da7;
   }
-  
-  & .has-vivid-red-color
-  {
+
+  & .has-vivid-red-color {
     color: #cf2e2e;
   }
-  
-  & .has-luminous-vivid-orange-color
-  {
+
+  & .has-luminous-vivid-orange-color {
     color: #ff6900;
   }
-  
-  & .has-luminous-vivid-amber-color
-  {
+
+  & .has-luminous-vivid-amber-color {
     color: #fcb900;
   }
-  
-  & .has-vivid-green-cyan-color
-  {
+
+  & .has-vivid-green-cyan-color {
     color: #00d084;
   }
-  
-  & .has-pale-cyan-blue-color
-  {
+
+  & .has-pale-cyan-blue-color {
     color: #8ed1fc;
   }
-  
-  & .has-vivid-cyan-blue-color
-  {
+
+  & .has-vivid-cyan-blue-color {
     color: #0693e3;
   }
-  
-  & .has-vivid-purple-color
-  {
+
+  & .has-vivid-purple-color {
     color: #9b51e0;
   }
 
-  & .wp-block-table table
-  {
+  & .wp-block-table table {
     border-collapse: collapse;
     width: 100%;
     overflow-wrap: break-word;
   }
 
-  & thead
-  {
+  & thead {
     border-bottom: 3px solid;
   }
 
-  & .wp-block-table table
-  {
+  & .wp-block-table table {
     border-collapse: collapse;
   }
 
-  & .wp-block-table td, .wp-block-table th
-  {
+  & .wp-block-table td,
+  .wp-block-table th {
     border: 1px solid;
-    padding: .5em;
+    padding: 0.5em;
   }
 
-  & figcaption
-  {
+  & figcaption {
     white-space: pre-wrap;
     min-width: 1px;
     color: #555;
@@ -232,10 +216,9 @@ const Description = styled.div`
   & .wp-block-code {
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-family: Menlo,Consolas,monaco,monospace;
-    padding: .8em 1em;
+    font-family: Menlo, Consolas, monaco, monospace;
+    padding: 0.8em 1em;
   }
-}
 `;
 
 const MainContent = styled.div`

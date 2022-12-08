@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../../types";
 import { useEffect } from "react";
 import Loading from "../loading";
@@ -22,20 +22,22 @@ function ShowListPage({ data }: ListPageProps): JSX.Element {
    *  preload next page
    *  render items from current page
    */
-  if (data.isReady) {
-    state.shows.ready = true;
+  useEffect(() => {
+    state.archives.shows.ready = data.isReady;
 
     if (data.next) {
-      useEffect(() => {
-        actions.source.fetch(data.next);
-      }, []);
-      state.shows.nextPage = state.source.get(data.next) as ShowArchiveData;
+      actions.source.fetch(data.next).then(() => {
+        const nextPage = state.source.get(data.next);
+        state.archives.shows.nextPage = nextPage as ShowArchiveData;
+      });
     } else {
-      state.shows.nextPage = undefined;
+      state.archives.shows.nextPage = undefined;
     }
-  }
+  }, [data.isReady, data.next]);
 
-  return data.isReady ? (
+  if (!data.isReady) return <Loading />;
+
+  return (
     <Container>
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
@@ -43,8 +45,6 @@ function ShowListPage({ data }: ListPageProps): JSX.Element {
         return <ShowListItem key={item.id} item={item} />;
       })}
     </Container>
-  ) : (
-    <Loading />
   );
 }
 

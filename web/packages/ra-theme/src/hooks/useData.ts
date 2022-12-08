@@ -2,6 +2,7 @@ import { useConnect } from "frontity";
 import { Packages } from "../../types";
 import useAsync from "./useAsync";
 import React from "react";
+import populate from "../lib/populate";
 
 export default function useData<T>(
   ids: number[],
@@ -10,7 +11,7 @@ export default function useData<T>(
 ) {
   const { state, libraries } = useConnect<Packages>();
   // @ts-ignore
-  const { api, populate } = libraries.source;
+  const { api } = libraries.source;
 
   const fetch = React.useCallback(
     async ({ cancelled }) => {
@@ -18,7 +19,8 @@ export default function useData<T>(
         endpoint: endpoint,
         params: { include: ids, _embed: true },
       });
-      if (!cancelled) await populate({ response, state });
+      if (cancelled) return;
+      await populate({ response, state });
     },
     [endpoint, JSON.stringify(ids)]
   );

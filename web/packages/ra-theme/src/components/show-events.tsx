@@ -2,7 +2,6 @@ import { connect, useConnect } from "frontity";
 import { Packages } from "../../types";
 import { EventArchiveData, EventEntity } from "../data";
 import Loading from "./loading";
-import Link from "./link";
 import { useEffect } from "react";
 
 /**
@@ -27,13 +26,17 @@ const cutSec = function (time) {
 function ShowEvents({ live, showId }: ShowEventsProps): JSX.Element {
   const { state, actions } = useConnect<Packages>();
 
+  return null;
+
   /**
    * get list of events
    */
   useEffect(() => {
-    actions.source.fetch("/events");
+    actions.source.fetch(state.configuration.posts.event.archivePath);
   }, []);
-  const eventsData = state.source.get("/events") as EventArchiveData;
+  const eventsData = state.source.get(
+    state.configuration.posts.event.archivePath
+  ) as EventArchiveData;
 
   /**
    * check if and what time event happens for each day

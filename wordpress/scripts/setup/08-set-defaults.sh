@@ -23,7 +23,7 @@ if [ -z "$about" ]; then
   about="$(wp post list --post_type=page --name=about --field=ID)"
 fi
 
-permalink='/%postname%/'
+permalink='/blog/%postname%/'
 
 [ "$(wp option get show_on_front)" == "page" ] || wp option update show_on_front page
 [ "$(wp option get page_on_front)" == "$home" ] || wp option update page_on_front "$home"

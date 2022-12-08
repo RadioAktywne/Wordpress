@@ -22,12 +22,12 @@ function PostList({ data }: ListProps): JSX.Element {
   const nextPage = function () {
     //if there is a next page and album-list-page is ready and the next page is ready
     if (
-      state.posts.ready &&
-      state.posts.nextPage != undefined &&
-      state.posts.nextPage.isReady
+      state.archives.posts.ready &&
+      state.archives.posts.nextPage != undefined &&
+      state.archives.posts.nextPage.isReady
     ) {
-      state.posts.ready = false; //tell state that the posts page starts to load now
-      state.posts.pages.push(state.posts.nextPage); //add page to our list in state
+      state.archives.posts.ready = false; //tell state that the posts page starts to load now
+      state.archives.posts.pages.push(state.archives.posts.nextPage); //add page to our list in state
     }
   };
 
@@ -47,7 +47,8 @@ function PostList({ data }: ListProps): JSX.Element {
     /**
      * load first page if it wasnt loaded yet
      */
-    if (state.posts.pages.length == 0) state.posts.pages.push(data);
+    if (state.archives.posts.pages.length == 0)
+      state.archives.posts.pages.push(data);
 
     /**
      * listening to scroll events (to load next page when users scrolls to the end)
@@ -66,9 +67,9 @@ function PostList({ data }: ListProps): JSX.Element {
    * (and before that, check if the current posts page is loaded already)
    */
   if (
-    state.posts.ready &&
-    state.posts.nextPage != undefined &&
-    state.posts.nextPage.isReady
+    state.archives.posts.ready &&
+    state.archives.posts.nextPage != undefined &&
+    state.archives.posts.nextPage.isReady
   ) {
     tryNextPage();
   }
@@ -80,7 +81,7 @@ function PostList({ data }: ListProps): JSX.Element {
           <h1>Publicystyka</h1>
         </Title>
 
-        {state.posts.pages.map((item, i) => (
+        {state.archives.posts.pages.map((item, i) => (
           <PostListPage data={item} key={i} />
         ))}
       </div>

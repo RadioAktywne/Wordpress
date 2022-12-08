@@ -5,6 +5,7 @@ import FocusLogo from "../img/logos/focus.png";
 import SSPWLogo from "../img/logos/sspw.png";
 import TVPWsLogo from "../img/logos/tvpw.png";
 import Arrow from "../img/icons/arrow.svg";
+import { Packages } from "../../types";
 
 /**
  * The footer of the site, logo, socials and the nav bar.
@@ -13,10 +14,15 @@ import Arrow from "../img/icons/arrow.svg";
  */
 
 function Footer() {
+  const { state } = useConnect<Packages>();
+
   return (
     <>
       <Container>
-        <Link link="/info" id="contactLink">
+        <Link
+          link={state.configuration.posts.info.archivePath}
+          id="contactLink"
+        >
           kontakt
           <img src={Arrow} alt="kontakt" />
         </Link>

@@ -32,9 +32,11 @@ function Home({ data }: HomeProps): JSX.Element {
    * fetch all events to pass them to EventsWidget
    */
   useEffect(() => {
-    actions.source.fetch("/events");
+    actions.source.fetch(state.configuration.posts.event.archivePath);
   }, []);
-  const eventsData = state.source.get("/events") as EventArchiveData;
+  const eventsData = state.source.get(
+    state.configuration.posts.event.archivePath
+  ) as EventArchiveData;
 
   // Load the page, but only if the data is ready.
   return data.isReady ? (

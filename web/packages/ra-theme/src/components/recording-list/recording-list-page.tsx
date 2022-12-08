@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import RecordingListItem from "./recording-list-item";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
@@ -22,22 +22,22 @@ function RecordingListPage({ data }: ListPageProps): JSX.Element {
    *  preload next page
    *  render items from current page
    */
-  if (data.isReady) {
-    state.recordings.ready = true;
+  useEffect(() => {
+    state.archives.recordings.ready = data.isReady;
 
     if (data.next) {
-      useEffect(() => {
-        actions.source.fetch(data.next);
-      }, []);
-      state.recordings.nextPage = state.source.get(
-        data.next
-      ) as RecordingArchiveData;
+      actions.source.fetch(data.next).then(() => {
+        const nextPage = state.source.get(data.next);
+        state.archives.recordings.nextPage = nextPage as RecordingArchiveData;
+      });
     } else {
-      state.recordings.nextPage = undefined;
+      state.archives.recordings.nextPage = undefined;
     }
-  }
+  }, [data.isReady, data.next]);
 
-  return data.isReady ? (
+  if (!data.isReady) return <Loading />;
+
+  return (
     <Container>
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
@@ -45,8 +45,6 @@ function RecordingListPage({ data }: ListPageProps): JSX.Element {
         return <RecordingListItem key={item.id} item={item} />;
       })}
     </Container>
-  ) : (
-    <Loading />
   );
 }
 

@@ -1,14 +1,15 @@
 import { ServerError } from "@frontity/source";
-import { PostTypeArchiveData, SearchData } from "@frontity/source/types/data";
 import capitalize from "@frontity/wp-source/src/libraries/handlers/utils/capitalize";
 import { Handler } from "@frontity/wp-source/types";
+import { Packages } from "../../types";
+import populate from "../lib/populate";
 
 /**
  * The parameters for {@link postTypeArchiveHandler}.
  */
 interface PostTypeArchiveHandlerParams {
   /**
-   * The slug of the custom post type as configured in WordPress.
+   * The slug of the post type as configured in WordPress.
    *
    * @example "movie"
    */
@@ -22,6 +23,9 @@ interface PostTypeArchiveHandlerParams {
    */
   endpoint: string;
 
+  /**
+   * Additional API params to be passed to the endpoint.
+   */
   params?: { [p: string]: any };
 }
 
@@ -42,9 +46,9 @@ interface PostTypeArchiveHandlerParams {
  *     endpoint: "movies",
  *   });
  *   libraries.source.handlers.push({
- *     name: "movies archive",
+ *     name: "movies archive handler",
  *     priority: 30,
- *     pattern: "/movies/",
+ *     pattern: "/filmy/",
  *     func: postTypeArchiveHandlerFunc,
  *   })
  * ```
@@ -54,22 +58,34 @@ interface PostTypeArchiveHandlerParams {
  * calling `source.fetch()` for a specific entity.
  */
 const postTypeArchiveHandler =
-  ({ type, endpoint, params = {} }: PostTypeArchiveHandlerParams): Handler =>
-  async ({ link: linkArg, route: routeArg, state, libraries, force }) => {
-    // This is only for backward compatibility for the moment when handlers used
-    // to receive `route` instead of `link`.
-    const link = linkArg || routeArg;
-    const { api, populate, parse, getTotal, getTotalPages } = libraries.source;
-    const { page, query, route } = parse(link);
+  ({
+    type,
+    endpoint,
+    params: apiParams = {},
+  }: PostTypeArchiveHandlerParams): Handler<Packages> =>
+  async ({
+    link: currentLink,
+    route: currentRoute,
+    state,
+    libraries,
+    force,
+  }) => {
+    // This 'or' is only for backward compatibility for the moment when handlers
+    // used to receive `route` instead of `link`.
+    const link = currentLink || currentRoute;
+    const { page, query, route } = libraries.source.parse(link);
+
+    const finalEndpoint =
+      endpoint === "posts" ? state.source.postEndpoint : endpoint;
 
     // 1. fetch the specified page
-    const response = await api.get({
-      endpoint: endpoint === "posts" ? state.source.postEndpoint : endpoint,
+    const response = await libraries.source.api.get({
+      endpoint: finalEndpoint,
       params: {
         search: query.s,
         page,
         _embed: true,
-        ...params,
+        ...apiParams,
         ...state.source.params,
       },
     });
@@ -83,31 +99,16 @@ const postTypeArchiveHandler =
     if (page > 1 && items.length === 0)
       throw new ServerError(`post archive doesn't have page ${page}`, 404);
 
-    // 3. get posts and pages count
-    const total = getTotal(response, items.length);
-    const totalPages = getTotalPages(response, 0);
+    // 4. get posts and pages count
+    const total = libraries.source.getTotal(response, items.length);
+    const totalPages = libraries.source.getTotalPages(response, 0);
 
     // returns true if next page exists
     const hasNewerPosts = page < totalPages;
     // returns true if previous page exists
     const hasOlderPosts = page > 1;
 
-    /**
-     * A helper function that helps "glue" the link back together
-     * from `route`, `query` and `page`.
-     *
-     * @param page - The page number.
-     *
-     * @returns The full link for a particular page.
-     */
-    const getPageLink = (page: number) =>
-      libraries.source.stringify({
-        route,
-        query,
-        page,
-      });
-
-    // 4. add data to source
+    // 5. add data to source
     const currentPageData = state.source.data[link];
 
     const newPageData = {
@@ -120,17 +121,27 @@ const postTypeArchiveHandler =
       [`is${capitalize(type)}Archive`]: true,
 
       // Add next and previous if they exist.
-      ...(hasOlderPosts && { previous: getPageLink(page - 1) }),
-      ...(hasNewerPosts && { next: getPageLink(page + 1) }),
+      ...(hasOlderPosts && {
+        previous: libraries.source.stringify({
+          route: route,
+          query,
+          page: page - 1,
+        }),
+      }),
+      ...(hasNewerPosts && {
+        next: libraries.source.stringify({
+          route: route,
+          query,
+          page: page + 1,
+        }),
+      }),
 
       // Add search data if this is a search.
       ...(query.s && { isSearch: true, searchQuery: query.s }),
     };
 
     // This ensures the resulting type is correct.
-    Object.assign(currentPageData, newPageData) as
-      | PostTypeArchiveData
-      | (PostTypeArchiveData & SearchData);
+    Object.assign(currentPageData, newPageData);
   };
 
 export default postTypeArchiveHandler;

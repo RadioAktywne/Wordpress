@@ -31,11 +31,11 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
    *  open ours by saving its id in state
    */
   const openRecording = function () {
-    state.recplayer.srcUrl = "";
-    state.recplayer.playing = false;
-    state.recplayer.played = 0;
+    state.players.recordings.srcUrl = "";
+    state.players.recordings.playing = false;
+    state.players.recordings.played = 0;
 
-    state.recplayer.openedRec = item.acf.file;
+    state.players.recordings.openedRec = item.acf.file;
   };
 
   /**
@@ -43,7 +43,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
    * @returns a boolean
    */
   function shouldBeOpened() {
-    return state.recplayer.openedRec == item.acf.file;
+    return state.players.recordings.openedRec == item.acf.file;
   }
 
   return (
@@ -59,7 +59,8 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
 
       <BackButton
         onClick={() => {
-          if (item.acf.file !== state.recplayer.openedRec) openRecording();
+          if (item.acf.file !== state.players.recordings.openedRec)
+            openRecording();
         }}
       >
         <Link link={item.link}>

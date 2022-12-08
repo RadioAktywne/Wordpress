@@ -1,7 +1,6 @@
 import { connect, css, Global, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import useMedia from "../hooks/useMedia";
-import Loading from "./loading";
 import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
@@ -69,16 +68,17 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
    * @returns .hidden class name if a recording is being closed
    */
   function openRecording() {
-    if (state.recplayer.isOpened[id] !== true) {
-      state.recplayer.isOpened[id] = true;
-      state.recplayer.srcUrl = media.source_url;
+    if (state.players.recordings.isOpened[id] !== true) {
+      state.players.recordings.isOpened[id] = true;
+      state.players.recordings.srcUrl = media.source_url;
     }
 
     return "";
   }
+
   function closeRecording() {
-    if (state.recplayer.isOpened[id] == true) {
-      state.recplayer.isOpened[id] = false;
+    if (state.players.recordings.isOpened[id] == true) {
+      state.players.recordings.isOpened[id] = false;
     }
 
     return "hidden";
@@ -89,23 +89,23 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
    * @returns a boolean
    */
   function shouldBeOpened() {
-    return state.recplayer.openedRec == id;
+    return state.players.recordings.openedRec == id;
   }
 
   /**
    * play/pause recording
    */
   const recToggle = function () {
-    state.recplayer.playing
-      ? actions.recplayer.playerPause()
-      : actions.recplayer.playerPlay();
+    state.players.recordings.playing
+      ? actions.players.recordings.playerPause()
+      : actions.players.recordings.playerPlay();
   };
 
   /**
    * mute/unmute recording
    */
   const recMuteToggle = function () {
-    state.recplayer.muted = !state.recplayer.muted;
+    state.players.recordings.muted = !state.players.recordings.muted;
   };
 
   return (
@@ -122,23 +122,26 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
       />
 
       <div className="rec-play" onClick={recToggle}>
-        <img src={state.recplayer.playing ? Pause : Play} />
+        <img src={state.players.recordings.playing ? Pause : Play} />
       </div>
 
       <div className="progress-text">
-        {state.recplayer.durations[id] !== undefined
+        {state.players.recordings.durations[id] !== undefined
           ? secsToTime(
-              Math.floor(state.recplayer.durations[id] * state.recplayer.played)
+              Math.floor(
+                state.players.recordings.durations[id] *
+                  state.players.recordings.played
+              )
             ) +
             " / " +
-            secsToTime(Math.floor(state.recplayer.durations[id]))
+            secsToTime(Math.floor(state.players.recordings.durations[id]))
           : "00:00 / 00:00"}
       </div>
 
       <SeekSlider />
 
       <div className="rec-mute" onClick={recMuteToggle}>
-        <img src={state.recplayer.muted ? Unmute : Mute} />
+        <img src={state.players.recordings.muted ? Unmute : Mute} />
       </div>
     </Container>
   );
@@ -152,8 +155,8 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   align-items: center;
   padding-left: 15px;
-  ${({ isAmp }) => isAmp && "position: relative;"}
 
+  ${({ isAmp }) => isAmp && "position: relative;"}
   .rec-play, .rec-mute {
     display: flex;
     align-items: center;

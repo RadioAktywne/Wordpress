@@ -1,7 +1,8 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "../link";
-import { EventEntity, ShowArchiveData } from "../../data";
-import { Packages } from "@frontity/wp-source/types";
+import { EventEntity } from "../../data";
+import { replacePath } from "../../lib/utils";
+import { Packages } from "../../../types";
 
 const cutSec = function (time) {
   return time.substring(0, 5);
@@ -12,7 +13,6 @@ const cutSec = function (time) {
  */
 interface ItemProps {
   item: EventEntity;
-  showsData: ShowArchiveData;
 }
 
 /**
@@ -21,14 +21,15 @@ interface ItemProps {
  * @param props - Defined in {@link ItemProps}.
  * @returns The rendered event.
  */
-function EventListItem({ item, showsData }: ItemProps): JSX.Element {
+function EventListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
+
   /**
    * name of the event. We need to remove "(Live)/(Replay)" and add " - powtórka" if neccesary
    */
   const name =
     item.title.rendered.replace(" (Live)", "").replace(" (Replay)", "") +
-    (item.acf.type.toString() === "live" ? "" : " - powtórka");
+    (item.acf.type === "live" ? "" : " - powtórka");
 
   /**
    * remove secs from start and end time of the event
@@ -36,9 +37,13 @@ function EventListItem({ item, showsData }: ItemProps): JSX.Element {
   const startTime = cutSec(item.acf.start_time);
   const endTime = cutSec(item.acf.end_time);
 
+  const show = state.source["show"][item.acf.show];
+
+  const showLink = replacePath(show.link, state.configuration);
+
   return (
     <Container>
-      <Link link={state.source["show"][item.acf.show].link}>
+      <Link link={showLink}>
         <Title>
           {startTime} - {endTime} {name}
         </Title>

@@ -1,9 +1,8 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
 import RecordingListPage from "./recording-list-page";
-import { useEffect } from "react";
-import React from "react";
+import React, { useEffect } from "react";
 
 /**
  * Props received by the {@link RecordingList} component.
@@ -23,12 +22,12 @@ function RecordingList({ data }: ListProps): JSX.Element {
   const nextPage = function () {
     //if there is a next page and recording-list-page is ready and the next page is ready
     if (
-      state.recordings.ready &&
-      state.recordings.nextPage != undefined &&
-      state.recordings.nextPage.isReady
+      state.archives.recordings.ready &&
+      state.archives.recordings.nextPage != undefined &&
+      state.archives.recordings.nextPage.isReady
     ) {
-      state.recordings.ready = false; //tell state that the recordings page starts to load now
-      state.recordings.pages.push(state.recordings.nextPage); //add page to our list in state
+      state.archives.recordings.ready = false; //tell state that the recordings page starts to load now
+      state.archives.recordings.pages.push(state.archives.recordings.nextPage); //add page to our list in state
     }
   };
 
@@ -48,7 +47,8 @@ function RecordingList({ data }: ListProps): JSX.Element {
     /**
      * load first page if it wasnt loaded yet
      */
-    if (state.recordings.pages.length == 0) state.recordings.pages.push(data);
+    if (state.archives.recordings.pages.length == 0)
+      state.archives.recordings.pages.push(data);
 
     /**
      * listening to scroll events (to load next page when users scrolls to the end)
@@ -67,9 +67,9 @@ function RecordingList({ data }: ListProps): JSX.Element {
    * (and before that, check if the current recordings page is loaded already)
    */
   if (
-    state.recordings.ready &&
-    state.recordings.nextPage != undefined &&
-    state.recordings.nextPage.isReady
+    state.archives.recordings.ready &&
+    state.archives.recordings.nextPage != undefined &&
+    state.archives.recordings.nextPage.isReady
   ) {
     tryNextPage();
   }
@@ -81,7 +81,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
           <h1>Nagrania</h1>
         </Title>
 
-        {state.recordings.pages.map((item, i) => (
+        {state.archives.recordings.pages.map((item, i) => (
           <RecordingListPage data={item} key={i} />
         ))}
       </div>

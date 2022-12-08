@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import MemberListPage from "./member-list-page";
 import { Packages } from "../../../types";
 import { MemberArchiveData } from "../../data";
@@ -22,12 +22,12 @@ function MemberList({ data }: ListProps): JSX.Element {
   const nextPage = function () {
     //if there is a next page and member-list-page is ready and the next page is ready
     if (
-      state.members.ready &&
-      state.members.nextPage != undefined &&
-      state.members.nextPage.isReady
+      state.archives.members.ready &&
+      state.archives.members.nextPage != undefined &&
+      state.archives.members.nextPage.isReady
     ) {
-      state.members.ready = false; //tell state that the members page starts to load now
-      state.members.pages.push(state.members.nextPage); //add page to our list in state
+      state.archives.members.ready = false; //tell state that the members page starts to load now
+      state.archives.members.pages.push(state.archives.members.nextPage); //add page to our list in state
     }
   };
 
@@ -47,7 +47,8 @@ function MemberList({ data }: ListProps): JSX.Element {
     /**
      * load first page if it wasnt loaded yet
      */
-    if (state.members.pages.length == 0) state.members.pages.push(data);
+    if (state.archives.members.pages.length == 0)
+      state.archives.members.pages.push(data);
 
     /**
      * listening to scroll events (to load next page when users scrolls to the end)
@@ -66,9 +67,9 @@ function MemberList({ data }: ListProps): JSX.Element {
    * (and before that, check if the current members page is loaded already)
    */
   if (
-    state.members.ready &&
-    state.members.nextPage != undefined &&
-    state.members.nextPage.isReady
+    state.archives.members.ready &&
+    state.archives.members.nextPage != undefined &&
+    state.archives.members.nextPage.isReady
   ) {
     tryNextPage();
   }
@@ -80,7 +81,7 @@ function MemberList({ data }: ListProps): JSX.Element {
           <h1>Radiowcy</h1>
         </Title>
 
-        {state.members.pages.map((item, i) => (
+        {state.archives.members.pages.map((item, i) => (
           <MemberListPage data={item} key={i} />
         ))}
       </div>

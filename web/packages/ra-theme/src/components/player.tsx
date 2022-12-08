@@ -1,4 +1,4 @@
-import { connect, css, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import VolumeSlider from "./volume-slider";
 
@@ -17,25 +17,25 @@ function Player() {
   const { state, actions } = useConnect<Packages>();
 
   const playerToggle = function () {
-    if (state.raplayer.playing)
-      actions.raplayer.playerStop(); //erases src, so that it will stop, not only pause
+    if (state.players.main.playing)
+      actions.players.main.playerStop(); //erases src, so that it will stop, not only pause
     else {
       //now we set src back, but with some random number - it wont play from cache B)
-      state.raplayer.srcUrl =
+      state.players.main.srcUrl =
         "https://listen.radioaktywne.pl:8443/raogg?c=" +
         Math.floor(Math.random() * 10000);
       //and play the stream
-      actions.raplayer.playerPlay();
+      actions.players.main.playerPlay();
     }
   };
 
   const setVolume = function (vol) {
-    state.raplayer.volume = vol;
-    state.raplayer.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
+    state.players.main.volume = vol;
+    state.players.main.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
   };
 
   const muteToggle = function () {
-    setVolume(state.raplayer.muted ? 1 : 0);
+    setVolume(state.players.main.muted ? 1 : 0);
   };
 
   //set rds autorefresh
@@ -80,7 +80,7 @@ function Player() {
             <PlayerContainer>
               <div id="ra-left">
                 <div id="ra-play" onClick={playerToggle}>
-                  <img src={state.raplayer.playing ? Pause : Play} />
+                  <img src={state.players.main.playing ? Pause : Play} />
                 </div>
 
                 <div id="rds">
@@ -91,7 +91,7 @@ function Player() {
 
               <div id="ra-right">
                 <div id="ra-mute" onClick={muteToggle}>
-                  <img src={state.raplayer.muted ? Unmute : Mute} />
+                  <img src={state.players.main.muted ? Unmute : Mute} />
                 </div>
 
                 <VolumeSlider />

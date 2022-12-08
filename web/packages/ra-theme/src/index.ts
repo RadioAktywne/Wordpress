@@ -3,11 +3,13 @@ import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import iframe from "@frontity/html2react/processors/iframe";
 import link from "@frontity/html2react/processors/link";
-import { postTypeHandler } from "@frontity/wp-source/src/libraries/handlers";
 import postTypeArchiveHandler from "./handlers/postTypeArchive";
+import postTypeHandler from "./handlers/postType";
+import { ensurePath } from "./lib/utils";
+import pageHandler from "./handlers/page";
 
 const raThemeTypeScript: RaThemeTypeScript = {
-  name: "@frontity/ra-theme",
+  name: "@radioaktywne/ra-theme",
   roots: {
     /**
      * In Frontity, any package can add React components to the site.
@@ -23,55 +25,132 @@ const raThemeTypeScript: RaThemeTypeScript = {
     theme: {
       autoPrefetch: "in-view",
       title: "Trwa ładowanie...",
-      menu: [],
+      menu: ({ state }) => [
+        ["Radio Aktywne", state.configuration.pages.home.path],
+        ["Nagrania", state.configuration.posts.recording.archivePath],
+        ["Płyta Tygodnia", state.configuration.posts.album.archivePath],
+        ["Publicystyka", state.configuration.posts.post.archivePath],
+        ["Radio", state.configuration.posts.info.archivePath],
+      ],
       isMobileMenuOpen: false,
     },
 
-    raplayer: {
-      playing: false,
-      srcUrl: "",
-      muted: false,
-      volume: 1,
+    configuration: {
+      pages: {
+        home: {
+          path: "/",
+        },
+        about: {
+          path: "/o-nas/",
+        },
+      },
+      posts: {
+        post: {
+          endpoint: "posts",
+          wpPath: "/blog/",
+          wpArchivePath: "/blog/",
+          path: "/blog/",
+          archivePath: "/blog/",
+        },
+        event: {
+          endpoint: "event",
+          wpPath: "/event/",
+          wpArchivePath: "/events/",
+          path: "/ramowka/",
+          archivePath: "/ramowka/",
+          perPage: 100,
+        },
+        recording: {
+          endpoint: "recording",
+          wpPath: "/recording/",
+          wpArchivePath: "/recordings/",
+          path: "/nagranie/",
+          archivePath: "/nagrania/",
+          perPage: 22,
+        },
+        album: {
+          endpoint: "album",
+          wpPath: "/album/",
+          wpArchivePath: "/albums/",
+          path: "/album/",
+          archivePath: "/albumy/",
+          perPage: 16,
+        },
+        show: {
+          endpoint: "show",
+          wpPath: "/show/",
+          wpArchivePath: "/shows/",
+          path: "/audycja/",
+          archivePath: "/audycje/",
+          perPage: 16,
+        },
+        member: {
+          endpoint: "member",
+          wpPath: "/member/",
+          wpArchivePath: "/members/",
+          path: "/radiowiec/",
+          archivePath: "/radiowcy/",
+          perPage: 16,
+        },
+        info: {
+          endpoint: "info",
+          wpPath: "/info/",
+          wpArchivePath: "/info/",
+          path: "/radio/",
+          archivePath: "/radio/",
+          perPage: 100,
+        },
+      },
     },
 
-    recplayer: {
-      playing: false,
-      srcUrl: "",
-      openedRec: -100,
-      muted: false,
-      played: 0.0,
-      durations: [],
-      isOpened: [],
+    players: {
+      main: {
+        playing: false,
+        srcUrl: "",
+        muted: false,
+        volume: 1,
+      },
+      recordings: {
+        playing: false,
+        srcUrl: "",
+        openedRec: -100,
+        muted: false,
+        played: 0.0,
+        durations: [],
+        isOpened: [],
+      },
     },
 
-    recordings: {
-      nextPage: undefined,
-      pages: [],
-      ready: false,
-    },
+    archives: {
+      recordings: {
+        nextPage: undefined,
+        pages: [],
+        ready: false,
+      },
 
-    albums: {
-      nextPage: undefined,
-      pages: [],
-      ready: false,
-    },
+      albums: {
+        nextPage: undefined,
+        pages: [],
+        ready: false,
+      },
 
-    posts: {
-      nextPage: undefined,
-      pages: [],
-      ready: false,
-    },
+      posts: {
+        nextPage: undefined,
+        pages: [],
+        ready: false,
+      },
 
-    members: {
-      nextPage: undefined,
-      pages: [],
-      ready: false,
-    },
+      members: {
+        nextPage: undefined,
+        pages: [],
+        ready: false,
+      },
 
-    shows: {
-      nextPage: undefined,
-      pages: [],
-      ready: false,
+      shows: {
+        nextPage: undefined,
+        pages: [],
+        ready: false,
+      },
     },
   },
 
@@ -87,161 +166,73 @@ const raThemeTypeScript: RaThemeTypeScript = {
       closeMobileMenu: ({ state }) => {
         state.theme.isMobileMenuOpen = false;
       },
-      init: ({ libraries }) => {
-        /**
-         * set number of events per page
-         */
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "event handler",
-          priority: 15,
-          pattern: "/event/(.*)?",
-          func: postTypeHandler({
-            endpoints: ["event"],
-          }),
-        });
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "events handler",
-          priority: 15,
-          pattern: "/events/",
-          func: postTypeArchiveHandler({
-            type: "event",
-            endpoint: "event",
-            params: {
-              per_page: 100,
-            },
-          }),
-        });
+      init: ({ state, libraries }) => {
+        // Add post handlers
+        for (const [key, data] of Object.entries(state.configuration.posts)) {
+          // @ts-ignore
+          libraries.source.handlers.push({
+            name: `${key} handler`,
+            priority: 5,
+            pattern: `${ensurePath(data.path)}:slug`,
+            func: postTypeHandler({
+              type: key,
+              endpoint: data.endpoint,
+            }),
+          });
 
-        /**
-         * set number of recordings per page
-         */
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "recording handler",
-          priority: 15,
-          pattern: "/recording/(.*)?",
-          func: postTypeHandler({
-            endpoints: ["recording"],
-          }),
-        });
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "recordings handler",
-          priority: 15,
-          pattern: "/recordings/",
-          func: postTypeArchiveHandler({
-            type: "recording",
-            endpoint: "recording",
-            params: {
-              per_page: 22,
-            },
-          }),
-        });
+          // @ts-ignore
+          libraries.source.handlers.push({
+            name: `${key} archive handler`,
+            priority: 5,
+            pattern: `${ensurePath(data.archivePath)}`,
+            func: postTypeArchiveHandler({
+              type: key,
+              endpoint: data.endpoint,
+              params: {
+                per_page: data.perPage,
+              },
+            }),
+          });
+        }
 
-        /**
-         * set number of albums per page
-         */
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "album handler",
-          priority: 15,
-          pattern: "/album/(.*)?",
-          func: postTypeHandler({
-            endpoints: ["album"],
-          }),
-        });
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "albums handler",
-          priority: 15,
-          pattern: "/albums/",
-          func: postTypeArchiveHandler({
-            type: "album",
-            endpoint: "album",
-            params: {
-              per_page: 16,
-            },
-          }),
-        });
-
-        /**
-         * set number of shows per page
-         */
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "show handler",
-          priority: 15,
-          pattern: "/show/(.*)?",
-          func: postTypeHandler({
-            endpoints: ["show"],
-          }),
-        });
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "shows handler",
-          priority: 15,
-          pattern: "/shows/",
-          func: postTypeArchiveHandler({
-            type: "show",
-            endpoint: "show",
-            params: {
-              per_page: 16,
-            },
-          }),
-        });
-
-        /**
-         * set number of members per page
-         */
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "member handler",
-          priority: 15,
-          pattern: "/member/(.*)?",
-          func: postTypeHandler({
-            endpoints: ["member"],
-          }),
-        });
-        // @ts-ignore
-        libraries.source.handlers.push({
-          name: "members handler",
-          priority: 15,
-          pattern: "/members/",
-          func: postTypeArchiveHandler({
-            type: "member",
-            endpoint: "member",
-            params: {
-              per_page: 16,
-            },
-          }),
-        });
+        // Add post handlers
+        for (const [key, data] of Object.entries(state.configuration.pages)) {
+          // @ts-ignore
+          libraries.source.handlers.push({
+            name: `${key} page handler`,
+            priority: 5,
+            pattern: ensurePath(data.path),
+            func: pageHandler({
+              slug: key,
+            }),
+          });
+        }
       },
     },
 
-    raplayer: {
-      playerPlay: ({ state }) => {
-        state.recplayer.playing = false; //turn off recording
-        state.recplayer.openedRec = -1;
+    players: {
+      main: {
+        playerPlay: ({ state }) => {
+          state.players.recordings.playing = false; //turn off recording
+          state.players.recordings.openedRec = -1;
 
-        state.raplayer.playing = true; //turn on radio
+          state.players.main.playing = true; //turn on radio
+        },
+        playerStop: ({ state }) => {
+          state.players.main.playing = false; //turn off recording
+          state.players.main.srcUrl = "";
+        },
       },
-      playerStop: ({ state }) => {
-        state.raplayer.playing = false; //turn off recording
-        state.raplayer.srcUrl = "";
-      },
-    },
+      recordings: {
+        playerPlay: ({ state }) => {
+          state.players.main.playing = false; //turn off radio
+          state.players.main.srcUrl = "";
 
-    recplayer: {
-      playerPlay: ({ state }) => {
-        state.raplayer.playing = false; //turn off radio
-        state.raplayer.srcUrl = "";
-
-        state.recplayer.playing = true; //turn on recording
-      },
-      playerPause: ({ state }) => {
-        state.recplayer.playing = false;
+          state.players.recordings.playing = true; //turn on recording
+        },
+        playerPause: ({ state }) => {
+          state.players.recordings.playing = false;
+        },
       },
     },
   },

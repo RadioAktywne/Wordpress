@@ -22,20 +22,22 @@ function PostListPage({ data }: ListPageProps): JSX.Element {
    *  preload next page
    *  render items from current page
    */
-  if (data.isReady) {
-    state.posts.ready = true;
+  useEffect(() => {
+    state.archives.posts.ready = data.isReady;
 
     if (data.next) {
-      useEffect(() => {
-        actions.source.fetch(data.next);
-      }, []);
-      state.posts.nextPage = state.source.get(data.next) as ArchiveData;
+      actions.source.fetch(data.next).then(() => {
+        const nextPage = state.source.get(data.next);
+        state.archives.posts.nextPage = nextPage as ArchiveData;
+      });
     } else {
-      state.posts.nextPage = undefined;
+      state.archives.posts.nextPage = undefined;
     }
-  }
+  }, [data.isReady, data.next]);
 
-  return data.isReady ? (
+  if (!data.isReady) return <Loading />;
+
+  return (
     <Container>
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
@@ -43,8 +45,6 @@ function PostListPage({ data }: ListPageProps): JSX.Element {
         return <PostListItem key={item.id} item={item} />;
       })}
     </Container>
-  ) : (
-    <Loading />
   );
 }
 

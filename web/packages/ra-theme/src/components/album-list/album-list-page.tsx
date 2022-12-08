@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import AlbumListItem from "./album-list-item";
 import { Packages } from "../../../types";
 import { AlbumArchiveData } from "../../data";
@@ -22,20 +22,22 @@ function AlbumListPage({ data }: ListPageProps): JSX.Element {
    *  preload next page
    *  render items from current page
    */
-  if (data.isReady) {
-    state.albums.ready = true;
+  useEffect(() => {
+    state.archives.albums.ready = data.isReady;
 
     if (data.next) {
-      useEffect(() => {
-        actions.source.fetch(data.next);
-      }, []);
-      state.albums.nextPage = state.source.get(data.next) as AlbumArchiveData;
+      actions.source.fetch(data.next).then(() => {
+        const nextPage = state.source.get(data.next);
+        state.archives.albums.nextPage = nextPage as AlbumArchiveData;
+      });
     } else {
-      state.albums.nextPage = undefined;
+      state.archives.albums.nextPage = undefined;
     }
-  }
+  }, [data.isReady, data.next]);
 
-  return data.isReady ? (
+  if (!data.isReady) return <Loading />;
+
+  return (
     <Container>
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
@@ -43,8 +45,6 @@ function AlbumListPage({ data }: ListPageProps): JSX.Element {
         return <AlbumListItem key={item.id} item={item} />;
       })}
     </Container>
-  ) : (
-    <Loading />
   );
 }
 

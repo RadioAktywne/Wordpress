@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import ShowListPage from "./show-list-page";
 import { Packages } from "../../../types";
 import { ShowArchiveData } from "../../data";
@@ -22,12 +22,12 @@ function ShowList({ data }: ListProps): JSX.Element {
   const nextPage = function () {
     //if there is a next page and show-list-page is ready and the next page is ready
     if (
-      state.shows.ready &&
-      state.shows.nextPage != undefined &&
-      state.shows.nextPage.isReady
+      state.archives.shows.ready &&
+      state.archives.shows.nextPage != undefined &&
+      state.archives.shows.nextPage.isReady
     ) {
-      state.shows.ready = false; //tell state that the shows page starts to load now
-      state.shows.pages.push(state.shows.nextPage); //add page to our list in state
+      state.archives.shows.ready = false; //tell state that the shows page starts to load now
+      state.archives.shows.pages.push(state.archives.shows.nextPage); //add page to our list in state
     }
   };
 
@@ -47,7 +47,8 @@ function ShowList({ data }: ListProps): JSX.Element {
     /**
      * load first page if it wasnt loaded yet
      */
-    if (state.shows.pages.length == 0) state.shows.pages.push(data);
+    if (state.archives.shows.pages.length == 0)
+      state.archives.shows.pages.push(data);
 
     /**
      * listening to scroll events (to load next page when users scrolls to the end)
@@ -66,9 +67,9 @@ function ShowList({ data }: ListProps): JSX.Element {
    * (and before that, check if the current shows page is loaded already)
    */
   if (
-    state.shows.ready &&
-    state.shows.nextPage != undefined &&
-    state.shows.nextPage.isReady
+    state.archives.shows.ready &&
+    state.archives.shows.nextPage != undefined &&
+    state.archives.shows.nextPage.isReady
   ) {
     tryNextPage();
   }
@@ -80,7 +81,7 @@ function ShowList({ data }: ListProps): JSX.Element {
           <h1>Audycje</h1>
         </Title>
 
-        {state.shows.pages.map((item, i) => (
+        {state.archives.shows.pages.map((item, i) => (
           <ShowListPage data={item} key={i} />
         ))}
       </div>

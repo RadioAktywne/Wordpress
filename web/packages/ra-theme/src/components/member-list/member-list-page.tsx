@@ -1,4 +1,4 @@
-import { connect, decode, styled, useConnect } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../../types";
 import { MemberArchiveData } from "../../data";
 import { useEffect } from "react";
@@ -22,20 +22,22 @@ function MemberListPage({ data }: ListPageProps): JSX.Element {
    *  preload next page
    *  render items from current page
    */
-  if (data.isReady) {
-    state.members.ready = true;
+  useEffect(() => {
+    state.archives.members.ready = data.isReady;
 
     if (data.next) {
-      useEffect(() => {
-        actions.source.fetch(data.next);
-      }, []);
-      state.members.nextPage = state.source.get(data.next) as MemberArchiveData;
+      actions.source.fetch(data.next).then(() => {
+        const nextPage = state.source.get(data.next);
+        state.archives.members.nextPage = nextPage as MemberArchiveData;
+      });
     } else {
-      state.members.nextPage = undefined;
+      state.archives.members.nextPage = undefined;
     }
-  }
+  }, [data.isReady, data.next]);
 
-  return data.isReady ? (
+  if (!data.isReady) return <Loading />;
+
+  return (
     <Container>
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
@@ -43,8 +45,6 @@ function MemberListPage({ data }: ListPageProps): JSX.Element {
         return <MemberListItem key={item.id} item={item} />;
       })}
     </Container>
-  ) : (
-    <Loading />
   );
 }
 

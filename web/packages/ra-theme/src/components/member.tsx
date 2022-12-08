@@ -25,10 +25,9 @@ function Member({ data }: MemberProps): JSX.Element {
   const { state } = useConnect<Packages>();
   const member: MemberEntity = state.source[data.type][data.id];
 
-  // const Html2React = libraries.html2react.Component;
+  if (!data.isReady) return <Loading />;
 
-  // Load the post, but only if the data is ready.
-  return data.isReady ? (
+  return (
     <Container>
       <MainContent>
         <Title>
@@ -37,7 +36,7 @@ function Member({ data }: MemberProps): JSX.Element {
           </h1>
 
           <BackButton>
-            <Link link="/members">
+            <Link link={state.configuration.posts.member.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>
@@ -62,8 +61,6 @@ function Member({ data }: MemberProps): JSX.Element {
         </Cover>
       )}
     </Container>
-  ) : (
-    <Loading />
   );
 }
 

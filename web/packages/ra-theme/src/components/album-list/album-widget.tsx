@@ -13,30 +13,36 @@ const RecordingWidget = () => {
    * fetch recordings
    */
   useEffect(() => {
-    actions.source.fetch("/albums");
+    actions.source.fetch(state.configuration.posts.album.archivePath);
   }, []);
-  const dataPost = state.source.get("/albums") as AlbumArchiveData;
+
+  const dataPost = state.source.get(
+    state.configuration.posts.album.archivePath
+  ) as AlbumArchiveData;
+
+  if (!dataPost.isReady) {
+    return <Loading />;
+  }
+
+  if (dataPost.items.length === 0) {
+    return null;
+  }
 
   /**
    * when albums are fetched
    */
-  return dataPost.isReady && dataPost.items[0] ? (
+  return (
     <Container>
       <div>
         <Title>
-          <Link link="/albums">
+          <Link link={state.configuration.posts.album.archivePath}>
             <h1>Płyta Tygodnia</h1>
           </Link>
         </Title>
         <AlbumListItem
-          key={0}
           item={state.source[dataPost.items[0].type][dataPost.items[0].id]}
         />
       </div>
-    </Container>
-  ) : (
-    <Container>
-      <Loading />
     </Container>
   );
 };

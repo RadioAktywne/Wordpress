@@ -10,8 +10,8 @@ function VolumeSlider() {
   const { state } = useConnect<Packages>();
 
   const setVolume = function (vol) {
-    state.raplayer.volume = vol;
-    state.raplayer.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
+    state.players.main.volume = vol;
+    state.players.main.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
   };
 
   return (
@@ -22,8 +22,8 @@ function VolumeSlider() {
           background: linear-gradient(
             90deg,
             white 0%,
-            white ${state.raplayer.volume * 100}%,
-            #3c3c4c ${state.raplayer.volume * 100}%,
+            white ${state.players.main.volume * 100}%,
+            #3c3c4c ${state.players.main.volume * 100}%,
             #3c3c4c 100%
           );
         `}
@@ -31,7 +31,7 @@ function VolumeSlider() {
         min="0"
         max="1" //cause player has such range
         step=".05"
-        value={state.raplayer.volume}
+        value={state.players.main.volume}
         onChange={(e) => setVolume(parseFloat(e.target.value))}
       />
     </Container>
@@ -85,6 +85,7 @@ const Container = styled.div`
     background: #ffffff;
     cursor: pointer;
   }
+
   input[type="range"]::-moz-range-thumb {
     border: 1px solid rbga(69, 69, 69);
     height: 17px;
@@ -93,6 +94,7 @@ const Container = styled.div`
     background: #ffffff;
     cursor: pointer;
   }
+
   input[type="range"]::-ms-thumb {
     border: 1px solid rbga(69, 69, 69);
     height: 17px;
@@ -101,14 +103,17 @@ const Container = styled.div`
     background: #ffffff;
     cursor: pointer;
   }
+
   input[type="range"]::-moz-range-thumb:active {
     background: #6aba9c;
     border: 1px solid #003eff;
   }
+
   input[type="range"]::-ms-thumb:active {
     background: #6aba9c;
     border: 1px solid #003eff;
   }
+
   input[type="range"]::-webkit-slider-thumb:active {
     background: #6aba9c;
     border: 1px solid #003eff;
