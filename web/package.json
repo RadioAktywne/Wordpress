@@ -8,9 +8,9 @@
     "npm": ">=6.0.0"
   },
   "scripts": {
-    "dev": "frontity dev",
     "build": "frontity build",
-    "serve": "frontity serve",
+    "serve": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity serve",
+    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity dev",
     "update": "ncu -u && npm i",
     "format": "prettier --write ."
   },
@@ -20,6 +20,7 @@
     "@frontity/ra-theme": "./packages/ra-theme",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
+    "cross-env": "^7.0.3",
     "frontity": "^1.17.2",
     "html-react-parser": "^3.0.4",
     "react-player": "^2.10.1",

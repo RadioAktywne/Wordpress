@@ -1,0 +1,17 @@
+http:
+  services:
+    wordpress:
+      loadBalancer:
+        servers:
+          - url: "{{ env "PROXY_WORDPRESS_URL" | default "http://wordpress:80" }}"
+    web:
+      loadBalancer:
+        servers:
+          - url: "{{ env "PROXY_WEB_URL" | default "http://host.docker.internal:3000" }}"
+  routers:
+    wordpress:
+      rule: "PathPrefix(`/wp-`)"
+      service: wordpress
+    web:
+      rule: "PathPrefix(`/`)"
+      service: web
