@@ -3,13 +3,21 @@
 apache2-foreground &
 pid="$!"
 
-# wait until wordpress is ready
-until curl -sLf 'http://localhost' >/dev/null; do
-  echo "WordPress is unavailable - sleeping for 1 second"
+# wait until http server is up
+until curl -s 'http://localhost:80' >/dev/null; do
+  echo "HTTP server is unavailable - sleeping for 1 second"
   sleep 1
 done
 
-echo "WordPress available!"
+echo "HTTP server available!"
+
+# wait until database is up
+until wp db check >/dev/null 2>&1; do
+  echo "Database is unavailable - sleeping for 1 second"
+  sleep 1
+done
+
+echo "Database available!"
 
 if ! wp core is-installed --quiet; then
   echo "WordPress not yet installed. Installing..."
