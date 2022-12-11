@@ -1,0 +1,15 @@
+api:
+  dashboard: true
+
+entryPoints:
+  http:
+    address: ":80"
+    forwardedHeaders:
+      insecure: true
+
+providers:
+  file:
+    directory: ./conf/
+    watch: true
+  docker:
+    exposedByDefault: false

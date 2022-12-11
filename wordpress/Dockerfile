@@ -188,7 +188,6 @@ ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_DEBUG='' \
     WORDPRESS_CONFIG_EXTRA='' \
     WORDPRESS_PUBLIC_URL='http://localhost:80' \
-    WORDPRESS_WEB_PUBLIC_URL='http://localhost:3000' \
     WORDPRESS_SITE_TITLE='Radio Aktywne' \
     WORDPRESS_ADMIN_USERNAME=username \
     WORDPRESS_ADMIN_PASSWORD=password \

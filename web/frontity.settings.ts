@@ -17,7 +17,7 @@ const settings: Settings<Theme | WpSource> = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: process.env.WEB_WORDPRESS_URL || "http://localhost:80",
+          url: process.env.WEB_WORDPRESS_PUBLIC_URL || "http://localhost:80",
           homepage: "home",
         },
       },
