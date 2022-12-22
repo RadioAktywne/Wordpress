@@ -121,6 +121,11 @@ const Description = styled.div`
     margin-right: auto;
   }
 
+  & .has-text-align-center
+  {
+    text-align: center;
+  }
+
   & .alignright {
     float: right;
     margin-left: 24px;
