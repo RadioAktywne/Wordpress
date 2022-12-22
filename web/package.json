@@ -10,7 +10,7 @@
   "scripts": {
     "build": "frontity build",
     "serve": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity serve",
-    "dev": "cross-env NODE_OPTIONS='--openssl-legacy-provider' NODE_TLS_REJECT_UNAUTHORIZED=0 frontity dev",
+    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity dev",
     "update": "ncu -u && npm i",
     "format": "prettier --write ."
   },
