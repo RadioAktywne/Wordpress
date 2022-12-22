@@ -10,7 +10,7 @@
   "scripts": {
     "build": "frontity build",
     "serve": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity serve",
-    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity dev",
+    "dev": "cross-env NODE_OPTIONS='--openssl-legacy-provider' NODE_TLS_REJECT_UNAUTHORIZED=0 frontity dev",
     "update": "ncu -u && npm i",
     "format": "prettier --write ."
   },
@@ -27,10 +27,10 @@
     "xhr2": "^0.2.1"
   },
   "devDependencies": {
-    "@types/node": "^18.11.11",
+    "@types/node": "^18.11.17",
     "@types/node-fetch": "^2.6.2",
     "@types/react": "^18.0.26",
-    "npm-check-updates": "^16.5.1",
+    "npm-check-updates": "^16.6.2",
     "prettier": "^2.8.1",
     "typescript": "^4.9.4"
   }
