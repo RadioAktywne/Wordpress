@@ -23,7 +23,7 @@ import {
   isRecording,
   isRecordingArchive,
   isShow,
-  isShowArchive
+  isShowArchive,
 } from "../data";
 import Member from "./member";
 import Show from "./show";
