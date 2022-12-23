@@ -51,6 +51,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
           wpArchivePath: "/blog/",
           path: "/blog/",
           archivePath: "/blog/",
+          perPage: 16,
         },
         event: {
           endpoint: "event",
