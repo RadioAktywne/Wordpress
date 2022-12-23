@@ -39,24 +39,24 @@ function InfoTileList({ data }: ListProps): JSX.Element {
 
   return (
     <Container>
-      {tiles.members && (
+      {tiles.topleft && (
         <TileContainer id="item-0">
-          <InfoTileListItem item={tiles.members} />
+          <InfoTileListItem item={tiles.topleft} />
         </TileContainer>
       )}
-      {tiles.members && (
+      {tiles.bottomleft && (
         <TileContainer id="item-1">
-          <InfoTileListItem item={tiles.members} />
+          <InfoTileListItem item={tiles.bottomleft} />
         </TileContainer>
       )}
-      {tiles.about && (
+      {tiles.topright && (
         <TileContainer id="item-2">
-          <InfoTileListItem item={tiles.about} />
+          <InfoTileListItem item={tiles.topright} />
         </TileContainer>
       )}
-      {tiles.about && (
+      {tiles.bottomright && (
         <TileContainer id="item-3">
-          <InfoTileListItem item={tiles.about} />
+          <InfoTileListItem item={tiles.bottomright} />
         </TileContainer>
       )}
     </Container>
