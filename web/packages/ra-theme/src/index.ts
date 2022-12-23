@@ -73,8 +73,8 @@ const raThemeTypeScript: RaThemeTypeScript = {
           endpoint: "album",
           wpPath: "/album/",
           wpArchivePath: "/albums/",
-          path: "/album/",
-          archivePath: "/albumy/",
+          path: "/plyta-tygodnia/",
+          archivePath: "/plyty-tygodnia/",
           perPage: 16,
         },
         show: {
