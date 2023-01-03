@@ -1,8 +1,10 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "../link";
-import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
-import { AlbumEntity, MemberEntity } from "../../data";
+import { MemberEntity } from "../../data";
+import FeaturedImage from "../featured-image";
+import DefaultImage from "../default-image";
+import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
 
 /**
  * The props of the {@link MemberListItem} component.
@@ -22,7 +24,11 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
       <article>
         <Link link={item.link}>
           <Cover>
-            {item.acf.image && <FeaturedMedia id={item.acf.image} />}
+            {item.acf.image ? (
+              <FeaturedImage id={item.acf.image} />
+            ) : (
+              <DefaultImage img={defaultImageMedia} />
+            )}
             <Title>
               <MemberName>{item.acf.name}</MemberName>
 

@@ -1,12 +1,14 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-image";
+import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
 import Loading from "./loading";
 import Back from "../img/icons/back.svg";
 import Link from "./link";
 import parse from "html-react-parser";
 import { PostTypeData, PostTypeEntity } from "@frontity/source/types";
 import { isPageEntity, isPostEntity } from "@frontity/source";
+import FeaturedImage from "./featured-image";
+import DefaultImage from "./default-image";
 
 /**
  * Properties received by the `Post` component.
@@ -46,11 +48,13 @@ function Post({ data }: PostProps): JSX.Element {
         </Description>
       </MainContent>
 
-      {post.featured_media && (isPostEntity(post) || isPageEntity(post)) && (
-        <Cover>
-          <FeaturedMedia id={post.featured_media} />
-        </Cover>
-      )}
+      <Cover>
+        {post.featured_media && (isPostEntity(post) || isPageEntity(post)) ? (
+          <FeaturedImage id={post.featured_media} />
+        ) : (
+          <DefaultImage img={defaultImageMedia} />
+        )}
+      </Cover>
     </Container>
   ) : (
     <Loading />

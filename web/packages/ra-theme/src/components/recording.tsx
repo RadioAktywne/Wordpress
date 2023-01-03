@@ -1,11 +1,13 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-image";
 import { RecordingData, RecordingEntity } from "../data";
 import FeaturedAudio from "./featured-audio";
 import Back from "../img/icons/back.svg";
 import Link from "./link";
 import parse from "html-react-parser";
+import FeaturedImage from "./featured-image";
+import DefaultImage from "./default-image";
+import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
 
 /**
  * Properties received by the `Recording` component.
@@ -55,11 +57,13 @@ function Recording({ data }: RecordingProps): JSX.Element {
         </Description>
       </MainContent>
 
-      {recording.acf.image && (
-        <Cover>
-          <FeaturedMedia id={recording.acf.image} />
-        </Cover>
-      )}
+      <Cover>
+        {recording.acf.image ? (
+          <FeaturedImage id={recording.acf.image} />
+        ) : (
+          <DefaultImage img={defaultImageMedia} />
+        )}
+      </Cover>
     </Container>
   ) : null;
 }

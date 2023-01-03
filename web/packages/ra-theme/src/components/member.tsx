@@ -1,11 +1,13 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-image";
 import { MemberData, MemberEntity } from "../data";
 import Loading from "./loading";
 import Back from "../img/icons/back.svg";
 import Link from "./link";
 import parse from "html-react-parser";
+import FeaturedImage from "./featured-image";
+import DefaultImage from "./default-image";
+import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
 
 /**
  * Properties received by the `Member` component.
@@ -55,11 +57,13 @@ function Member({ data }: MemberProps): JSX.Element {
         </Description>
       </MainContent>
 
-      {member.acf.image && (
-        <Cover>
-          <FeaturedMedia id={member.acf.image} />
-        </Cover>
-      )}
+      <Cover>
+        {member.acf.image ? (
+          <FeaturedImage id={member.acf.image} />
+        ) : (
+          <DefaultImage img={defaultImageMedia} />
+        )}
+      </Cover>
     </Container>
   );
 }

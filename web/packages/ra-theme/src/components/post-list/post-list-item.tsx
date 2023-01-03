@@ -1,8 +1,10 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "../link";
-import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
 import { PostEntity } from "@frontity/source/types";
+import DefaultImage from "../default-image";
+import FeaturedImage from "../featured-image";
+import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
 
 /**
  * The props of the {@link AlbumListItem} component.
@@ -15,14 +17,18 @@ interface ItemProps {
 }
 
 function AlbumListItem({ item }: ItemProps): JSX.Element {
-  const { state } = useConnect<Packages>();
+  const {} = useConnect<Packages>();
 
   return (
     <Container>
       <article>
         <Link link={item.link}>
           <PostTile>
-            {item.featured_media && <FeaturedMedia id={item.featured_media} />}
+            {item.featured_media ? (
+              <FeaturedImage id={item.featured_media} />
+            ) : (
+              <DefaultImage img={defaultImageMedia} />
+            )}
             <Title>{item.title.rendered}</Title>
           </PostTile>
         </Link>

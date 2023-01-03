@@ -1,9 +1,11 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "../link";
-import FeaturedMedia from "../featured-image";
 import { Packages } from "../../../types";
 import { InfoTileEntity } from "../../data";
 import { replacePath } from "../../lib/utils";
+import FeaturedImage from "../featured-image";
+import DefaultImage from "../default-image";
+import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
 
 /**
  * The props of the {@link InfoTileListItem} component.
@@ -37,7 +39,11 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
       <Tile>
         <Link link={frontPath}>
           <Title>{item.acf.title}</Title>
-          {item.acf.image && <FeaturedMedia id={item.acf.image} />}
+          {item.acf.image ? (
+            <FeaturedImage id={item.acf.image} />
+          ) : (
+            <DefaultImage img={defaultImageMedia} />
+          )}
         </Link>
       </Tile>
     </article>

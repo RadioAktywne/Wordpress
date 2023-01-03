@@ -1,11 +1,13 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-image";
 import { AlbumData, AlbumEntity } from "../data";
 import Loading from "./loading";
 import Back from "../img/icons/back.svg";
 import Link from "./link";
 import parse from "html-react-parser";
+import FeaturedImage from "./featured-image";
+import DefaultImage from "./default-image";
+import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
 
 /**
  * Properties received by the `Album` component.
@@ -56,11 +58,13 @@ function Album({ data }: AlbumProps): JSX.Element {
         </Description>
       </MainContent>
 
-      {album.acf.image && (
-        <Cover>
-          <FeaturedMedia id={album.acf.image} />
-        </Cover>
-      )}
+      <Cover>
+        {album.acf.image ? (
+          <FeaturedImage id={album.acf.image} />
+        ) : (
+          <DefaultImage img={defaultImageMedia} />
+        )}
+      </Cover>
     </Container>
   ) : (
     <Loading />

@@ -1,6 +1,5 @@
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
-import FeaturedMedia from "./featured-image";
 import { ShowData, ShowEntity } from "../data";
 import useMembers from "../hooks/useMembers";
 import Back from "../img/icons/back.svg";
@@ -9,6 +8,9 @@ import parse from "html-react-parser";
 import Link from "./link";
 import ShowEvents from "./show-events";
 import { replacePath } from "../lib/utils";
+import FeaturedImage from "./featured-image";
+import DefaultImage from "./default-image";
+import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
 
 /**
  * Properties received by the `Show` component.
@@ -59,11 +61,13 @@ function Show({ data }: ShowProps): JSX.Element {
       </MainContent>
 
       <AboutContent>
-        {show.acf.image && (
-          <Cover>
-            <FeaturedMedia id={show.acf.image} />
-          </Cover>
-        )}
+        <Cover>
+          {show.acf.image ? (
+            <FeaturedImage id={show.acf.image} />
+          ) : (
+            <DefaultImage img={defaultImageMedia} />
+          )}
+        </Cover>
 
         <Title>
           <h1>Na żywo</h1>
