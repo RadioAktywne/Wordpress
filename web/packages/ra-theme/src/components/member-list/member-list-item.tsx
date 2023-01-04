@@ -30,9 +30,9 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
               <DefaultImage img={defaultImageMedia} />
             )}
             <Title>
-              <MemberName>{item.acf.name}</MemberName>
-
               <MemberRole>{item.acf.role}</MemberRole>
+
+              <MemberName>{item.acf.name}</MemberName>
             </Title>
           </Cover>
         </Link>
@@ -45,6 +45,17 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
 export default connect(MemberListItem);
 
 const MemberName = styled.h5`
+color: #fff;
+margin: 0;
+font-size: 1.3rem;
+padding: 0;
+
+padding-left: 10px;
+padding-bottom: 10px;
+
+`;
+
+const MemberRole = styled.h3`
   color: #fff;
   margin: 0;
   padding: 0;
@@ -53,16 +64,6 @@ const MemberName = styled.h5`
 
   padding-left: 10px;
   padding-top: 10px;
-`;
-
-const MemberRole = styled.h3`
-  color: #fff;
-  margin: 0;
-  font-size: 1.3rem;
-  padding: 0;
-
-  padding-left: 10px;
-  padding-bottom: 10px;
 `;
 
 const Container = styled.h1`
