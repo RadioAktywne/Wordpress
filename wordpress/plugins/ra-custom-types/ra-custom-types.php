@@ -623,14 +623,22 @@ function ra_custom_types_register_info_tile()
                 'required' => true,
             ],
             [
+                // decided to swap the list with just text, cause wrong adresses were being listed
+                // (no translations and wrong ports)
+                // 'key' => 'info_tile_field_link',
+                // 'label' => 'Link',
+                // 'name' => 'link',
+                // 'type' => 'page_link',
+                // 'required' => true,
+                // 'allow_null' => false,
+                // 'allow_archives' => true,
+                // 'multiple' => false,
+
                 'key' => 'info_tile_field_link',
                 'label' => 'Link',
                 'name' => 'link',
-                'type' => 'page_link',
+                'type' => 'text',
                 'required' => true,
-                'allow_null' => false,
-                'allow_archives' => true,
-                'multiple' => false,
             ],
             [
                 'key' => 'info_tile_field_image',
