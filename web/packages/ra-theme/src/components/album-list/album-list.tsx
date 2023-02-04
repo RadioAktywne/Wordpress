@@ -23,7 +23,7 @@ function AlbumList({ data }: ListProps): JSX.Element {
     //if there is a next page and album-list-page is ready and the next page is ready
     if (
       state.archives.albums.ready &&
-      state.archives.albums.nextPage != undefined &&
+      state.archives.albums.pages.length < state.archives.albums.pages[0].totalPages &&
       state.archives.albums.nextPage.isReady
     ) {
       state.archives.albums.ready = false; //tell state that the albums page starts to load now

@@ -23,7 +23,7 @@ function PostList({ data }: ListProps): JSX.Element {
     //if there is a next page and album-list-page is ready and the next page is ready
     if (
       state.archives.posts.ready &&
-      state.archives.posts.nextPage != undefined &&
+      state.archives.posts.pages.length < state.archives.posts.pages[0].totalPages &&
       state.archives.posts.nextPage.isReady
     ) {
       state.archives.posts.ready = false; //tell state that the posts page starts to load now

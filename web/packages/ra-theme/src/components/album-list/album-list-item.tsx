@@ -74,7 +74,11 @@ const SongTitle = styled.h3`
 const Container = styled.h1`
   width: 100%;
   height: 275px;
-  margin-bottom: 0px;
+  margin: 0;
+
+  @media (max-width: 750px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Title = styled.div`

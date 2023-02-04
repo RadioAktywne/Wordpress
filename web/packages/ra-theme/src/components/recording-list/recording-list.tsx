@@ -23,7 +23,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
     //if there is a next page and recording-list-page is ready and the next page is ready
     if (
       state.archives.recordings.ready &&
-      state.archives.recordings.nextPage != undefined &&
+      state.archives.recordings.pages.length < state.archives.recordings.pages[0].totalPages &&
       state.archives.recordings.nextPage.isReady
     ) {
       state.archives.recordings.ready = false; //tell state that the recordings page starts to load now

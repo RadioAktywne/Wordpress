@@ -56,6 +56,7 @@ const Container = styled.section`
   grid-template-rows: repeat(auto-fill, 275px);
   grid-row-gap: 15px;
   grid-column-gap: 15px;
+  margin-top: 20px;
 
   @media (max-width: 750px) {
     gap: 0;
