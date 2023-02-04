@@ -26,8 +26,6 @@ const cutSec = function (time) {
 function ShowEvents({ live, showId }: ShowEventsProps): JSX.Element {
   const { state, actions } = useConnect<Packages>();
 
-  return null;
-
   /**
    * get list of events
    */
