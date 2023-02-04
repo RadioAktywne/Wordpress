@@ -23,7 +23,8 @@ function ShowList({ data }: ListProps): JSX.Element {
     //if there is a next page and show-list-page is ready and the next page is ready
     if (
       state.archives.shows.ready &&
-      state.archives.shows.pages.length < state.archives.shows.pages[0].totalPages &&
+      state.archives.shows.pages.length <
+        state.archives.shows.pages[0].totalPages &&
       state.archives.shows.nextPage.isReady
     ) {
       state.archives.shows.ready = false; //tell state that the shows page starts to load now

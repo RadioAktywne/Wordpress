@@ -45,14 +45,13 @@ function MemberListItem({ item }: ItemProps): JSX.Element {
 export default connect(MemberListItem);
 
 const MemberName = styled.h5`
-color: #fff;
-margin: 0;
-font-size: 1.3rem;
-padding: 0;
+  color: #fff;
+  margin: 0;
+  font-size: 1.3rem;
+  padding: 0;
 
-padding-left: 10px;
-padding-bottom: 10px;
-
+  padding-left: 10px;
+  padding-bottom: 10px;
 `;
 
 const MemberRole = styled.h3`

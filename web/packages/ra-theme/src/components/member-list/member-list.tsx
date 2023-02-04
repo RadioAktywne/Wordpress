@@ -23,7 +23,8 @@ function MemberList({ data }: ListProps): JSX.Element {
     //if there is a next page and member-list-page is ready and the next page is ready
     if (
       state.archives.members.ready &&
-      state.archives.members.pages.length < state.archives.members.pages[0].totalPages &&
+      state.archives.members.pages.length <
+        state.archives.members.pages[0].totalPages &&
       state.archives.members.nextPage.isReady
     ) {
       state.archives.members.ready = false; //tell state that the members page starts to load now
