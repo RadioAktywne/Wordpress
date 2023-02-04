@@ -3,6 +3,7 @@ import Link from "../link";
 import { EventEntity } from "../../data";
 import { replacePath } from "../../lib/utils";
 import { Packages } from "../../../types";
+import parse from "html-react-parser";
 
 const cutSec = function (time) {
   return time.substring(0, 5);
@@ -28,8 +29,8 @@ function EventListItem({ item }: ItemProps): JSX.Element {
    * name of the event. We need to remove "(Live)/(Replay)" and add " - powtórka" if neccesary
    */
   const name =
-    item.title.rendered.replace(" (Live)", "").replace(" (Replay)", "") +
-    (item.acf.type === "live" ? "" : " - powtórka");
+    parse(item.title.rendered.replace(" (Live)", "").replace(" (Replay)", "") +
+    (item.acf.type === "live" ? "" : " - powtórka"));
 
   /**
    * remove secs from start and end time of the event
