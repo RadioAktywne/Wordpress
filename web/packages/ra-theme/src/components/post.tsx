@@ -33,7 +33,7 @@ function Post({ data }: PostProps): JSX.Element {
     <Container>
       <MainContent>
         <Title>
-          <h1>{post.title.rendered}</h1>
+          <h1>{parse(post.title.rendered)}</h1>
 
           <BackButton>
             <Link link={state.configuration.posts.post.archivePath}>

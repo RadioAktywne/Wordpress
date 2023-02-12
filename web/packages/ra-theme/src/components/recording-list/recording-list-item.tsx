@@ -4,6 +4,7 @@ import { Packages } from "../../../types";
 import { RecordingEntity } from "../../data";
 import Arrow from "../../img/icons/arrow.svg";
 import FeaturedAudio from "../featured-audio";
+import parse from "html-react-parser";
 
 /**
  * The props of the {@link RecordingListItem} component.
@@ -52,7 +53,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
         onClick={openRecording}
         className={shouldBeOpened() ? "hidden" : ""}
       >
-        {item.title.rendered.replace(/&#8211;/g, "-")}
+        {parse(item.title.rendered)}
       </Title>
 
       <FeaturedAudio id={item.acf.file} />

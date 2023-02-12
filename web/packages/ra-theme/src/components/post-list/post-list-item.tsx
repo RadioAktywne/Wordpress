@@ -5,6 +5,7 @@ import { PostEntity } from "@frontity/source/types";
 import DefaultImage from "../default-image";
 import FeaturedImage from "../featured-image";
 import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
+import parse from "html-react-parser";
 
 /**
  * The props of the {@link AlbumListItem} component.
@@ -29,7 +30,7 @@ function AlbumListItem({ item }: ItemProps): JSX.Element {
             ) : (
               <DefaultImage img={defaultImageMedia} />
             )}
-            <Title>{item.title.rendered}</Title>
+            <Title>{parse(item.title.rendered)}</Title>
           </PostTile>
         </Link>
       </article>

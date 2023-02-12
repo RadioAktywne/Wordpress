@@ -5,6 +5,7 @@ import { AlbumEntity } from "../../data";
 import FeaturedImage from "../featured-image";
 import DefaultImage from "../default-image";
 import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
+import parse from "html-react-parser";
 
 /**
  * The props of the {@link AlbumListItem} component.
@@ -31,13 +32,13 @@ function AlbumListItem({ item }: ItemProps): JSX.Element {
             )}
             <Title>
               <ArtistName>
-                {item.title.rendered
+                {parse(item.title.rendered
                   .replace(/(?<= &#8211; ).*$/, "")
-                  .replace(" &#8211; ", "")}
+                  .replace(" &#8211; ", ""))}
               </ArtistName>
 
               <SongTitle>
-                {item.title.rendered.replace(/^(.*?)\&#8211; /, "")}
+                {parse(item.title.rendered.replace(/^(.*?)\&#8211; /, ""))}
               </SongTitle>
             </Title>
           </Cover>

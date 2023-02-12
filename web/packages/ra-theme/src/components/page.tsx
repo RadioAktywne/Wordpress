@@ -43,7 +43,7 @@ function Page({ data }: PageProps): JSX.Element {
     <Container>
       <MainContent>
         <Title>
-          <h1>{page.title.rendered}</h1>
+          <h1>{parse(page.title.rendered)}</h1>
         </Title>
 
         <Description>
