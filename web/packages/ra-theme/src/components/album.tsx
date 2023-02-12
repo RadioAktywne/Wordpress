@@ -35,7 +35,7 @@ function Album({ data }: AlbumProps): JSX.Element {
       <MainContent>
         <Title>
           <h1>
-            {album.acf.title} - {album.acf.artist}
+            {album.acf.artist} - {album.acf.title}
           </h1>
 
           <BackButton>
