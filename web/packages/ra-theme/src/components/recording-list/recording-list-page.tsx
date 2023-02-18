@@ -23,12 +23,11 @@ function RecordingListPage({ data }: ListPageProps): JSX.Element {
    *  render items from current page
    */
   useEffect(() => {
-    state.archives.recordings.ready = data.isReady;
-
     if (data.next) {
       actions.source.fetch(data.next).then(() => {
         const nextPage = state.source.get(data.next);
         state.archives.recordings.nextPage = nextPage as RecordingArchiveData;
+        state.archives.recordings.ready = data.isReady;
       });
     } else {
       state.archives.recordings.nextPage = undefined;

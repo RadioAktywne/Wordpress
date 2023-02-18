@@ -23,12 +23,11 @@ function ShowListPage({ data }: ListPageProps): JSX.Element {
    *  render items from current page
    */
   useEffect(() => {
-    state.archives.shows.ready = data.isReady;
-
     if (data.next) {
       actions.source.fetch(data.next).then(() => {
         const nextPage = state.source.get(data.next);
         state.archives.shows.nextPage = nextPage as ShowArchiveData;
+        state.archives.shows.ready = data.isReady;
       });
     } else {
       state.archives.shows.nextPage = undefined;

@@ -23,12 +23,11 @@ function MemberListPage({ data }: ListPageProps): JSX.Element {
    *  render items from current page
    */
   useEffect(() => {
-    state.archives.members.ready = data.isReady;
-
     if (data.next) {
       actions.source.fetch(data.next).then(() => {
         const nextPage = state.source.get(data.next);
         state.archives.members.nextPage = nextPage as MemberArchiveData;
+        state.archives.members.ready = data.isReady;
       });
     } else {
       state.archives.members.nextPage = undefined;

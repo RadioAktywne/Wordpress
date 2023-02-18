@@ -23,12 +23,11 @@ function PostListPage({ data }: ListPageProps): JSX.Element {
    *  render items from current page
    */
   useEffect(() => {
-    state.archives.posts.ready = data.isReady;
-
     if (data.next) {
       actions.source.fetch(data.next).then(() => {
         const nextPage = state.source.get(data.next);
         state.archives.posts.nextPage = nextPage as ArchiveData;
+        state.archives.posts.ready = data.isReady;
       });
     } else {
       state.archives.posts.nextPage = undefined;
