@@ -23,12 +23,11 @@ function AlbumListPage({ data }: ListPageProps): JSX.Element {
    *  render items from current page
    */
   useEffect(() => {
-    state.archives.albums.ready = data.isReady;
-
     if (data.next) {
       actions.source.fetch(data.next).then(() => {
         const nextPage = state.source.get(data.next);
         state.archives.albums.nextPage = nextPage as AlbumArchiveData;
+        state.archives.albums.ready = data.isReady;
       });
     } else {
       state.archives.albums.nextPage = undefined;
