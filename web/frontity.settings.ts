@@ -8,7 +8,7 @@ const settings: Settings<Theme | WpSource> = {
     frontity: {
       url: process.env.WEB_URL || "https://radioaktywne.pl",
       title: "Radio Aktywne",
-      description: "Radio Aktywne",
+      description: "Najstarsza studencka rozgłośnia internetowa w Warszawie!",
     },
   },
   packages: [
