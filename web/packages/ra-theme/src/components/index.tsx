@@ -36,6 +36,7 @@ import ReactPlayer from "react-player";
 import React from "react";
 import PostList from "./post-list/post-list";
 import Post from "./post";
+import Favicon from "../img/favicon.png"
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -76,6 +77,7 @@ function Theme() {
       {/* @ts-ignore */}
       <Head>
         <meta name="description" content={state.frontity.description} />
+        <link rel="icon" type="image/x-icon" href={Favicon}></link>
         <html lang="pl" />
       </Head>
 
