@@ -39,11 +39,13 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
       <Tile>
         <Link link={frontPath}>
           <Title>{item.acf.title}</Title>
-          {item.acf.image ? (
-            <FeaturedImage id={item.acf.image} />
-          ) : (
-            <DefaultImage img={defaultImageMedia} />
-          )}
+          <ImageContainer>
+            {item.acf.image ? (
+              <FeaturedImage id={item.acf.image} />
+            ) : (
+              <DefaultImage img={defaultImageMedia} />
+            )}
+          </ImageContainer>
         </Link>
       </Tile>
     </article>
@@ -53,9 +55,15 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
 // Connect the InfoTileListItem to gain access to `state` as a prop
 export default connect(InfoTileListItem);
 
+const ImageContainer = styled.div`
+  height: 330px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+`;
+
 const Tile = styled.div`
   width: 100%;
-  height: 350px;
   overflow: hidden;
 `;
 
