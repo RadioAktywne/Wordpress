@@ -27,8 +27,6 @@ function Album({ data }: AlbumProps): JSX.Element {
   const { state, libraries } = useConnect<Packages>();
   const album: AlbumEntity = state.source[data.type][data.id];
 
-  // const Html2React = libraries.html2react.Component;
-
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
@@ -46,9 +44,7 @@ function Album({ data }: AlbumProps): JSX.Element {
         </Title>
 
         <Description>
-          {(parse(album.acf.description) as JSX.Element).props.children.splice(
-            1
-          )}
+          {parse(album.acf.description)}
         </Description>
       </MainContent>
 
