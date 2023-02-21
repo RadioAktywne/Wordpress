@@ -49,7 +49,9 @@ function Show({ data }: ShowProps): JSX.Element {
         </Title>
 
         <Description>
-          {(parse(show.acf.description) as JSX.Element).props.children.splice(1)}
+          {(parse(show.acf.description) as JSX.Element).props.children.splice(
+            1
+          )}
         </Description>
       </MainContent>
 

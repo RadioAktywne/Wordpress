@@ -46,7 +46,9 @@ function Album({ data }: AlbumProps): JSX.Element {
         </Title>
 
         <Description>
-          {(parse(album.acf.description) as JSX.Element).props.children.splice(1)}
+          {(parse(album.acf.description) as JSX.Element).props.children.splice(
+            1
+          )}
         </Description>
       </MainContent>
 

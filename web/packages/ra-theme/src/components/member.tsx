@@ -45,7 +45,9 @@ function Member({ data }: MemberProps): JSX.Element {
         </Title>
 
         <Description>
-          {(parse(member.acf.description) as JSX.Element).props.children.splice(1)}
+          {(parse(member.acf.description) as JSX.Element).props.children.splice(
+            1
+          )}
         </Description>
       </MainContent>
 

@@ -46,7 +46,9 @@ function Recording({ data }: RecordingProps): JSX.Element {
         </AudioContainer>
 
         <Description>
-          {(parse(recording.acf.description) as JSX.Element).props.children.splice(1)}
+          {(
+            parse(recording.acf.description) as JSX.Element
+          ).props.children.splice(1)}
         </Description>
       </MainContent>
 

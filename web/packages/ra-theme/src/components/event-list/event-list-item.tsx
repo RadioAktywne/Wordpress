@@ -28,9 +28,10 @@ function EventListItem({ item }: ItemProps): JSX.Element {
   /**
    * name of the event. We need to remove "(Live)/(Replay)" and add " - powtórka" if neccesary
    */
-  const name =
-    parse(item.title.rendered.replace(" (Live)", "").replace(" (Replay)", "") +
-    (item.acf.type === "live" ? "" : " - powtórka"));
+  const name = parse(
+    item.title.rendered.replace(" (Live)", "").replace(" (Replay)", "") +
+      (item.acf.type === "live" ? "" : " - powtórka")
+  );
 
   /**
    * remove secs from start and end time of the event
