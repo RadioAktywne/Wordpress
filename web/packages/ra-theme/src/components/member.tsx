@@ -45,15 +45,7 @@ function Member({ data }: MemberProps): JSX.Element {
         </Title>
 
         <Description>
-          {/* <Html2React html={member.acf.description} /> //alternative way - it can be styled then below*/}
-          {parse(
-            //parse html
-            member.acf.description
-              .replace('<div class="article-containter">', "") //remove div at the beginning
-              .replace("</div>", "") //remove closing div at the end
-              .replace(/(?:\r\n|\r|\n)/g, "<br>") //convert new lines to breaks
-              .replace(/^(<br>)+|(<br>)+$/g, "") //remove newlines at the beginning and at the end
-          )}
+          {(parse(member.acf.description) as JSX.Element).props.children.splice(1)}
         </Description>
       </MainContent>
 
@@ -96,6 +88,7 @@ const Description = styled.div`
   font-size: 1rem;
   line-height: 1.7;
   margin-top: 20px;
+  white-space: pre-line;
 
   & ul,
   & ol {

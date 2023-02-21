@@ -49,14 +49,7 @@ function Show({ data }: ShowProps): JSX.Element {
         </Title>
 
         <Description>
-          {parse(
-            //parse html
-            show.acf.description
-              .replace('<div class="article-containter">', "") //remove div at the beginning
-              .replace("</div>", "") //remove closing div at the end
-              .replace(/(?:\r\n|\r|\n)/g, "<br>") //convert new lines to breaks
-              .replace(/^(<br>)+|(<br>)+$/g, "") //remove newlines at the beginning and at the end
-          )}
+          {(parse(show.acf.description) as JSX.Element).props.children.splice(1)}
         </Description>
       </MainContent>
 
@@ -131,6 +124,7 @@ const Description = styled.div`
   font-size: 1rem;
   line-height: 1.7;
   margin-top: 20px;
+  white-space: pre-line;
 
   & ul,
   & ol {

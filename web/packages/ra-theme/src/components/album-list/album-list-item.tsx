@@ -32,13 +32,11 @@ function AlbumListItem({ item }: ItemProps): JSX.Element {
             )}
             <Title>
               <ArtistName>
-                {parse(item.title.rendered
-                  .replace(/(?<= &#8211; ).*$/, "")
-                  .replace(" &#8211; ", ""))}
+                {parse(item.title.rendered.split(" &#8211; ")[0])}
               </ArtistName>
 
               <SongTitle>
-                {parse(item.title.rendered.replace(/^(.*?)\&#8211; /, ""))}
+                {parse(item.title.rendered.split(" &#8211; ")[1])}
               </SongTitle>
             </Title>
           </Cover>
