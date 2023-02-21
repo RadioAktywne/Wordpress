@@ -22,8 +22,8 @@ function Player() {
     else {
       //now we set src back, but with some random number - it wont play from cache B)
       state.players.main.srcUrl =
-        "https://listen.radioaktywne.pl:8443/raogg?c=" +
-        Math.floor(Math.random() * 10000);
+        "https://listen.radioaktywne.pl:8443/ramp3?c=" +
+        Date.now();
       //and play the stream
       actions.players.main.playerPlay();
     }
