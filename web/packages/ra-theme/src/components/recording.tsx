@@ -27,6 +27,19 @@ function Recording({ data }: RecordingProps): JSX.Element {
   const { state } = useConnect<Packages>();
   const recording: RecordingEntity = state.source[data.type][data.id];
 
+  /**
+   * Open the recording if data is ready:
+   *  stop current recording
+   *  open ours by saving its id in state
+   */
+  if(data.isReady && state.players.recordings.openedRec != recording.acf.file) {
+    state.players.recordings.srcUrl = "";
+    state.players.recordings.playing = false;
+    state.players.recordings.played = 0;
+
+    state.players.recordings.openedRec = recording.acf.file;
+  };
+
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <Container>
