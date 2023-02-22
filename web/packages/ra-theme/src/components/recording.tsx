@@ -32,13 +32,16 @@ function Recording({ data }: RecordingProps): JSX.Element {
    *  stop current recording
    *  open ours by saving its id in state
    */
-  if(data.isReady && state.players.recordings.openedRec != recording.acf.file) {
+  if (
+    data.isReady &&
+    state.players.recordings.openedRec != recording.acf.file
+  ) {
     state.players.recordings.srcUrl = "";
     state.players.recordings.playing = false;
     state.players.recordings.played = 0;
 
     state.players.recordings.openedRec = recording.acf.file;
-  };
+  }
 
   // Load the post, but only if the data is ready.
   return data.isReady ? (
@@ -58,9 +61,7 @@ function Recording({ data }: RecordingProps): JSX.Element {
           {recording.acf.file && <FeaturedAudio id={recording.acf.file} />}
         </AudioContainer>
 
-        <Description>
-          {parse(recording.acf.description)}
-        </Description>
+        <Description>{parse(recording.acf.description)}</Description>
       </MainContent>
 
       <Cover>

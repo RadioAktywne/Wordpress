@@ -44,9 +44,7 @@ function Member({ data }: MemberProps): JSX.Element {
           </BackButton>
         </Title>
 
-        <Description>
-          {parse(member.acf.description)}
-        </Description>
+        <Description>{parse(member.acf.description)}</Description>
       </MainContent>
 
       <Cover>

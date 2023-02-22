@@ -43,9 +43,7 @@ function Album({ data }: AlbumProps): JSX.Element {
           </BackButton>
         </Title>
 
-        <Description>
-          {parse(album.acf.description)}
-        </Description>
+        <Description>{parse(album.acf.description)}</Description>
       </MainContent>
 
       <Cover>

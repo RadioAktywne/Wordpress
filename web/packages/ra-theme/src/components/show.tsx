@@ -48,9 +48,7 @@ function Show({ data }: ShowProps): JSX.Element {
           </BackButton>
         </Title>
 
-        <Description>
-          {parse(show.acf.description)}
-        </Description>
+        <Description>{parse(show.acf.description)}</Description>
       </MainContent>
 
       <AboutContent>
