@@ -50,7 +50,9 @@ function Player() {
       if (this.readyState == 4 && this.status == 200) {
         const title = JSON.parse(this.responseText).icestats.source[1].title;
 
-        if (title != "Unknown" && !title.endsWith("- Unknown")) {
+        if(title.endsWith(" - Unknown"))
+          state.theme.title = title.replace(" - Unknown", "");
+        else if(title != "Unknown") {
           state.theme.title = title;
         }
       }
