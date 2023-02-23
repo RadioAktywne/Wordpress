@@ -218,6 +218,10 @@ const PlayerContainer = styled.div`
   #ra-mute {
     cursor: pointer;
     margin-right: 50px;
+
+    @media (max-width: 360px) {
+      display: none;
+    }
   }
 
   .invisible {
