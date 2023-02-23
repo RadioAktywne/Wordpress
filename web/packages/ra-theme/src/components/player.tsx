@@ -50,9 +50,9 @@ function Player() {
       if (this.readyState == 4 && this.status == 200) {
         const title = JSON.parse(this.responseText).icestats.source[1].title;
 
-        if(title.endsWith(" - Unknown"))
+        if (title.endsWith(" - Unknown"))
           state.theme.title = title.replace(" - Unknown", "");
-        else if(title != "Unknown") {
+        else if (title != "Unknown") {
           state.theme.title = title;
         }
       }
@@ -131,6 +131,8 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 330px;
+  border: solid 7px #30241a;
+  box-sizing: border-box;
 
   & .player-bg {
     background-size: cover;
@@ -149,8 +151,9 @@ const Container = styled.div`
 
   & .player-title h2 {
     color: #6aba9c;
-    background-color: #3c3c4c;
-    border-bottom: solid 2px #6aba9c;
+    background-color: #30241a;
+    padding-top: 6px;
+    padding-bottom: 6px;
     padding-left: 15px;
     margin-top: 0px;
     margin-bottom: 0px;

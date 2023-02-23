@@ -42,6 +42,11 @@ interface ListProps {
   day: string;
 }
 
+interface DayProps {
+  isHome: boolean;
+  isHovered: boolean;
+}
+
 function EventDay({ data, onHome, day }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
@@ -52,7 +57,7 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
 
   if (shows.status !== "success")
     return (
-      <Day>
+      <Day isHome={onHome} isHovered={state.home.hovered.events}>
         <Loading />
       </Day>
     );
@@ -60,12 +65,18 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
   const sorted = [...data].sort(isEarlier);
 
   return (
-    <Day>
+    <Day isHome={onHome} isHovered={state.home.hovered.events}>
       <div>
         {onHome ? (
-          <Link link={state.configuration.posts.event.archivePath}>
-            <h2 className="">RAmówka na dziś</h2>
-          </Link>
+          <div
+            onMouseEnter={() => (state.home.hovered.events = true)}
+            onMouseLeave={() => (state.home.hovered.events = false)}
+            onClick={() => (state.home.hovered.events = false)}
+          >
+            <Link link={state.configuration.posts.event.archivePath}>
+              <h2 className="">RAmówka na dziś</h2>
+            </Link>
+          </div>
         ) : (
           <h2>{daysNames[day]}</h2>
         )}
@@ -79,11 +90,16 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
 
 export default connect(EventDay);
 
-const Day = styled.div`
+const Day = styled.div<DayProps>`
   width: 33.33%;
-
+  ${({ isHome }) => isHome && "margin-bottom: 10px;"}
+  
   & > div {
-    padding: 0 15px 15px 0;
+    margin: 0 15px 15px 0;
+    ${({ isHome }) =>
+      isHome &&
+      "box-sizing: border-box; border: solid 7px #30241A; height: 100%;"}
+    ${({ isHovered }) => isHovered && "border: solid 7px #6aba9c;"}
   }
 
   &:nth-of-type(3n) > div {
@@ -91,33 +107,33 @@ const Day = styled.div`
   }
 
   & > div > h2 {
-    color: #3c3c4c;
-    border-bottom: solid 2px #3c3c4c;
+    color: #30241A;
     font-weight: normal;
     padding-left: 15px;
     margin-top: 0;
+    border-bottom: 2px solid rgba(48, 36, 26, 0.8);
   }
 
-  & > div > a > h2 {
+  & > div > div > a > h2 {
     color: #6aba9c;
-    background-color: #3c3c4c;
-    border-bottom: solid 2px #6aba9c;
-    padding-left: 15px;
+    background-color: #30241A;
+padding-top: 6px;
+padding-bottom: 6px;
+padding-left: 15px;
     margin-top: 0px;
     margin-bottom: 10px;
     font-weight: lighter;
   }
 
-  & > div > a:hover > h2 {
+  & > div > div > a:hover > h2 {
     color: #fff;
     background-color: #6aba9c;
-    border-bottom: solid 2px #3c3c4c;
   }
 
   @media (max-width: 750px) {
     width: 100%;
 
     & > div {
-      padding: 0 0 20px 0;
+      margin: 0 0 20px 0;
     }
 `;

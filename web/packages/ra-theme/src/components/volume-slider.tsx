@@ -23,8 +23,8 @@ function VolumeSlider() {
             90deg,
             white 0%,
             white ${state.players.main.volume * 100}%,
-            #3c3c4c ${state.players.main.volume * 100}%,
-            #3c3c4c 100%
+            #30241a ${state.players.main.volume * 100}%,
+            #30241a 100%
           );
         `}
         type="range"

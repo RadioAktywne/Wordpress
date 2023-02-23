@@ -85,7 +85,7 @@ const Container = styled.div`
 `;
 
 const Description = styled.div`
-  color: #3c3c4c;
+  color: #30241A;
   font-size: 1rem;
   line-height: 1.7;
   margin-top: 20px;
@@ -275,8 +275,9 @@ const Title = styled.div`
 
   & > h1 {
     color: #6aba9c;
-    background-color: #3c3c4c;
-    border-bottom: solid 2px #6aba9c;
+    background-color: #30241a;
+    padding-top: 6px;
+    padding-bottom: 6px;
     padding-left: 15px;
     margin-top: 0px;
     margin-bottom: 0px;

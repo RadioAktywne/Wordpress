@@ -73,7 +73,7 @@ const Container = styled.div`
   bottom: 0;
   height: 40px;
   width: 100%;
-  background-color: #3c3c4c;
+  background-color: #30241a;
 
   display: flex;
   flex-direction: row;

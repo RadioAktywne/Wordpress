@@ -10,6 +10,10 @@ export type RecordingWidgetProps = {
   length?: number;
 };
 
+interface ContainerProps {
+  isHovered: boolean;
+}
+
 const RecordingWidget = ({ length = 6 }) => {
   const { actions, state } = useConnect<Packages>();
 
@@ -26,7 +30,7 @@ const RecordingWidget = ({ length = 6 }) => {
 
   if (!dataPost.isReady)
     return (
-      <Container>
+      <Container isHovered={state.home.hovered.recordings}>
         <Loading />
       </Container>
     );
@@ -35,18 +39,24 @@ const RecordingWidget = ({ length = 6 }) => {
    * when recordings are fetched
    */
   return (
-    <Container>
+    <Container isHovered={state.home.hovered.recordings}>
       <div>
-        <Title>
+        <Title
+          onMouseEnter={() => (state.home.hovered.recordings = true)}
+          onMouseLeave={() => (state.home.hovered.recordings = false)}
+          onClick={() => (state.home.hovered.recordings = false)}
+        >
           <Link link={state.configuration.posts.recording.archivePath}>
             <h1>Nagrania</h1>
           </Link>
         </Title>
 
-        {dataPost.items.slice(0, length).map(({ type, id }) => {
-          const item = state.source[type][id];
-          return <RecordingListItem key={item.id} item={item} />;
-        })}
+        <div>
+          {dataPost.items.slice(0, length).map(({ type, id }) => {
+            const item = state.source[type][id];
+            return <RecordingListItem key={item.id} item={item} />;
+          })}
+        </div>
       </div>
     </Container>
   );
@@ -54,13 +64,20 @@ const RecordingWidget = ({ length = 6 }) => {
 
 export default connect(RecordingWidget);
 
-const Container = styled.section`
+const Container = styled.section<ContainerProps>`
   width: 66.66%;
   padding: 0;
   margin: 0;
 
   & > div {
-    padding-right: 15px;
+    margin-right: 15px;
+    border: solid 7px #30241a;
+    ${({ isHovered }) => isHovered && "border: solid 7px #6aba9c;"}
+    box-sizing: border-box;
+  }
+
+  & > .hovered {
+    border: solid 7px #6aba9c;
   }
 
   @media (max-width: 750px) {
@@ -77,8 +94,9 @@ const Container = styled.section`
 const Title = styled.div`
   & > a > h1 {
     color: #6aba9c;
-    background-color: #3c3c4c;
-    border-bottom: solid 2px #6aba9c;
+    background-color: #30241a;
+    padding-top: 6px;
+    padding-bottom: 6px;
     padding-left: 15px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -89,6 +107,5 @@ const Title = styled.div`
   & > a:hover > h1 {
     color: #fff;
     background-color: #6aba9c;
-    border-bottom: solid 2px #3c3c4c;
   }
 `;

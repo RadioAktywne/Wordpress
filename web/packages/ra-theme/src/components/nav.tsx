@@ -55,7 +55,7 @@ const NavContainer = styled.nav`
 
 const NavItem = styled.div`
   margin: 0;
-  color: #f7f5f6;
+  color: #fff4dc;
   font-size: 1rem;
 
   @media (max-width: 1400px) {
@@ -74,13 +74,13 @@ const NavItem = styled.div`
     /* Use for semantic approach to style the current link */
 
     &[aria-current="page"] {
-      background-color: #f7f5f6;
-      color: #3c3c4c;
+      background-color: #fff4dc;
+      color: #30241a;
     }
   }
 
   &:hover > a {
     background-color: #6aba9c;
-    color: #f7f5f6;
+    color: #fff4dc;
   }
 `;

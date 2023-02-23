@@ -191,7 +191,7 @@ const globalStyles = css`
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    background-color: #f7f5f6;
+    background-color: #fff4dc;
     line-height: 1.7;
     font-family: sans-serif;
   }
@@ -214,7 +214,7 @@ const HeadContainer = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   flex-direction: row;
-  background-color: #3c3c4c;
+  background-color: #30241a;
 
   padding: 0 3rem;
 

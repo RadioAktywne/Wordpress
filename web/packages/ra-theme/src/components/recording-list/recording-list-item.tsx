@@ -88,12 +88,12 @@ const Container = styled.div`
     width: 100%;
   }
 
-  &:nth-of-type(2n) > div {
-    background-color: rgba(60, 60, 76, 0.8);
+  &:nth-of-type(2n + 1) > div {
+    background-color: rgba(48, 36, 26, 0.8);
   }
 
-  &:nth-of-type(2n + 1) > div {
-    background-color: #3c3c4c;
+  &:nth-of-type(2n) > div {
+    background-color: #30241a;
   }
 `;
 
@@ -122,7 +122,7 @@ const BackButton = styled.div`
     height: 40px;
     background-color: white !important;
     border-left: solid #6aba9c 2px;
-    color: #3c3c4c;
+    color: #30241a;
   }
 
   & > a > .showMore {

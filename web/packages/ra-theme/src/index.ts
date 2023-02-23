@@ -35,6 +35,13 @@ const raThemeTypeScript: RaThemeTypeScript = {
       isMobileMenuOpen: false,
     },
 
+    home: {
+      hovered: {
+        recordings: false,
+        events: false,
+      },
+    },
+
     configuration: {
       pages: {
         home: {

@@ -39,7 +39,7 @@ function MenuModal({ ...props }) {
 }
 
 const MenuContent = styled.div`
-  background-color: #3c3c4c;
+  background-color: #30241a;
   width: 200px;
   height: 100vh;
   overflow: hidden auto;
@@ -66,14 +66,14 @@ const MenuLink = styled(Link)`
   &:hover,
   &:focus {
     background-color: #6aba9c;
-    color: #f7f5f6;
+    color: #fff4dc;
   }
 
   // /* styles for active link */
 
   // &[aria-current="page"] {
-  //   background-color: #F7F5F6;
-  //   color: #3c3c4c;
+  //   background-color: #FFF4DC;
+  //   color: #30241A;
   // }
 `;
 

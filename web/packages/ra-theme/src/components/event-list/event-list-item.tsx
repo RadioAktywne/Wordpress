@@ -59,7 +59,7 @@ export default connect(EventListItem);
 
 const Container = styled.div`
   &:nth-of-type(2n + 1) {
-    background-color: rgba(60, 60, 76, 0.1);
+    background-color: rgba(48, 36, 26, 0.1);
   }
 `;
 
@@ -67,7 +67,7 @@ const Title = styled.div`
   margin: 0;
   padding: 0;
   padding-left: 15px;
-  color: #3c3c4c;
+  color: #30241a;
 
   &:hover {
     color: #6aba9c;

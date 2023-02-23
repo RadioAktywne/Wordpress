@@ -69,7 +69,7 @@ const Tile = styled.div`
 
 const Title = styled.h2`
   color: #6aba9c;
-  background-color: #3c3c4c;
+  background-color: #30241a;
   border-bottom: solid 2px #6aba9c;
   padding-left: 15px;
   margin-top: 0px;
@@ -79,6 +79,5 @@ const Title = styled.h2`
   &:hover {
     color: #fff;
     background-color: #6aba9c;
-    border-bottom: solid 2px #3c3c4c;
   }
 `;

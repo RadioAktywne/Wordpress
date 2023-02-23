@@ -118,7 +118,7 @@ const Container = styled.div`
 `;
 
 const Description = styled.div`
-  color: #3c3c4c;
+  color: #30241a;
   font-size: 1rem;
   line-height: 1.7;
   margin-top: 20px;
@@ -189,8 +189,9 @@ const Title = styled.div`
 
   & > h1 {
     color: #6aba9c;
-    background-color: #3c3c4c;
-    border-bottom: solid 2px #6aba9c;
+    background-color: #30241a;
+    padding-top: 6px;
+    padding-bottom: 6px;
     padding-left: 15px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -233,7 +234,7 @@ const List = styled.div`
 
     margin: 0;
     padding: 0;
-    color: #3c3c4c;
+    color: #30241a;
   }
 
   @media (max-width: 750px) {
@@ -252,6 +253,6 @@ const List = styled.div`
 
   & > div:nth-of-type(2n + 1) > a,
   & > div:nth-of-type(2n + 1) > span {
-    background-color: rgba(60, 60, 76, 0.1);
+    background-color: rgba(48, 36, 26, 0.1);
   }
 `;

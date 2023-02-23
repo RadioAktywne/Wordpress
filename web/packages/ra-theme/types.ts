@@ -121,6 +121,13 @@ interface RaThemeTypeScript extends Package {
       isMobileMenuOpen: boolean;
     };
 
+    home: {
+      hovered: {
+        recordings: boolean;
+        events: boolean;
+      };
+    };
+
     configuration: {
       pages: {
         home: PageConfiguration;
