@@ -92,14 +92,35 @@ export default connect(EventDay);
 
 const Day = styled.div<DayProps>`
   width: 33.33%;
-  ${({ isHome }) => isHome && "margin-bottom: 10px;"}
+  ${({ isHome }) => isHome && "margin-bottom: 10px;"};
   
   & > div {
     margin: 0 15px 15px 0;
     ${({ isHome }) =>
       isHome &&
-      "box-sizing: border-box; border: solid 7px #30241A; height: 100%;"}
-    ${({ isHovered }) => isHovered && "border: solid 7px #6aba9c;"}
+      "box-sizing: border-box;\
+      border: solid 7px #30241A;\
+      height: 100%;\
+      box-shadow: 7px -6px 0px 0px #7190BC;\
+      -webkit-box-shadow: 7px -6px 0px 0px #7190BC;\
+      -moz-box-shadow: 7px -6px 0px 0px #7190BC;"};
+    ${({ isHovered }) => isHovered && "border: solid 7px #6aba9c;"};
+  }
+
+  @media (max-width: 900px) {
+    & > div {
+      ${({ isHome }) => isHome && "margin-right: 6px;"};
+    }
+  }
+
+  @media (max-width: 750px) {
+    & > div {
+      ${({ isHome }) =>
+        isHome &&
+        "box-shadow: none;\
+        -webkit-box-shadow: none;\
+        -moz-box-shadow: none;"};
+    }
   }
 
   &:nth-of-type(3n) > div {

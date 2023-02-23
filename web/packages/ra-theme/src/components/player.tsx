@@ -134,6 +134,10 @@ const Container = styled.div`
   border: solid 7px #30241a;
   box-sizing: border-box;
 
+  box-shadow: 7px -6px 0px 0px #e85a57;
+  -webkit-box-shadow: 7px -6px 0px 0px #e85a57;
+  -moz-box-shadow: 7px -6px 0px 0px #e85a57;
+
   & .player-bg {
     background-size: cover;
     background-position-y: center;
@@ -168,6 +172,11 @@ const Container = styled.div`
     height: 330px;
     margin-right: 0px !important;
     font-size: 12px;
+
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    margin-top: 6px;
   }
 `;
 

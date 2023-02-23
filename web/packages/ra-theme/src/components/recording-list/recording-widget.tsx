@@ -74,10 +74,10 @@ const Container = styled.section<ContainerProps>`
     border: solid 7px #30241a;
     ${({ isHovered }) => isHovered && "border: solid 7px #6aba9c;"}
     box-sizing: border-box;
-  }
 
-  & > .hovered {
-    border: solid 7px #6aba9c;
+    box-shadow: 7px -6px 0px 0px #fff55a;
+    -webkit-box-shadow: 7px -6px 0px 0px #fff55a;
+    -moz-box-shadow: 7px -6px 0px 0px #fff55a;
   }
 
   @media (max-width: 750px) {
@@ -87,6 +87,11 @@ const Container = styled.section<ContainerProps>`
     & > div {
       padding: 0;
       width: 100%;
+
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      margin-top: 6px;
     }
   }
 `;

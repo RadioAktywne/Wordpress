@@ -29,10 +29,10 @@ function Footer() {
 
         <PartnersLinks>
           <Link link="https://tvpw.pl" target="_blank">
-            <img src={FocusLogo} alt="TVPW" />
+            <img src={TVPWsLogo} alt="TVPW" />
           </Link>
           <Link link="https://www.facebook.com/KlubFocus/" target="_blank">
-            <img src={TVPWsLogo} alt="Klub Focus" />
+            <img src={FocusLogo} alt="Klub Focus" />
           </Link>
           <Link link="https://sspw.pl" target="_blank">
             <img src={SSPWLogo} alt="SSPW" />

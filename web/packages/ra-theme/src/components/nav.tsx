@@ -1,6 +1,7 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "./link";
 import { Packages } from "../../types";
+import React from "react";
 
 /**
  * The navigation component. It renders the navigation links.
@@ -10,18 +11,51 @@ import { Packages } from "../../types";
 function Nav(): JSX.Element {
   const { state } = useConnect<Packages>();
 
+  let afterOpened = false;
+
   return (
     <NavContainer>
-      {state.theme.menu.map(([name, link]) => {
+      {state.theme.menu.map(([name, link], number) => {
         // Check if the link matched the current page url.
         const data = state.source.get(state.router.link);
-        const isCurrentPage =
-          data.route === link ||
-          data.route.slice(0, data.route.length - 1) === link;
+        let isCurrentPage = data.route === link;
+        switch (link) {
+          case "/nagrania/":
+            if (data.route.includes("/nagranie/")) isCurrentPage = true;
+            break;
+
+          case "/plyty-tygodnia/":
+            if (data.route.includes("/plyta-tygodnia/")) isCurrentPage = true;
+            break;
+
+          case "/blog/":
+            if (data.route.includes("/blog/")) isCurrentPage = true;
+            break;
+
+          case "/radio/":
+            if (
+              data.route.includes("/ramowka/") ||
+              data.route.includes("/audycje/") ||
+              data.route.includes("/o-nas/") ||
+              data.route.includes("/audycja/") ||
+              data.route.includes("/radiowcy/") ||
+              data.route.includes("/radiowiec/")
+            )
+              isCurrentPage = true;
+            break;
+        }
+
+        if (isCurrentPage) afterOpened = true;
 
         return (
-          <NavItem key={name}>
-            {/* If link url is the current page, add `aria-current` for a11y */}
+          <NavItem
+            key={name}
+            className={
+              isCurrentPage
+                ? "noBorder"
+                : "border" + ((number - (afterOpened ? 1 : 0)) % 4)
+            }
+          >
             <Link link={link} aria-current={isCurrentPage ? "page" : undefined}>
               {name}
             </Link>
@@ -66,21 +100,40 @@ const NavItem = styled.div`
   box-sizing: border-box;
   flex-shrink: 0;
 
+  &.border0 {
+    border-top: solid 27px #e85a57;
+  }
+
+  &.border1 {
+    border-top: solid 27px #fff55a;
+  }
+
+  &.border2 {
+    border-top: solid 27px #6aba9c;
+  }
+
+  &.border3 {
+    border-top: solid 27px #7190bc;
+  }
+
+  &.noBorder {
+    border-top: solid 27px #30241a;
+  }
+
   & > a {
     display: inline-block;
     line-height: 45px;
     padding: 0 20px;
     border-bottom-color: transparent;
-    /* Use for semantic approach to style the current link */
 
     &[aria-current="page"] {
-      background-color: #fff4dc;
-      color: #30241a;
+      background-color: #fff4dc !important;
+      color: #30241a !important;
     }
   }
 
   &:hover > a {
-    background-color: #6aba9c;
+    background-color: #594d40;
     color: #fff4dc;
   }
 `;

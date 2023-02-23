@@ -56,20 +56,31 @@ const Container = styled.section`
 
   & > div {
     margin-right: 15px;
+    box-shadow: 7px -6px 0px 0px #6aba9c;
+    -webkit-box-shadow: 7px -6px 0px 0px #6aba9c;
+    -moz-box-shadow: 7px -6px 0px 0px #6aba9c;
   }
 
   & > div > h1 {
     margin: 0;
   }
 
+  @media (max-width: 900px) {
+    & > div {
+      margin-right: 6px;
+    }
+  }
+
   @media (max-width: 750px) {
-    padding-right: 0px;
     width: 100%;
     padding-top: 20px !important;
 
     & > div {
-      padding: 0;
+      margin-right: 0px;
       width: 100%;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
     }
   }
 `;
