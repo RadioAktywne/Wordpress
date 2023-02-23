@@ -14,6 +14,7 @@ interface ItemProps {
    * The recording that should be shown.
    */
   item: RecordingEntity;
+  number: Number
 }
 
 /**
@@ -23,7 +24,7 @@ interface ItemProps {
  * @param props - Defined in {@link ItemProps}.
  * @returns The rendered recording.
  */
-function RecordingListItem({ item }: ItemProps): JSX.Element {
+function RecordingListItem({ item, number }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   /**
@@ -51,7 +52,7 @@ function RecordingListItem({ item }: ItemProps): JSX.Element {
     <Container>
       <Title
         onClick={openRecording}
-        className={shouldBeOpened() ? "hidden" : ""}
+        className={(shouldBeOpened() ? "hidden " : "") + ("hoverColor" + number)} 
       >
         {parse(item.title.rendered)}
       </Title>
@@ -105,8 +106,24 @@ const Title = styled.div`
   padding-left: 15px;
 
   &:hover {
-    background-color: #6aba9c !important;
     cursor: pointer;
+  }
+
+  &.hoverColor0:hover {
+    background-color: #E85A57 !important;
+  }
+
+  &.hoverColor1:hover {
+    background-color: #FFF55A !important;
+    color: #30241A;
+  }
+
+  &.hoverColor2:hover {
+    background-color: #6ABA9C !important;
+  }
+
+  &.hoverColor3:hover {
+    background-color: #7190BC !important;
   }
 `;
 
