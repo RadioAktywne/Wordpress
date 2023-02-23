@@ -38,6 +38,9 @@ function Home({ data }: HomeProps): JSX.Element {
     state.configuration.posts.event.archivePath
   ) as EventArchiveData;
 
+  state.home.hovered.events = false;
+  state.home.hovered.recordings = false;
+
   // Load the page, but only if the data is ready.
   return data.isReady ? (
     <BigContainer>

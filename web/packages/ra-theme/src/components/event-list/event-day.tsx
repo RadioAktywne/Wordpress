@@ -104,7 +104,7 @@ const Day = styled.div<DayProps>`
       box-shadow: 7px -6px 0px 0px #7190BC;\
       -webkit-box-shadow: 7px -6px 0px 0px #7190BC;\
       -moz-box-shadow: 7px -6px 0px 0px #7190BC;"};
-    ${({ isHovered }) => isHovered && "border: solid 7px #6aba9c;"};
+    ${({ isHovered, isHome }) => isHovered && isHome && "border: solid 7px #6aba9c;"};
   }
 
   @media (max-width: 900px) {
