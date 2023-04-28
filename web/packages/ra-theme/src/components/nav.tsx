@@ -101,23 +101,23 @@ const NavItem = styled.div`
   flex-shrink: 0;
 
   &.border0 {
-    border-top: solid 27px #e85a57;
+    border-top: solid 18px #e85a57;
   }
 
   &.border1 {
-    border-top: solid 27px #fff55a;
+    border-top: solid 18px #fff55a;
   }
 
   &.border2 {
-    border-top: solid 27px #6aba9c;
+    border-top: solid 18px #6aba9c;
   }
 
   &.border3 {
-    border-top: solid 27px #7190bc;
+    border-top: solid 18px #7190bc;
   }
 
   &.noBorder {
-    border-top: solid 27px #30241a;
+    border-top: solid 18px #30241a;
   }
 
   & > a {

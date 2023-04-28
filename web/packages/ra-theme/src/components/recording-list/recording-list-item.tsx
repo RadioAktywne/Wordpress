@@ -137,7 +137,6 @@ const BackButton = styled.div`
     justify-content: center;
     padding: 0 5px;
     height: 40px;
-    background-color: white !important;
     border-left: solid #6aba9c 2px;
     color: #30241a;
   }
