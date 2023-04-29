@@ -81,7 +81,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   min-height: 40px;
   color: white;
 
@@ -136,9 +136,9 @@ const BackButton = styled.div`
     align-items: center;
     justify-content: center;
     padding: 0 5px;
-    height: 40px;
+    height: 100%;
     border-left: solid #6aba9c 2px;
-    color: #30241a;
+    color: white;
   }
 
   & > a > .showMore {
