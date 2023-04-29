@@ -68,9 +68,10 @@ const Tile = styled.div`
 `;
 
 const Title = styled.h2`
-  color: #6aba9c;
-  background-color: #30241a;
-  border-bottom: solid 2px #6aba9c;
+  color: rgb(106, 186, 156);
+  background-color: rgb(48, 36, 26);
+  padding-top: 6px;
+  padding-bottom: 6px;
   padding-left: 15px;
   margin-top: 0px;
   margin-bottom: 0px;
