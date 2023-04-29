@@ -56,10 +56,14 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
 export default connect(InfoTileListItem);
 
 const ImageContainer = styled.div`
-  height: 200px;
+  height: 280px;
   display: flex;
   align-items: center;
   overflow: hidden;
+
+  @media (min-width: 560px) {
+    height: 280px;
+  }
 `;
 
 const Tile = styled.div`
