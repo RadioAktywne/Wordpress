@@ -56,7 +56,7 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
 export default connect(InfoTileListItem);
 
 const ImageContainer = styled.div`
-  height: 330px;
+  height: 200px;
   display: flex;
   align-items: center;
   overflow: hidden;
