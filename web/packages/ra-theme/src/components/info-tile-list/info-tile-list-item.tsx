@@ -61,7 +61,7 @@ const ImageContainer = styled.div`
   align-items: center;
   overflow: hidden;
 
-  @media (min-width: 1030px) {
+  @media (max-width: 1030px) {
     height: 200px;
   }
 `;
