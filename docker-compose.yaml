@@ -65,6 +65,7 @@ services:
       - database
   web:
     build: web
+    restart: unless-stopped
     network_mode: "host"
     environment:
       - "WEB_PORT=${WEB_PORT:-3000}"
