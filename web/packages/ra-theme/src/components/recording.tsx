@@ -114,6 +114,10 @@ const Description = styled.div`
   @media (max-width: 1400px) {
     font-size: 0.8rem;
   }
+
+  @media (max-width: 750px) {
+    margin: 0 20px;
+  }
 `;
 
 const MainContent = styled.div`

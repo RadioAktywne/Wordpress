@@ -135,7 +135,7 @@ const Description = styled.div`
   }
 
   @media (max-width: 750px) {
-    margin-left: 20px;
+    margin: 0 20px;
   }
 `;
 
