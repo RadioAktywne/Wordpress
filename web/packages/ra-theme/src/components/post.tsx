@@ -91,10 +91,23 @@ const Description = styled.div`
   margin-top: 20px;
 
   & img {
+    width: 100%;
     max-width: 760px !important;
     height: auto;
     object-fit: cover;
     object-position: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  & .wp-block-video video
+  {
+    width: 100%;
+  }
+
+  & .wp-block-embed__wrapper iframe
+  {
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -111,6 +124,10 @@ const Description = styled.div`
 
   @media (max-width: 1400px) {
     font-size: 0.8rem;
+  }
+
+  @media (max-width: 750px) {
+    margin: 0 20px;
   }
 
   & .aligncenter,
