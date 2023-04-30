@@ -10,8 +10,8 @@ Run from top directory:
 docker compose up
 ```
 
-By default, website is at [localhost:3000](http://localhost:3000),
-while the admin panel is at [localhost:80](http://localhost:80).
+By default, website is at [localhost](http://localhost),
+while the admin panel is at [localhost/wp-admin](http://localhost/wp-admin).
 
 ## Components
 
@@ -38,7 +38,7 @@ At first launch, you need to configure it by going to the admin panel.
 
 You can find everything related to WordPress in `wordpress` directory.
 WordPress admin panel is available
-on [localhost:80](http://localhost:80) by
+on [localhost/wp-admin](http://localhost/wp-admin) by
 default.
 
 ### Web
@@ -50,4 +50,4 @@ It means that you can use anything that is available in React
 to make your website look however you like.
 
 You can find everything related to the website in `web` directory.
-It's available on [localhost:3000](http://localhost:3000) by default.
+It's available on [localhost](http://localhost) by default.
