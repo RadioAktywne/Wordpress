@@ -46,8 +46,9 @@ import Favicon from "../img/favicon.png";
  */
 
 function Theme() {
-  const { state, actions } = useConnect<Packages>();
-  const data = state.source.get(state.router.link);
+  const { state, actions, libraries } = useConnect<Packages>();
+  const { route } = libraries.source.parse(state.router.link);
+  const data = state.source.get(route);
 
   /**
    * Things related to playing audio (needs to be global)
