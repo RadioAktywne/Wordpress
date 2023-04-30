@@ -109,7 +109,7 @@ const postTypeArchiveHandler =
     const hasOlderPosts = page > 1;
 
     // 5. add data to source
-    const currentPageData = state.source.get(route);
+    const currentPageData = state.source.data[link];
 
     const newPageData = {
       type,
