@@ -192,7 +192,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
           libraries.source.handlers.push({
             name: `${key} archive handler`,
             priority: 5,
-            pattern: `${ensurePath(data.archivePath)}`,
+            pattern: ensurePath(data.archivePath),
             func: postTypeArchiveHandler({
               type: key,
               endpoint: data.endpoint,

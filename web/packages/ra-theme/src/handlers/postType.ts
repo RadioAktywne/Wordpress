@@ -112,6 +112,8 @@ const postTypeHandler =
       query,
       isPostType: true,
       [`is${capitalize(data.type)}`]: true,
+      isReady: true,
+      isFetching: false,
     }); // This ensures the resulting type is correct.
 
     // Overwrite properties if the request is a preview.
