@@ -13,6 +13,12 @@ docker compose up
 By default, website is at [localhost](http://localhost),
 while the admin panel is at [localhost/wp-admin](http://localhost/wp-admin).
 
+You might need to use node 16.15.1
+
+```sh
+nvm use 16.15.1
+```
+
 ## Components
 
 ### Database
