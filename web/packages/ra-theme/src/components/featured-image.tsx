@@ -4,6 +4,7 @@ import { Packages } from "../../types";
 import React from "react";
 import useMedia from "../hooks/useMedia";
 import Loading from "./loading";
+import { motion } from "framer-motion";
 
 /**
  * Props of the {@link FeaturedImage} component.
@@ -64,13 +65,17 @@ function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{duration: 0.1}}
     />
   );
 }
 
 export default connect(FeaturedImage);
 
-const SquareContainer = styled.div`
+const SquareContainer = styled(motion.div)`
   height: 0;
   width: 100%;
   padding-bottom: 100%;

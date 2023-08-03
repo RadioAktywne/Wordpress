@@ -5,6 +5,7 @@ import { Packages } from "../../../types";
 import { EventEntity } from "../../data";
 import Loading from "../loading";
 import useShows from "../../hooks/useShows";
+import { motion } from "framer-motion";
 
 /**
  * polish names of days
@@ -66,7 +67,12 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
 
   return (
     <Day isHome={onHome} isHovered={state.home.hovered.events}>
-      <div>
+      <motion.div
+        initial={onHome ? {x: 200, opacity: 0 } : {y: 20, opacity: 0}}
+        animate={onHome ? {x: 0, opacity: 1 } : {y: 0, opacity: 1}}
+        exit={onHome ? {x: 200, opacity: 0 } : {}}
+        transition={{ ease: "easeOut", duration: 0.4}}
+      >
         {onHome ? (
           <div
             onMouseEnter={() => (state.home.hovered.events = true)}
@@ -83,7 +89,7 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
         {sorted.map((value, index) => {
           return <EventListItem item={value} key={index} />;
         })}
-      </div>
+      </motion.div>
     </Day>
   );
 }
@@ -99,6 +105,7 @@ const Day = styled.div<DayProps>`
     ${({ isHome }) =>
       isHome &&
       "box-sizing: border-box;\
+      opacity: 0;\
       border: solid 7px #30241A;\
       height: 100%;\
       box-shadow: 7px -6px 0px 0px #7190BC;\

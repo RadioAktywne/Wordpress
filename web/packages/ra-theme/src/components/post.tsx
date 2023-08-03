@@ -9,6 +9,7 @@ import { PostTypeData, PostTypeEntity } from "@frontity/source/types";
 import { isPageEntity, isPostEntity } from "@frontity/source";
 import FeaturedImage from "./featured-image";
 import DefaultImage from "./default-image";
+import { motion } from "framer-motion";
 
 /**
  * Properties received by the `Post` component.
@@ -30,7 +31,11 @@ function Post({ data }: PostProps): JSX.Element {
 
   // Load the post, but only if the data is ready.
   return data.isReady ? (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <MainContent>
         <Title>
           <h1>{parse(post.title.rendered)}</h1>
@@ -63,7 +68,7 @@ function Post({ data }: PostProps): JSX.Element {
 
 export default connect(Post);
 
-const Container = styled.div`
+const Container = styled(motion.section)`
   max-width: 1140px;
   width: 100%;
   margin: 0 30px;

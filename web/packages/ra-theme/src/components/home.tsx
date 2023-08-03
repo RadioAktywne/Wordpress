@@ -8,6 +8,7 @@ import AlbumWidget from "./album-list/album-widget";
 import { useEffect } from "react";
 import { EventArchiveData } from "../data";
 import Loading from "./loading";
+import { motion } from "framer-motion";
 
 /**
  * Properties received by the `Home` component.
@@ -43,7 +44,11 @@ function Home({ data }: HomeProps): JSX.Element {
 
   // Load the page, but only if the data is ready.
   return data.isReady ? (
-    <BigContainer>
+    <BigContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Container>
         <Player />
         {eventsData.isReady ? (
@@ -77,7 +82,7 @@ const EventsLoadingContainer = styled.div`
   }
 `;
 
-const BigContainer = styled.div`
+const BigContainer = styled(motion.div)`
   padding-bottom: 50px;
   width: 100%;
   max-width: 1200px;

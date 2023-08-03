@@ -5,6 +5,7 @@ import Loading from "../loading";
 import Link from "../link";
 import { AlbumArchiveData } from "../../data";
 import AlbumListItem from "./album-list-item";
+import { motion } from "framer-motion";
 
 const RecordingWidget = () => {
   const { actions, state } = useConnect<Packages>();
@@ -32,7 +33,11 @@ const RecordingWidget = () => {
    * when albums are fetched
    */
   return (
-    <Container>
+    <Container
+      initial={{y: 300, opacity: 0 }}
+      animate={{y: 0, opacity: 1 }}
+      transition={{ ease: "easeOut", duration: 0.45}}
+    >
       <div>
         <Title>
           <Link link={state.configuration.posts.album.archivePath}>
@@ -49,7 +54,7 @@ const RecordingWidget = () => {
 
 export default connect(RecordingWidget);
 
-const Container = styled.section`
+const Container = styled(motion.div)`
   width: 33.33%;
   padding: 0;
   margin: 0;

@@ -3,6 +3,7 @@ import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
 import RecordingListPage from "./recording-list-page";
 import React, { useEffect } from "react";
+import { motion } from "framer-motion";
 
 /**
  * Props received by the {@link RecordingList} component.
@@ -76,7 +77,11 @@ function RecordingList({ data }: ListProps): JSX.Element {
   }
 
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div ref={contentRef}>
         <Title>
           <h1>Nagrania</h1>
@@ -92,7 +97,7 @@ function RecordingList({ data }: ListProps): JSX.Element {
 
 export default connect(RecordingList);
 
-const Container = styled.section`
+const Container = styled(motion.section)`
   width: 100%;
   max-width: 1200px;
   margin: 20px 0 0 0;

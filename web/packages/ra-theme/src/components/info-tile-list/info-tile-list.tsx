@@ -3,6 +3,7 @@ import { Packages } from "../../../types";
 import { InfoTileArchiveData, InfoTileEntity } from "../../data";
 import Loading from "../loading";
 import InfoTileListItem from "./info-tile-list-item";
+import { motion } from "framer-motion";
 
 /**
  * Props received by the {@link InfoTileList} component.
@@ -38,24 +39,48 @@ function InfoTileList({ data }: ListProps): JSX.Element {
   if (!data.isReady) return <Loading />;
 
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       {tiles.topleft && (
-        <TileContainer id="item-0">
+        <TileContainer 
+          id="item-0"
+          initial={{x: -300, opacity: 0 }}
+          animate={{x: 0, opacity: 1 }}
+          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+        >
           <InfoTileListItem item={tiles.topleft} />
         </TileContainer>
       )}
       {tiles.bottomleft && (
-        <TileContainer id="item-1">
+        <TileContainer 
+          id="item-1"
+          initial={{y: 300, opacity: 0 }}
+          animate={{y: 0, opacity: 1 }}
+          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+        >
           <InfoTileListItem item={tiles.bottomleft} />
         </TileContainer>
       )}
       {tiles.topright && (
-        <TileContainer id="item-2">
+        <TileContainer 
+          id="item-2"
+          initial={{y: -300, opacity: 0 }}
+          animate={{y: 0, opacity: 1 }}
+          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+        >
           <InfoTileListItem item={tiles.topright} />
         </TileContainer>
       )}
       {tiles.bottomright && (
-        <TileContainer id="item-3">
+        <TileContainer 
+          id="item-3"
+          initial={{x: 300, opacity: 0 }}
+          animate={{x: 0, opacity: 1 }}
+          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+        >
           <InfoTileListItem item={tiles.bottomright} />
         </TileContainer>
       )}
@@ -65,7 +90,7 @@ function InfoTileList({ data }: ListProps): JSX.Element {
 
 export default connect(InfoTileList);
 
-const Container = styled.section`
+const Container = styled(motion.section)`
   width: 1140px;
   margin: 0;
   padding: 20px;
@@ -146,6 +171,6 @@ const Container = styled.section`
   }
 `;
 
-const TileContainer = styled.div`
+const TileContainer = styled(motion.div)`
   width: 100%;
 `;

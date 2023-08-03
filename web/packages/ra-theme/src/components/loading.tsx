@@ -31,13 +31,13 @@ const scale = keyframes`
 export default function Loading(_props: LoadingProps): JSX.Element {
   return (
     <Container>
-      <div>
+      {/* <div>
         <div css={bar(1)} />
         <div css={bar(2)} />
         <div css={bar(3)} />
         <div css={bar(4)} />
         <div css={bar(5)} />
-      </div>
+      </div> */}
     </Container>
   );
 }

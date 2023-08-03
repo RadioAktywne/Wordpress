@@ -5,6 +5,8 @@ import { RecordingEntity } from "../../data";
 import Arrow from "../../img/icons/arrow.svg";
 import FeaturedAudio from "../featured-audio";
 import parse from "html-react-parser";
+import { motion } from "framer-motion";
+
 
 /**
  * The props of the {@link RecordingListItem} component.
@@ -49,35 +51,39 @@ function RecordingListItem({ item, number }: ItemProps): JSX.Element {
   }
 
   return (
-    <Container>
-      <Title
-        onClick={openRecording}
-        className={(shouldBeOpened() ? "hidden " : "") + ("hoverColor" + number)} 
+      <Container
+        initial={{x: -100, opacity: 0 }}
+        animate={{x: 0, opacity: 1 }}
+        transition={{ ease: "easeOut", duration: 0.2, delay: Math.random()/5 }}
       >
-        {parse(item.title.rendered)}
-      </Title>
+        <Title
+          onClick={openRecording}
+          className={(shouldBeOpened() ? "hidden " : "") + ("hoverColor" + number)} 
+        >
+          {parse(item.title.rendered)}
+        </Title>
 
-      <FeaturedAudio id={item.acf.file} />
+        <FeaturedAudio id={item.acf.file} />
 
-      <BackButton
-        onClick={() => {
-          if (item.acf.file !== state.players.recordings.openedRec)
-            openRecording();
-        }}
-      >
-        <Link link={item.link}>
-          <span className="showMore">Więcej...</span>
-          <img src={Arrow} alt="pokaż więcej" />
-        </Link>
-      </BackButton>
-    </Container>
+        <BackButton
+          onClick={() => {
+            if (item.acf.file !== state.players.recordings.openedRec)
+              openRecording();
+          }}
+        >
+          <Link link={item.link}>
+            <span className="showMore">Więcej...</span>
+            <img src={Arrow} alt="pokaż więcej" />
+          </Link>
+        </BackButton>
+      </Container>
   );
 }
 
 // Connect the RecordingListItem to gain access to `state` as a prop
 export default connect(RecordingListItem);
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   width: 100%;
   display: flex;
   justify-content: space-between;

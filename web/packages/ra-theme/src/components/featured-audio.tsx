@@ -6,6 +6,7 @@ import Pause from "../img/icons/pause-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
 import Mute from "../img/icons/speaker-white.svg";
 import SeekSlider from "./seek-slider";
+import { motion } from "framer-motion";
 
 /**
  * Formats time
@@ -112,6 +113,9 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
     <Container
       isAmp={state.frontity.mode === "amp"}
       className={shouldBeOpened() ? openRecording() : closeRecording()}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
       <Global
         styles={css`
@@ -149,7 +153,7 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
 
 export default connect(FeaturedAudio);
 
-const Container = styled.div<ContainerProps>`
+const Container = styled(motion.div)<ContainerProps>`
   width: 100%;
   min-height: 40px;
   display: flex;

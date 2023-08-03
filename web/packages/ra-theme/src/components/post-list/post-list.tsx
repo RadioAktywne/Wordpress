@@ -3,6 +3,7 @@ import { Packages } from "../../../types";
 import React, { useEffect } from "react";
 import { ArchiveData } from "@frontity/source/types";
 import PostListPage from "./post-list-page";
+import { motion } from "framer-motion";
 
 /**
  * Props received by the {@link PostList} component.
@@ -76,7 +77,11 @@ function PostList({ data }: ListProps): JSX.Element {
   }
 
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div ref={contentRef}>
         <Title>
           <h1>Publicystyka</h1>
@@ -92,7 +97,7 @@ function PostList({ data }: ListProps): JSX.Element {
 
 export default connect(PostList);
 
-const Container = styled.section`
+const Container = styled(motion.section)`
   width: 100%;
   max-width: 1200px;
   margin-left: auto;

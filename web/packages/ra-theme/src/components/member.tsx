@@ -8,6 +8,7 @@ import parse from "html-react-parser";
 import FeaturedImage from "./featured-image";
 import DefaultImage from "./default-image";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
+import { motion } from "framer-motion";
 
 /**
  * Properties received by the `Member` component.
@@ -30,7 +31,11 @@ function Member({ data }: MemberProps): JSX.Element {
   if (!data.isReady) return <Loading />;
 
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <MainContent>
         <Title>
           <h1>
@@ -60,7 +65,7 @@ function Member({ data }: MemberProps): JSX.Element {
 
 export default connect(Member);
 
-const Container = styled.div`
+const Container = styled(motion.section)`
   max-width: 1140px;
   width: 100%;
   margin: 0 30px;

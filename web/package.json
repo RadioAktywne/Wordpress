@@ -17,10 +17,11 @@
   "dependencies": {
     "@frontity/core": "^1.16.0",
     "@frontity/html2react": "^1.7.0",
-    "@radioaktywne/ra-theme": "./packages/ra-theme",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
+    "@radioaktywne/ra-theme": "./packages/ra-theme",
     "cross-env": "^7.0.3",
+    "framer-motion": "^4.1.17",
     "frontity": "^1.17.2",
     "html-react-parser": "^3.0.4",
     "react-player": "^2.11.0",

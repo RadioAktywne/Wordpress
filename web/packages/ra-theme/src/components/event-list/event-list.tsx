@@ -2,6 +2,7 @@ import { connect, styled, useConnect } from "frontity";
 import EventDay from "./event-day";
 import { Packages } from "../../../types";
 import { EventArchiveData, EventEntity } from "../../data";
+import { motion } from "framer-motion";
 
 /**
  * Props received by the {@link EventList} component.
@@ -37,7 +38,11 @@ function EventList({ data }: ListProps): JSX.Element {
   });
 
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Title>
         <h1>Ramówka</h1>
       </Title>
@@ -69,7 +74,7 @@ function EventList({ data }: ListProps): JSX.Element {
 
 export default connect(EventList);
 
-const Container = styled.section`
+const Container = styled(motion.section)`
   width: 100%;
   max-width: 1200px;
   margin: 20px 0 0 0;

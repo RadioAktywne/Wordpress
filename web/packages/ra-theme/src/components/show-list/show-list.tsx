@@ -3,6 +3,7 @@ import ShowListPage from "./show-list-page";
 import { Packages } from "../../../types";
 import { ShowArchiveData } from "../../data";
 import React, { useEffect } from "react";
+import { motion } from "framer-motion";
 
 /**
  * Props received by the {@link ShowList} component.
@@ -76,7 +77,11 @@ function ShowList({ data }: ListProps): JSX.Element {
   }
 
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div ref={contentRef}>
         <Title>
           <h1>Audycje</h1>
@@ -92,7 +97,7 @@ function ShowList({ data }: ListProps): JSX.Element {
 
 export default connect(ShowList);
 
-const Container = styled.section`
+const Container = styled(motion.section)`
   width: 100%;
   max-width: 1200px;
   margin: 20px 0 0 0;

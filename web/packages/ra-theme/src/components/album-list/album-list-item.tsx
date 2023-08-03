@@ -6,6 +6,7 @@ import FeaturedImage from "../featured-image";
 import DefaultImage from "../default-image";
 import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
 import parse from "html-react-parser";
+import { motion } from "framer-motion";
 
 /**
  * The props of the {@link AlbumListItem} component.
@@ -21,7 +22,11 @@ function AlbumListItem({ item }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   return (
-    <Container>
+    <Container
+      initial={{ scale: 0.5 }}
+      animate={{ scale: 1 }}
+      transition={{ type: "spring", duration: 0.4, delay: Math.random()/5 }}
+    >
       <article>
         <Link link={item.link}>
           <Cover>
@@ -70,7 +75,7 @@ const SongTitle = styled.h3`
   padding-bottom: 10px;
 `;
 
-const Container = styled.h1`
+const Container = styled(motion.h1)`
   width: 100%;
   height: 275px;
   margin: 0;

@@ -11,6 +11,7 @@ import { replacePath } from "../lib/utils";
 import FeaturedImage from "./featured-image";
 import DefaultImage from "./default-image";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
+import { motion } from "framer-motion";
 
 /**
  * Properties received by the `Show` component.
@@ -36,7 +37,11 @@ function Show({ data }: ShowProps): JSX.Element {
 
   // Load the post, but only if the data is ready.
   return data.isReady ? (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <MainContent>
         <Title>
           <h1>{show.acf.title}</h1>
@@ -96,7 +101,7 @@ function Show({ data }: ShowProps): JSX.Element {
 
 export default connect(Show);
 
-const Container = styled.div`
+const Container = styled(motion.section)`
   max-width: 1140px;
   width: 100%;
   margin: 0 30px;
