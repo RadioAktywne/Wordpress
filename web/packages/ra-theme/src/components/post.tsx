@@ -318,7 +318,7 @@ const Title = styled.div`
 const BackButton = styled.div`
   cursor: pointer;
   border-left: 2px solid #6aba9c;
-  background-color: #30241A;
+  background-color: #30241a;
   display: flex;
   align-items: center;
   justify-content: center;

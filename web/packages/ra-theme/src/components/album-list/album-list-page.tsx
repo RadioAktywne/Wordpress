@@ -41,7 +41,7 @@ function AlbumListPage({ data }: ListPageProps): JSX.Element {
       {data.items.map(({ type, id }) => {
         const item = state.source[type][id];
         // Render one AlbumListItem component for each one.
-        return <AlbumListItem key={item.id} item={item} />;
+        return <AlbumListItem key={item.id} item={item} onHome={false} />;
       })}
     </Container>
   );

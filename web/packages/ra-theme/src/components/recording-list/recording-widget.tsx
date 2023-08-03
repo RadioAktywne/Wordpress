@@ -54,7 +54,13 @@ const RecordingWidget = ({ length = 6 }) => {
         <div>
           {dataPost.items.slice(0, length).map(({ type, id }, number) => {
             const item = state.source[type][id];
-            return <RecordingListItem key={item.id} item={item} number={number%4}/>;
+            return (
+              <RecordingListItem
+                key={item.id}
+                item={item}
+                number={number % 4}
+              />
+            );
           })}
         </div>
       </div>

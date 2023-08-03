@@ -41,7 +41,9 @@ function RecordingListPage({ data }: ListPageProps): JSX.Element {
       {data.items.map(({ type, id }, number) => {
         const item = state.source[type][id];
         // Render one RecordingListItem component for each one.
-        return <RecordingListItem key={item.id} item={item} number={number%4}/>;
+        return (
+          <RecordingListItem key={item.id} item={item} number={number % 4} />
+        );
       })}
     </Container>
   );

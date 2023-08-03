@@ -68,10 +68,10 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
   return (
     <Day isHome={onHome} isHovered={state.home.hovered.events}>
       <motion.div
-        initial={onHome ? {x: 200, opacity: 0 } : {y: 20, opacity: 0}}
-        animate={onHome ? {x: 0, opacity: 1 } : {y: 0, opacity: 1}}
-        exit={onHome ? {x: 200, opacity: 0 } : {}}
-        transition={{ ease: "easeOut", duration: 0.4}}
+        initial={onHome ? { x: 200, opacity: 0 } : { y: 20, opacity: 0 }}
+        animate={onHome ? { x: 0, opacity: 1 } : { y: 0, opacity: 1 }}
+        exit={onHome ? { x: 200, opacity: 0 } : {}}
+        transition={{ ease: "easeOut", duration: 0.4 }}
       >
         {onHome ? (
           <div
@@ -111,7 +111,8 @@ const Day = styled.div<DayProps>`
       box-shadow: 7px -6px 0px 0px #7190BC;\
       -webkit-box-shadow: 7px -6px 0px 0px #7190BC;\
       -moz-box-shadow: 7px -6px 0px 0px #7190BC;"};
-    ${({ isHovered, isHome }) => isHovered && isHome && "border: solid 7px #6aba9c;"};
+    ${({ isHovered, isHome }) =>
+      isHovered && isHome && "border: solid 7px #6aba9c;"};
   }
 
   @media (max-width: 900px) {

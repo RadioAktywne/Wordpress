@@ -24,7 +24,7 @@ function ShowListItem({ item }: ItemProps): JSX.Element {
     <Container
       initial={{ scale: 0.5 }}
       animate={{ scale: 1 }}
-      transition={{ type: "spring", duration: 0.4, delay: Math.random()/5 }}
+      transition={{ type: "spring", duration: 0.4, delay: Math.random() / 5 }}
     >
       <article>
         <Link link={item.link}>

@@ -7,7 +7,6 @@ import FeaturedAudio from "../featured-audio";
 import parse from "html-react-parser";
 import { motion } from "framer-motion";
 
-
 /**
  * The props of the {@link RecordingListItem} component.
  */
@@ -16,7 +15,7 @@ interface ItemProps {
    * The recording that should be shown.
    */
   item: RecordingEntity;
-  number: Number
+  number: Number;
 }
 
 /**
@@ -51,32 +50,34 @@ function RecordingListItem({ item, number }: ItemProps): JSX.Element {
   }
 
   return (
-      <Container
-        initial={{x: -100, opacity: 0 }}
-        animate={{x: 0, opacity: 1 }}
-        transition={{ ease: "easeOut", duration: 0.2, delay: Math.random()/5 }}
+    <Container
+      initial={{ x: -100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ ease: "easeOut", duration: 0.2, delay: Math.random() / 5 }}
+    >
+      <Title
+        onClick={openRecording}
+        className={
+          (shouldBeOpened() ? "hidden " : "") + ("hoverColor" + number)
+        }
       >
-        <Title
-          onClick={openRecording}
-          className={(shouldBeOpened() ? "hidden " : "") + ("hoverColor" + number)} 
-        >
-          {parse(item.title.rendered)}
-        </Title>
+        {parse(item.title.rendered)}
+      </Title>
 
-        <FeaturedAudio id={item.acf.file} />
+      <FeaturedAudio id={item.acf.file} />
 
-        <BackButton
-          onClick={() => {
-            if (item.acf.file !== state.players.recordings.openedRec)
-              openRecording();
-          }}
-        >
-          <Link link={item.link}>
-            <span className="showMore">Więcej...</span>
-            <img src={Arrow} alt="pokaż więcej" />
-          </Link>
-        </BackButton>
-      </Container>
+      <BackButton
+        onClick={() => {
+          if (item.acf.file !== state.players.recordings.openedRec)
+            openRecording();
+        }}
+      >
+        <Link link={item.link}>
+          <span className="showMore">Więcej...</span>
+          <img src={Arrow} alt="pokaż więcej" />
+        </Link>
+      </BackButton>
+    </Container>
   );
 }
 
@@ -116,20 +117,20 @@ const Title = styled.div`
   }
 
   &.hoverColor0:hover {
-    background-color: #E85A57 !important;
+    background-color: #e85a57 !important;
   }
 
   &.hoverColor1:hover {
-    background-color: #FFF55A !important;
-    color: #30241A;
+    background-color: #fff55a !important;
+    color: #30241a;
   }
 
   &.hoverColor2:hover {
-    background-color: #6ABA9C !important;
+    background-color: #6aba9c !important;
   }
 
   &.hoverColor3:hover {
-    background-color: #7190BC !important;
+    background-color: #7190bc !important;
   }
 `;
 

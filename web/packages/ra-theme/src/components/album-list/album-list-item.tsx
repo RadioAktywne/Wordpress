@@ -12,20 +12,22 @@ import { motion } from "framer-motion";
  * The props of the {@link AlbumListItem} component.
  */
 interface ItemProps {
-  /**
-   * The album that should be shown.
-   */
   item: AlbumEntity;
+  onHome: boolean;
 }
 
-function AlbumListItem({ item }: ItemProps): JSX.Element {
+function AlbumListItem({ item, onHome }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
   return (
     <Container
-      initial={{ scale: 0.5 }}
-      animate={{ scale: 1 }}
-      transition={{ type: "spring", duration: 0.4, delay: Math.random()/5 }}
+      initial={onHome ? {} : { scale: 0.5 }}
+      animate={onHome ? {} : { scale: 1 }}
+      transition={
+        onHome
+          ? {}
+          : { type: "spring", duration: 0.4, delay: Math.random() / 5 }
+      }
     >
       <article>
         <Link link={item.link}>

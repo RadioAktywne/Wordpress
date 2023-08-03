@@ -45,41 +45,57 @@ function InfoTileList({ data }: ListProps): JSX.Element {
       exit={{ opacity: 0 }}
     >
       {tiles.topleft && (
-        <TileContainer 
+        <TileContainer
           id="item-0"
-          initial={{x: -300, opacity: 0 }}
-          animate={{x: 0, opacity: 1 }}
-          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+          initial={{ x: -300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{
+            ease: "easeOut",
+            duration: 0.4,
+            delay: Math.random() / 4,
+          }}
         >
           <InfoTileListItem item={tiles.topleft} />
         </TileContainer>
       )}
       {tiles.bottomleft && (
-        <TileContainer 
+        <TileContainer
           id="item-1"
-          initial={{y: 300, opacity: 0 }}
-          animate={{y: 0, opacity: 1 }}
-          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+          initial={{ y: 300, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            ease: "easeOut",
+            duration: 0.4,
+            delay: Math.random() / 4,
+          }}
         >
           <InfoTileListItem item={tiles.bottomleft} />
         </TileContainer>
       )}
       {tiles.topright && (
-        <TileContainer 
+        <TileContainer
           id="item-2"
-          initial={{y: -300, opacity: 0 }}
-          animate={{y: 0, opacity: 1 }}
-          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+          initial={{ y: -300, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            ease: "easeOut",
+            duration: 0.4,
+            delay: Math.random() / 4,
+          }}
         >
           <InfoTileListItem item={tiles.topright} />
         </TileContainer>
       )}
       {tiles.bottomright && (
-        <TileContainer 
+        <TileContainer
           id="item-3"
-          initial={{x: 300, opacity: 0 }}
-          animate={{x: 0, opacity: 1 }}
-          transition={{ ease: "easeOut", duration: 0.4, delay: Math.random()/4 }}
+          initial={{ x: 300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{
+            ease: "easeOut",
+            duration: 0.4,
+            delay: Math.random() / 4,
+          }}
         >
           <InfoTileListItem item={tiles.bottomright} />
         </TileContainer>

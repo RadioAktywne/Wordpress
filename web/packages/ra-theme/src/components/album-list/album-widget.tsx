@@ -34,9 +34,9 @@ const RecordingWidget = () => {
    */
   return (
     <Container
-      initial={{y: 300, opacity: 0 }}
-      animate={{y: 0, opacity: 1 }}
-      transition={{ ease: "easeOut", duration: 0.45}}
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ ease: "easeOut", duration: 0.45 }}
     >
       <div>
         <Title>
@@ -46,6 +46,7 @@ const RecordingWidget = () => {
         </Title>
         <AlbumListItem
           item={state.source[dataPost.items[0].type][dataPost.items[0].id]}
+          onHome={true}
         />
       </div>
     </Container>
