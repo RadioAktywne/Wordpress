@@ -18,6 +18,11 @@ RUN set -eux; \
         unzip \
 # mysql-client is required for wp db cli
         default-mysql-client \
+# image conversion libraries 
+		jpegoptim \
+		optipng \
+		webp \
+		libavif-bin \
     ; \
 	rm -rf /var/lib/apt/lists/*
 
@@ -156,7 +161,8 @@ RUN chmod +x ./scripts/download.sh
 
 # preload plugins
 RUN ./scripts/download.sh plugin disable-comments; \
-    ./scripts/download.sh plugin advanced-custom-fields
+    ./scripts/download.sh plugin advanced-custom-fields; \
+    ./scripts/download.sh plugin squidge
 
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh

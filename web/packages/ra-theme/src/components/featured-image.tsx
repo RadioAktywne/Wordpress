@@ -60,7 +60,7 @@ function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
   return (
     <SquareContainer
       style={{
-        background: "url(" + media.source_url + ")",
+        background: "url(" + media.source_url + ".webp)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
