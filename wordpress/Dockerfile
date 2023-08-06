@@ -22,7 +22,6 @@ RUN set -eux; \
 		jpegoptim \
 		optipng \
 		webp \
-		libavif-bin \
     ; \
 	rm -rf /var/lib/apt/lists/*
 
