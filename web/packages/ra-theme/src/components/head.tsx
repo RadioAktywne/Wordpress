@@ -16,6 +16,7 @@ import {
   isMemberArchive,
   isRecordingArchive,
   isShowArchive,
+  isSurveyArchive,
 } from "../data";
 
 /**
@@ -83,6 +84,10 @@ function Head({
 
     if (isRecordingArchive(data)) {
       return `Nagrania - ${state.frontity.title}`;
+    }
+
+    if (isSurveyArchive(data)) {
+      return `Ankiety - ${state.frontity.title}`;
     }
 
     if (isInfoTileArchive(data)) {

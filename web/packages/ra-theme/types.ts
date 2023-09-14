@@ -1,3 +1,8 @@
+import { AutoPrefetch } from "@frontity/components/link/types";
+import Html2React from "@frontity/html2react/types";
+import Router from "@frontity/router/types";
+import Source, { ArchiveData } from "@frontity/source/types";
+import WpSource from "@frontity/wp-source/types";
 import {
   Action,
   Derived,
@@ -5,18 +10,14 @@ import {
   MergePackages,
   Package,
 } from "frontity/types";
-import { AutoPrefetch } from "@frontity/components/link/types";
-import Html2React from "@frontity/html2react/types";
-import Router from "@frontity/router/types";
-import Source, { ArchiveData } from "@frontity/source/types";
+import { ElementType } from "react";
 import {
   AlbumArchiveData,
   MemberArchiveData,
   RecordingArchiveData,
   ShowArchiveData,
+  SurveyArchiveData,
 } from "./src/data";
-import { ElementType } from "react";
-import WpSource from "@frontity/wp-source/types";
 
 type PageConfiguration = {
   /**
@@ -152,6 +153,7 @@ interface RaThemeTypeScript extends Package {
         show: PostConfiguration;
         member: PostConfiguration;
         info: PostConfiguration;
+        survey: PostConfiguration;
       };
     };
 
@@ -249,6 +251,7 @@ interface RaThemeTypeScript extends Package {
       posts: ArchivePageData<ArchiveData>;
       members: ArchivePageData<MemberArchiveData>;
       shows: ArchivePageData<ShowArchiveData>;
+      surveys: ArchivePageData<SurveyArchiveData>;
     };
   };
 

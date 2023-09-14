@@ -107,6 +107,14 @@ const raThemeTypeScript: RaThemeTypeScript = {
           archivePath: "/radio/",
           perPage: 100,
         },
+        survey: {
+          endpoint: "survey",
+          wpPath: "/survey/",
+          wpArchivePath: "/surveys/",
+          path: "/ankieta/",
+          archivePath: "/ankiety/",
+          perPage: 16,
+        },
       },
     },
 
@@ -154,6 +162,12 @@ const raThemeTypeScript: RaThemeTypeScript = {
       },
 
       shows: {
+        nextPage: undefined,
+        pages: [],
+        ready: false,
+      },
+
+      surveys: {
         nextPage: undefined,
         pages: [],
         ready: false,

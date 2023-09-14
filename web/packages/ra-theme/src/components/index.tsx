@@ -16,6 +16,8 @@ import {
   isRecordingArchive,
   isShow,
   isShowArchive,
+  isSurvey,
+  isSurveyArchive,
 } from "../data";
 import Favicon from "../img/favicon.png";
 import Album from "./album";
@@ -37,6 +39,8 @@ import Recording from "./recording";
 import RecordingList from "./recording-list";
 import Show from "./show";
 import ShowList from "./show-list";
+import Survey from "./survey";
+import SurveyList from "./survey-list";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -158,6 +162,10 @@ function Theme() {
               when={isInfoTileArchive(data)}
               data={isInfoTileArchive(data) && data}
             />
+            <SurveyList
+              when={isSurveyArchive(data)}
+              data={isSurveyArchive(data) && data}
+            />
             <Member when={isMember(data)} data={isMember(data) && data} />
             <Show when={isShow(data)} data={isShow(data) && data} />
             <Album when={isAlbum(data)} data={isAlbum(data) && data} />
@@ -165,6 +173,7 @@ function Theme() {
               when={isRecording(data)}
               data={isRecording(data) && data}
             />
+            <Survey when={isSurvey(data)} data={isSurvey(data) && data} />
             <Post when={isPostType(data)} data={isPostType(data) && data} />
           </Switch>
         </Main>
