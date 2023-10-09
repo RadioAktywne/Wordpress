@@ -65,4 +65,8 @@ const Container = styled.div`
     flex-wrap: wrap;
     margin-right: 40px;
   }
+
+  @media (max-width: 400px) {
+    max-width: 130px;
+  }
 `;
