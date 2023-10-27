@@ -1,10 +1,7 @@
-import Image from "@frontity/components/image";
-import { connect, styled, useConnect } from "frontity";
-import { Packages } from "../../types";
-import React from "react";
+import { motion } from "framer-motion";
+import { connect, styled } from "frontity";
 import useMedia from "../hooks/useMedia";
 import Loading from "./loading";
-import { motion } from "framer-motion";
 
 /**
  * Props of the {@link FeaturedImage} component.
@@ -35,7 +32,6 @@ interface ContainerProps {
  * @returns A react component.
  */
 function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
-  const { state } = useConnect<Packages>();
   const {
     status,
     value: [media],
@@ -43,19 +39,6 @@ function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
 
   if (status === "pending") return <Loading />;
   if (!media) return null;
-
-  const srcset =
-    Object.values(media.media_details.sizes)
-      // Get the url and width of each size.
-      .map((item) => [item.source_url, item.width])
-      // Reduce them to a string with the format required by `srcset`.
-      .reduce(
-        (final, current, index, array) =>
-          final.concat(
-            `${current.join(" ")}w${index !== array.length - 1 ? ", " : ""}`
-          ),
-        ""
-      ) || null;
 
   return (
     <SquareContainer

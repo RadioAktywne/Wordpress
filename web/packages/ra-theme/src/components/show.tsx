@@ -1,17 +1,17 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
+import parse from "html-react-parser";
 import { Packages } from "../../types";
 import { ShowData, ShowEntity } from "../data";
 import useMembers from "../hooks/useMembers";
-import Back from "../img/icons/back.svg";
-import Loading from "./loading";
-import parse from "html-react-parser";
-import Link from "./link";
-import ShowEvents from "./show-events";
-import { replacePath } from "../lib/utils";
-import FeaturedImage from "./featured-image";
-import DefaultImage from "./default-image";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
-import { motion } from "framer-motion";
+import Back from "../img/icons/back.svg";
+import { replacePath } from "../lib/utils";
+import DefaultImage from "./default-image";
+import FeaturedImage from "./featured-image";
+import Link from "./link";
+import Loading from "./loading";
+import ShowEvents from "./show-events";
 
 /**
  * Properties received by the `Show` component.
@@ -47,7 +47,7 @@ function Show({ data }: ShowProps): JSX.Element {
           <h1>{show.acf.title}</h1>
 
           <BackButton>
-            <Link link={state.configuration.posts.show.archivePath}>
+            <Link link={state.config.posts.show.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>
@@ -87,7 +87,7 @@ function Show({ data }: ShowProps): JSX.Element {
             if (value != undefined)
               return (
                 <div key={id}>
-                  <Link link={replacePath(value.link, state.configuration)}>
+                  <Link link={replacePath(value.link, state.config)}>
                     {value.acf.name}
                   </Link>
                 </div>

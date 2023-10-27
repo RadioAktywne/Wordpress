@@ -1,11 +1,11 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
 import { useEffect } from "react";
 import { Packages } from "../../../types";
-import Loading from "../loading";
-import Link from "../link";
 import { AlbumArchiveData } from "../../data";
+import Link from "../link";
+import Loading from "../loading";
 import AlbumListItem from "./album-list-item";
-import { motion } from "framer-motion";
 
 const RecordingWidget = () => {
   const { actions, state } = useConnect<Packages>();
@@ -14,11 +14,11 @@ const RecordingWidget = () => {
    * fetch recordings
    */
   useEffect(() => {
-    actions.source.fetch(state.configuration.posts.album.archivePath);
+    actions.source.fetch(state.config.posts.album.archivePath);
   }, []);
 
   const dataPost = state.source.get(
-    state.configuration.posts.album.archivePath
+    state.config.posts.album.archivePath,
   ) as AlbumArchiveData;
 
   if (!dataPost.isReady) {
@@ -40,7 +40,7 @@ const RecordingWidget = () => {
     >
       <div>
         <Title>
-          <Link link={state.configuration.posts.album.archivePath}>
+          <Link link={state.config.posts.album.archivePath}>
             <h1>Płyta Tygodnia</h1>
           </Link>
         </Title>

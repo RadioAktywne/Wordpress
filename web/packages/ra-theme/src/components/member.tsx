@@ -1,14 +1,14 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
+import parse from "html-react-parser";
 import { Packages } from "../../types";
 import { MemberData, MemberEntity } from "../data";
-import Loading from "./loading";
-import Back from "../img/icons/back.svg";
-import Link from "./link";
-import parse from "html-react-parser";
-import FeaturedImage from "./featured-image";
-import DefaultImage from "./default-image";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
-import { motion } from "framer-motion";
+import Back from "../img/icons/back.svg";
+import DefaultImage from "./default-image";
+import FeaturedImage from "./featured-image";
+import Link from "./link";
+import Loading from "./loading";
 
 /**
  * Properties received by the `Member` component.
@@ -43,7 +43,7 @@ function Member({ data }: MemberProps): JSX.Element {
           </h1>
 
           <BackButton>
-            <Link link={state.configuration.posts.member.archivePath}>
+            <Link link={state.config.posts.member.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>

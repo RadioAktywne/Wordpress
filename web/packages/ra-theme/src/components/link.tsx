@@ -1,7 +1,8 @@
-import { connect, useConnect } from "frontity";
 import Link from "@frontity/components/link";
-import { Packages } from "../../types";
 import { LinkProps } from "@frontity/components/link/types";
+import { connect, useConnect } from "frontity";
+import { useCallback } from "react";
+import { Packages } from "../../types";
 
 /**
  * The ThemeLink component, which is a wrapper on top of the {@link Link}
@@ -25,11 +26,11 @@ function ThemeLink({ children, ...props }: LinkProps): JSX.Element {
   /**
    * A handler that closes the mobile menu when a link is clicked.
    */
-  const onClick = () => {
+  const onClick = useCallback(() => {
     if (state.theme.isMobileMenuOpen) {
       actions.theme.closeMobileMenu();
     }
-  };
+  }, [state.theme.isMobileMenuOpen]);
 
   return (
     <Link {...props} onClick={onClick}>

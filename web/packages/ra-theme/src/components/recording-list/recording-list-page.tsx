@@ -1,9 +1,9 @@
 import { connect, styled, useConnect } from "frontity";
-import RecordingListItem from "./recording-list-item";
+import { useEffect } from "react";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
-import { useEffect } from "react";
 import Loading from "../loading";
+import RecordingListItem from "./recording-list-item";
 
 /**
  * Props received by the {@link RecordingListPage} component.

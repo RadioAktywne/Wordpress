@@ -1,5 +1,5 @@
-import { styled } from "frontity";
 import { ErrorData } from "@frontity/source/types";
+import { styled } from "frontity";
 
 /**
  * The props of the {@link PageError} component.

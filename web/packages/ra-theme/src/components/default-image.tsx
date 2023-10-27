@@ -1,9 +1,4 @@
-import Image from "@frontity/components/image";
-import { connect, styled, useConnect } from "frontity";
-import { Packages } from "../../types";
-import React from "react";
-import useMedia from "../hooks/useMedia";
-import Loading from "./loading";
+import { connect, styled } from "frontity";
 import Module from "module";
 
 interface DefaultImageProps {
@@ -32,8 +27,6 @@ interface ContainerProps {
  * @returns A react component.
  */
 function DefaultImage({ img }: DefaultImageProps): JSX.Element {
-  const { state } = useConnect<Packages>();
-
   return (
     <SquareContainer
       style={{

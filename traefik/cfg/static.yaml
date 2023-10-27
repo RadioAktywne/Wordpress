@@ -1,0 +1,7 @@
+entryPoints:
+  http:
+    address: :20000
+
+providers:
+  file:
+    filename: ./cfg/dynamic.yaml

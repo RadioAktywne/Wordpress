@@ -1,14 +1,14 @@
-import { connect, styled, useConnect } from "frontity";
-import { Packages } from "../../types";
-import Player from "./player";
-import EventWidget from "./event-list/event-widget";
-import RecordingWidget from "./recording-list/recording-widget";
 import { HomeData, PageData, PageEntity } from "@frontity/source/types";
-import AlbumWidget from "./album-list/album-widget";
-import { useEffect } from "react";
-import { EventArchiveData } from "../data";
-import Loading from "./loading";
 import { motion } from "framer-motion";
+import { connect, styled, useConnect } from "frontity";
+import { useEffect } from "react";
+import { Packages } from "../../types";
+import { EventArchiveData } from "../data";
+import AlbumWidget from "./album-list/album-widget";
+import EventWidget from "./event-list/event-widget";
+import Loading from "./loading";
+import Player from "./player";
+import RecordingWidget from "./recording-list/recording-widget";
 
 /**
  * Properties received by the `Home` component.
@@ -29,18 +29,17 @@ function Home({ data }: HomeProps): JSX.Element {
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
-  /**
-   * fetch all events to pass them to EventsWidget
-   */
-  useEffect(() => {
-    actions.source.fetch(state.configuration.posts.event.archivePath);
-  }, []);
   const eventsData = state.source.get(
-    state.configuration.posts.event.archivePath
+    state.config.posts.event.archivePath,
   ) as EventArchiveData;
 
-  state.home.hovered.events = false;
-  state.home.hovered.recordings = false;
+  useEffect(() => {
+    state.home.hovered.events = false;
+    state.home.hovered.recordings = false;
+
+    // fetch all events to pass them to EventsWidget
+    actions.source.fetch(state.config.posts.event.archivePath);
+  }, []);
 
   // Load the page, but only if the data is ready.
   return data.isReady ? (
@@ -173,7 +172,9 @@ const Content = styled.div`
     border: 1px solid #ced4da;
     border-radius: 4px;
     outline-color: transparent;
-    transition: outline-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition:
+      outline-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
     margin: 8px 0 4px 0;
 
     &:focus {

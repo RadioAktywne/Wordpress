@@ -1,8 +1,8 @@
 import { connect, useConnect } from "frontity";
+import { useEffect } from "react";
 import { Packages } from "../../types";
 import { EventArchiveData, EventEntity } from "../data";
 import Loading from "./loading";
-import { useEffect } from "react";
 
 /**
  * Properties received by the `ShowEvents` component.
@@ -15,7 +15,7 @@ interface ShowEventsProps {
 /**
  * remove seconds from time notation
  */
-const cutSec = function (time) {
+const cutSec = (time: string) => {
   return time.substring(0, 5);
 };
 
@@ -26,78 +26,69 @@ const cutSec = function (time) {
 function ShowEvents({ live, showId }: ShowEventsProps): JSX.Element {
   const { state, actions } = useConnect<Packages>();
 
+  const eventsData = state.source.get(
+    state.config.posts.event.archivePath,
+  ) as EventArchiveData;
+
   /**
    * get list of events
    */
   useEffect(() => {
-    actions.source.fetch(state.configuration.posts.event.archivePath);
+    actions.source.fetch(state.config.posts.event.archivePath);
   }, []);
-  const eventsData = state.source.get(
-    state.configuration.posts.event.archivePath
-  ) as EventArchiveData;
 
-  /**
-   * check if and what time event happens for each day
-   */
-  let isDay = {
-    monday: undefined,
-    tuesday: undefined,
-    wednesday: undefined,
-    thursday: undefined,
-    friday: undefined,
-    saturday: undefined,
-    sunday: undefined,
-  };
-  if (eventsData.isReady) {
-    eventsData.items.map(({ type, id }) => {
+  const isDay = eventsData.items.reduce(
+    (acc, { type, id }) => {
       const item = state.source[type][id] as EventEntity;
       if (
         item.acf.show == showId &&
         (live == true ? item.acf.type == "live" : item.acf.type == "replay")
       )
-        isDay[item.acf.day] =
+        acc[item.acf.day] =
           cutSec(item.acf.start_time) + " do " + cutSec(item.acf.end_time);
-    });
-  }
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
 
   // Load events, but only if the data is ready.
   return eventsData.isReady ? (
     <>
-      {isDay.monday != undefined ? (
+      {isDay.monday && (
         <div>
           <span>Poniedziałki, od {isDay.monday}</span>
         </div>
-      ) : null}
-      {isDay.tuesday != undefined ? (
+      )}
+      {isDay.tuesday && (
         <div>
           <span>Wtorki, od {isDay.tuesday}</span>
         </div>
-      ) : null}
-      {isDay.wednesday != undefined ? (
+      )}
+      {isDay.wednesday && (
         <div>
           <span>Środy, od {isDay.wednesday}</span>
         </div>
-      ) : null}
-      {isDay.thursday != undefined ? (
+      )}
+      {isDay.thursday && (
         <div>
           <span>Czwartki, od {isDay.thursday}</span>
         </div>
-      ) : null}
-      {isDay.friday != undefined ? (
+      )}
+      {isDay.friday && (
         <div>
           <span>Piątki, od {isDay.friday}</span>
         </div>
-      ) : null}
-      {isDay.saturday != undefined ? (
+      )}
+      {isDay.saturday && (
         <div>
           <span>Soboty, od {isDay.saturday}</span>
         </div>
-      ) : null}
-      {isDay.sunday != undefined ? (
+      )}
+      {isDay.sunday && (
         <div>
           <span>Niedziele, od {isDay.sunday}</span>
         </div>
-      ) : null}
+      )}
     </>
   ) : (
     <Loading />

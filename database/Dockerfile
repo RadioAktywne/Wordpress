@@ -1,20 +1,18 @@
-ARG MYSQL_IMAGE_TAG=8.0.29-debian
+FROM mysql:8.0.29-debian
 
-FROM mysql:$MYSQL_IMAGE_TAG
+WORKDIR /app/
 
-WORKDIR /app
+COPY ./src/ ./src/
+RUN chmod +x ./src/start.sh
 
-COPY ./start.sh ./start.sh
-RUN chmod +x ./start.sh
-
-COPY ./config.cnf ./config.cnf
+COPY ./cfg/ ./cfg/
 
 ENV DATABASE_ROOT_PASSWORD=password \
-    DATABASE_NAME=database \
     DATABASE_USER=user \
-    DATABASE_PASSWORD=password
+    DATABASE_PASSWORD=password \
+    DATABASE_NAME=database
 
-EXPOSE 3306
+EXPOSE 20001
 
-ENTRYPOINT ["./start.sh"]
+ENTRYPOINT ["./src/start.sh"]
 CMD []

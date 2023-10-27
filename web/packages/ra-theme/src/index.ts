@@ -1,12 +1,12 @@
+import iframe from "@frontity/html2react/processors/iframe";
+import image from "@frontity/html2react/processors/image";
+import link from "@frontity/html2react/processors/link";
 import RaThemeTypeScript from "../types";
 import Theme from "./components";
-import image from "@frontity/html2react/processors/image";
-import iframe from "@frontity/html2react/processors/iframe";
-import link from "@frontity/html2react/processors/link";
-import postTypeArchiveHandler from "./handlers/postTypeArchive";
-import postTypeHandler from "./handlers/postType";
-import { ensurePath } from "./lib/utils";
 import pageHandler from "./handlers/page";
+import postTypeHandler from "./handlers/postType";
+import postTypeArchiveHandler from "./handlers/postTypeArchive";
+import { ensurePath } from "./lib/utils";
 
 const raThemeTypeScript: RaThemeTypeScript = {
   name: "@radioaktywne/ra-theme",
@@ -24,13 +24,12 @@ const raThemeTypeScript: RaThemeTypeScript = {
      */
     theme: {
       autoPrefetch: "in-view",
-      title: "Trwa ładowanie...",
       menu: ({ state }) => [
-        ["Radio Aktywne", state.configuration.pages.home.path],
-        ["Nagrania", state.configuration.posts.recording.archivePath],
-        ["Płyta Tygodnia", state.configuration.posts.album.archivePath],
-        ["Publicystyka", state.configuration.posts.post.archivePath],
-        ["Radio", state.configuration.posts.info.archivePath],
+        ["Radio Aktywne", state.config.pages.home.path],
+        ["Nagrania", state.config.posts.recording.archivePath],
+        ["Płyta Tygodnia", state.config.posts.album.archivePath],
+        ["Publicystyka", state.config.posts.post.archivePath],
+        ["Radio", state.config.posts.info.archivePath],
       ],
       isMobileMenuOpen: false,
     },
@@ -42,7 +41,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
       },
     },
 
-    configuration: {
+    config: {
       pages: {
         home: {
           path: "/",
@@ -114,18 +113,18 @@ const raThemeTypeScript: RaThemeTypeScript = {
     players: {
       main: {
         playing: false,
-        srcUrl: "",
         muted: false,
         volume: 1,
+        source: {
+          url: "https://listen.radioaktywne.pl:8443/ramp3",
+          title: null,
+        },
       },
       recordings: {
         playing: false,
-        srcUrl: "",
-        openedRec: -100,
         muted: false,
-        played: 0.0,
-        durations: [],
-        isOpened: [],
+        volume: 1,
+        source: null,
       },
     },
 
@@ -176,7 +175,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
       },
       init: ({ state, libraries }) => {
         // Add post handlers
-        for (const [key, data] of Object.entries(state.configuration.posts)) {
+        for (const [key, data] of Object.entries(state.config.posts)) {
           // @ts-ignore
           libraries.source.handlers.push({
             name: `${key} handler`,
@@ -204,7 +203,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
         }
 
         // Add post handlers
-        for (const [key, data] of Object.entries(state.configuration.pages)) {
+        for (const [key, data] of Object.entries(state.config.pages)) {
           // @ts-ignore
           libraries.source.handlers.push({
             name: `${key} page handler`,
@@ -219,28 +218,19 @@ const raThemeTypeScript: RaThemeTypeScript = {
     },
 
     players: {
-      main: {
-        playerPlay: ({ state }) => {
-          state.players.recordings.playing = false; //turn off recording
-          state.players.recordings.openedRec = -1;
-
-          state.players.main.playing = true; //turn on radio
-        },
-        playerStop: ({ state }) => {
-          state.players.main.playing = false; //turn off recording
-          state.players.main.srcUrl = "";
-        },
+      playMain: ({ state }) => {
+        state.players.recordings.playing = false; //turn off recording
+        state.players.main.playing = true; //turn on radio
       },
-      recordings: {
-        playerPlay: ({ state }) => {
-          state.players.main.playing = false; //turn off radio
-          state.players.main.srcUrl = "";
-
-          state.players.recordings.playing = true; //turn on recording
-        },
-        playerPause: ({ state }) => {
-          state.players.recordings.playing = false;
-        },
+      pauseMain: ({ state }) => {
+        state.players.main.playing = false; //turn off recording
+      },
+      playRecordings: ({ state }) => {
+        state.players.main.playing = false; //turn off radio
+        state.players.recordings.playing = true; //turn on recording
+      },
+      pauseRecordings: ({ state }) => {
+        state.players.recordings.playing = false;
       },
     },
   },

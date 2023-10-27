@@ -1,16 +1,8 @@
-import { connect, css, Global, styled, useConnect } from "frontity";
 import Switch from "@frontity/components/switch";
 import { isError, isHome, isPage, isPostArchive } from "@frontity/source";
-import Header from "./header";
-import Footer from "./footer";
-import MemberList from "./member-list";
-import ShowList from "./show-list";
-import EventList from "./event-list";
-import AlbumList from "./album-list";
-import RecordingList from "./recording-list";
-import InfoTileList from "./info-tile-list";
-import Loading from "./loading";
-import PageError from "./page-error";
+import { Global, connect, css, styled, useConnect } from "frontity";
+import React, { useCallback, useRef } from "react";
+import ReactPlayer from "react-player";
 import { Packages } from "../../types";
 import {
   isAlbum,
@@ -25,18 +17,26 @@ import {
   isShow,
   isShowArchive,
 } from "../data";
-import Member from "./member";
-import Show from "./show";
-import Album from "./album";
-import Recording from "./recording";
-import Head from "./head";
-import Page from "./page";
-import Home from "./home";
-import ReactPlayer from "react-player";
-import React from "react";
-import PostList from "./post-list/post-list";
-import Post from "./post";
 import Favicon from "../img/favicon.png";
+import Album from "./album";
+import AlbumList from "./album-list";
+import EventList from "./event-list";
+import Footer from "./footer";
+import Head from "./head";
+import Header from "./header";
+import Home from "./home";
+import InfoTileList from "./info-tile-list";
+import Loading from "./loading";
+import Member from "./member";
+import MemberList from "./member-list";
+import Page from "./page";
+import PageError from "./page-error";
+import Post from "./post";
+import PostList from "./post-list/post-list";
+import Recording from "./recording";
+import RecordingList from "./recording-list";
+import Show from "./show";
+import ShowList from "./show-list";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -50,27 +50,28 @@ function Theme() {
   const { route } = libraries.source.parse(state.router.link);
   const data = state.source.get(route);
 
-  /**
-   * Things related to playing audio (needs to be global)
-   */
   // handle for ReactPlayer object (right now undefined)
-  const recplayer = React.useRef<ReactPlayer>(null);
+  const recplayer = useRef<ReactPlayer>(null);
+
   // when recording is ready to be played, show its duration
-  const setDuration = function () {
-    state.players.recordings.durations[state.players.recordings.openedRec] =
-      recplayer.current.getDuration();
-  };
+  const onPlayerReady = useCallback(() => {
+    if (!state.players.recordings.source) return;
+    state.players.recordings.source.duration = recplayer.current.getDuration();
+  }, [state.players.recordings.source, recplayer.current]);
+
   // when recording progresses, update played (recording progress) state
-  const handleProgress = (played) => {
-    state.players.recordings.played = played;
-  };
+  const onPlayerProgress = useCallback(
+    (progress: number) => {
+      if (!state.players.recordings.source) return;
+      state.players.recordings.source.progress = progress;
+    },
+    [state.players.recordings.source],
+  );
+
   // when recording ends, change play icon to pause
-  const recordingEnded = function () {
-    actions.players.recordings.playerPause();
-  };
-  /**
-   * End of things related to playing audio (needs to be global)
-   */
+  const onPlayerEnd = useCallback(() => {
+    actions.players.pauseRecordings();
+  }, []);
 
   return (
     <>
@@ -94,37 +95,28 @@ function Theme() {
       {/* radio player needs to be on each page - thats why its here */}
       <ReactPlayer
         playing={state.players.main.playing}
-        url={state.players.main.srcUrl}
+        url={state.players.main.source?.url}
         volume={state.players.main.volume}
+        muted={state.players.main.muted}
         width={0}
         height={0}
-        config={{
-          file: {
-            forceAudio: true,
-          },
-        }}
+        config={{ file: { forceAudio: true } }}
       />
 
       {/* same with recording player */}
       <ReactPlayer
         playing={state.players.recordings.playing}
-        url={state.players.recordings.srcUrl}
+        url={state.players.recordings.source?.url}
         volume={1}
         muted={state.players.recordings.muted}
         width={0}
         height={0}
         ref={recplayer}
         progressInterval={50}
-        onReady={setDuration}
-        onProgress={(e) => {
-          handleProgress(e.played);
-        }}
-        onEnded={recordingEnded}
-        config={{
-          file: {
-            forceAudio: true,
-          },
-        }}
+        onReady={onPlayerReady}
+        onProgress={(e) => onPlayerProgress(e.played)}
+        onEnded={onPlayerEnd}
+        config={{ file: { forceAudio: true } }}
       />
 
       <PlayerContext.Provider value={recplayer}>

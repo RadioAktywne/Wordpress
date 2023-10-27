@@ -1,9 +1,9 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../../types";
 import { InfoTileArchiveData, InfoTileEntity } from "../../data";
 import Loading from "../loading";
 import InfoTileListItem from "./info-tile-list-item";
-import { motion } from "framer-motion";
 
 /**
  * Props received by the {@link InfoTileList} component.
@@ -31,10 +31,13 @@ interface ListProps {
 function InfoTileList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
-  const tiles = data.items.reduce((acc, item) => {
-    const tile = state.source[item.type]?.[item.id] as InfoTileEntity;
-    return { ...acc, [tile.acf.id]: tile };
-  }, {} as { [id: string]: InfoTileEntity });
+  const tiles = data.items.reduce(
+    (acc, item) => {
+      const tile = state.source[item.type]?.[item.id] as InfoTileEntity;
+      return { ...acc, [tile.acf.id]: tile };
+    },
+    {} as { [id: string]: InfoTileEntity },
+  );
 
   if (!data.isReady) return <Loading />;
 

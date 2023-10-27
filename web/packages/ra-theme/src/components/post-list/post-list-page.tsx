@@ -1,8 +1,8 @@
-import { connect, styled, useConnect } from "frontity";
-import { Packages } from "../../../types";
-import { useEffect } from "react";
-import Loading from "../loading";
 import { ArchiveData } from "@frontity/source/types";
+import { connect, styled, useConnect } from "frontity";
+import { useEffect } from "react";
+import { Packages } from "../../../types";
+import Loading from "../loading";
 import PostListItem from "./post-list-item";
 
 /**

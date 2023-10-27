@@ -1,8 +1,8 @@
 import { connect, styled, useConnect } from "frontity";
-import { Packages } from "../../../types";
 import { useEffect } from "react";
-import Loading from "../loading";
+import { Packages } from "../../../types";
 import { ShowArchiveData } from "../../data";
+import Loading from "../loading";
 import ShowListItem from "./show-list-item";
 
 /**

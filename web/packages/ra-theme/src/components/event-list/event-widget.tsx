@@ -13,7 +13,6 @@ const englishDays = {
   5: "friday",
   6: "saturday",
 };
-const day = new Date().getDay();
 
 interface ListProps {
   data: EventArchiveData;
@@ -21,6 +20,8 @@ interface ListProps {
 
 function EventWidget({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
+
+  const day = new Date().getDay();
 
   /**
    * choose just today's events

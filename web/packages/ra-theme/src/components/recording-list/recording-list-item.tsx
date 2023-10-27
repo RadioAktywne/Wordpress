@@ -1,11 +1,13 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
-import Link from "../link";
+import parse from "html-react-parser";
+import { useCallback } from "react";
 import { Packages } from "../../../types";
 import { RecordingEntity } from "../../data";
+import useMedia from "../../hooks/useMedia";
 import Arrow from "../../img/icons/arrow.svg";
 import FeaturedAudio from "../featured-audio";
-import parse from "html-react-parser";
-import { motion } from "framer-motion";
+import Link from "../link";
 
 /**
  * The props of the {@link RecordingListItem} component.
@@ -27,27 +29,25 @@ interface ItemProps {
  */
 function RecordingListItem({ item, number }: ItemProps): JSX.Element {
   const { state } = useConnect<Packages>();
+  const {
+    status,
+    value: [media],
+  } = useMedia([item.acf.file]);
 
-  /**
-   * this happens when user clicks on some recording from list:
-   *  stop current recording
-   *  open ours by saving its id in state
-   */
-  const openRecording = function () {
-    state.players.recordings.srcUrl = "";
-    state.players.recordings.playing = false;
-    state.players.recordings.played = 0;
+  const onOpen = useCallback(() => {
+    if (!media?.source_url) return;
 
-    state.players.recordings.openedRec = item.acf.file;
-  };
+    if (state.players.recordings.source?.recording === item.id) return;
 
-  /**
-   * check if a recording is open.
-   * @returns a boolean
-   */
-  function shouldBeOpened() {
-    return state.players.recordings.openedRec == item.acf.file;
-  }
+    state.players.recordings.source = {
+      url: media.source_url,
+      recording: item.id,
+      progress: 0,
+      duration: 0,
+    };
+  }, [item.id, media?.source_url]);
+
+  const isOpen = state.players.recordings.source?.recording === item.id;
 
   return (
     <Container
@@ -56,22 +56,15 @@ function RecordingListItem({ item, number }: ItemProps): JSX.Element {
       transition={{ ease: "easeOut", duration: 0.2, delay: Math.random() / 5 }}
     >
       <Title
-        onClick={openRecording}
-        className={
-          (shouldBeOpened() ? "hidden " : "") + ("hoverColor" + number)
-        }
+        onClick={onOpen}
+        className={(isOpen ? "hidden " : "") + ("hoverColor" + number)}
       >
         {parse(item.title.rendered)}
       </Title>
 
-      <FeaturedAudio id={item.acf.file} />
+      <FeaturedAudio loading={status === "pending"} id={item.id} />
 
-      <BackButton
-        onClick={() => {
-          if (item.acf.file !== state.players.recordings.openedRec)
-            openRecording();
-        }}
-      >
+      <BackButton>
         <Link link={item.link}>
           <span className="showMore">Więcej...</span>
           <img src={Arrow} alt="pokaż więcej" />

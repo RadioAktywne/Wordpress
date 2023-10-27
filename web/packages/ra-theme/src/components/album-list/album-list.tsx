@@ -1,9 +1,9 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
-import AlbumListPage from "./album-list-page";
+import React, { useEffect } from "react";
 import { Packages } from "../../../types";
 import { AlbumArchiveData } from "../../data";
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import AlbumListPage from "./album-list-page";
 
 /**
  * Props received by the {@link AlbumList} component.

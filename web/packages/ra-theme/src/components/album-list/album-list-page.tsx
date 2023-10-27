@@ -1,9 +1,9 @@
 import { connect, styled, useConnect } from "frontity";
-import AlbumListItem from "./album-list-item";
+import { useEffect } from "react";
 import { Packages } from "../../../types";
 import { AlbumArchiveData } from "../../data";
-import { useEffect } from "react";
 import Loading from "../loading";
+import AlbumListItem from "./album-list-item";
 
 /**
  * Props received by the {@link AlbumListPage} component.

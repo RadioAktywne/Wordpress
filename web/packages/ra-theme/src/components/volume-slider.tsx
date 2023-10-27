@@ -1,4 +1,5 @@
 import { connect, css, styled, useConnect } from "frontity";
+import { useCallback } from "react";
 import { Packages } from "../../types";
 
 /**
@@ -9,10 +10,9 @@ import { Packages } from "../../types";
 function VolumeSlider() {
   const { state } = useConnect<Packages>();
 
-  const setVolume = function (vol) {
+  const onVolumeChange = useCallback((vol: number) => {
     state.players.main.volume = vol;
-    state.players.main.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
-  };
+  }, []);
 
   return (
     <Container>
@@ -32,7 +32,7 @@ function VolumeSlider() {
         max="1" //cause player has such range
         step=".05"
         value={state.players.main.volume}
-        onChange={(e) => setVolume(parseFloat(e.target.value))}
+        onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
       />
     </Container>
   );

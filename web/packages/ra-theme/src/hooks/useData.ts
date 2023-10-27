@@ -1,13 +1,13 @@
 import { useConnect } from "frontity";
-import { Packages } from "../../types";
-import useAsync from "./useAsync";
 import React from "react";
+import { Packages } from "../../types";
 import populate from "../lib/populate";
+import useAsync from "./useAsync";
 
 export default function useData<T>(
   ids: number[],
   endpoint: string,
-  property: string
+  property: string,
 ) {
   const { state, libraries } = useConnect<Packages>();
   // @ts-ignore
@@ -22,7 +22,7 @@ export default function useData<T>(
       if (cancelled) return;
       await populate({ response, state });
     },
-    [endpoint, JSON.stringify(ids)]
+    [endpoint, JSON.stringify(ids)],
   );
 
   const { status, error } = useAsync(fetch);

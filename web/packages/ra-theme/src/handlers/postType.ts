@@ -2,8 +2,8 @@ import { ServerError } from "@frontity/source";
 import { PostTypeData } from "@frontity/source/types/data";
 import capitalize from "@frontity/wp-source/src/libraries/handlers/utils/capitalize";
 import { Handler } from "@frontity/wp-source/types";
-import populate from "../lib/populate";
 import { Packages } from "../../types";
+import populate from "../lib/populate";
 
 /**
  * The parameters for {@link postTypeHandler}.
@@ -96,7 +96,7 @@ const postTypeHandler =
       if (addedArray.length === 0) {
         throw new ServerError(
           `post type from endpoint "${finalEndpoint}" with slug "${slug}" not found`,
-          404
+          404,
         );
       }
     }

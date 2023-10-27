@@ -1,11 +1,11 @@
 import { connect, styled, useConnect } from "frontity";
-import Link from "../link";
+import parse from "html-react-parser";
+import { Packages } from "../../../types";
 import { EventEntity } from "../../data";
 import { replacePath } from "../../lib/utils";
-import { Packages } from "../../../types";
-import parse from "html-react-parser";
+import Link from "../link";
 
-const cutSec = function (time) {
+const cutSec = (time: string) => {
   return time.substring(0, 5);
 };
 
@@ -30,7 +30,7 @@ function EventListItem({ item }: ItemProps): JSX.Element {
    */
   const name = parse(
     item.title.rendered.replace(" (Live)", "").replace(" (Replay)", "") +
-      (item.acf.type === "live" ? "" : " - powtórka")
+      (item.acf.type === "live" ? "" : " - powtórka"),
   );
 
   /**
@@ -41,7 +41,7 @@ function EventListItem({ item }: ItemProps): JSX.Element {
 
   const show = state.source["show"][item.acf.show];
 
-  const showLink = replacePath(show.link, state.configuration);
+  const showLink = replacePath(show.link, state.config);
 
   return (
     <Container>

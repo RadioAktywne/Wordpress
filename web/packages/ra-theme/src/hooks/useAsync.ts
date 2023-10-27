@@ -3,7 +3,7 @@ import useCancellable, { CancelInfo } from "./useCancellable";
 
 export default function useAsync<T, E = string>(
   asyncFunction: (cancelInfo: CancelInfo) => Promise<T>,
-  immediate = true
+  immediate = true,
 ) {
   const [status, setStatus] = React.useState<
     "idle" | "pending" | "success" | "error"
@@ -29,7 +29,7 @@ export default function useAsync<T, E = string>(
           setStatus("error");
         });
     },
-    [asyncFunction]
+    [asyncFunction],
   );
   // Call execute if we want to fire it right away.
   // Otherwise, execute can be called later, such as
@@ -40,7 +40,7 @@ export default function useAsync<T, E = string>(
         execute(cancelInfo).then();
       }
     },
-    [execute, immediate]
+    [execute, immediate],
   );
   return { execute, status, value, error };
 }

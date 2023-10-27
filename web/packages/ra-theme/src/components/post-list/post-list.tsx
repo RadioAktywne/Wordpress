@@ -1,9 +1,9 @@
-import { connect, styled, useConnect } from "frontity";
-import { Packages } from "../../../types";
-import React, { useEffect } from "react";
 import { ArchiveData } from "@frontity/source/types";
-import PostListPage from "./post-list-page";
 import { motion } from "framer-motion";
+import { connect, styled, useConnect } from "frontity";
+import React, { useEffect } from "react";
+import { Packages } from "../../../types";
+import PostListPage from "./post-list-page";
 
 /**
  * Props received by the {@link PostList} component.

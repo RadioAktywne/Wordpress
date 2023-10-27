@@ -105,11 +105,6 @@ interface RaThemeTypeScript extends Package {
       autoPrefetch: AutoPrefetch;
 
       /**
-       * The title of current song
-       */
-      title: string;
-
-      /**
        * The menu of the theme. Expressed as an array of arrays that contain the
        * label in the first item and the link in the second.
        */
@@ -121,18 +116,34 @@ interface RaThemeTypeScript extends Package {
       isMobileMenuOpen: boolean;
     };
 
+    /**
+     * Homepage state.
+     */
     home: {
+      /**
+       * Hovered elements.
+       */
       hovered: {
         recordings: boolean;
         events: boolean;
       };
     };
 
-    configuration: {
+    /**
+     * Static configuration.
+     */
+    config: {
+      /**
+       * Pages configuration.
+       */
       pages: {
         home: PageConfiguration;
         about: PageConfiguration;
       };
+
+      /**
+       * Posts configuration.
+       */
       posts: {
         post: PostConfiguration;
         event: PostConfiguration;
@@ -144,24 +155,94 @@ interface RaThemeTypeScript extends Package {
       };
     };
 
+    /**
+     * State related to players.
+     */
     players: {
+      /**
+       * Main player state.
+       */
       main: {
-        playing: boolean; //is radio player playing
-        srcUrl: string; //src of current radio stream
-        muted: boolean; //is radio player muted
-        volume: number; //volume of radio player
+        /**
+         * Whether the player is playing or not.
+         */
+        playing: boolean;
+
+        /**
+         * Whether the player is muted or not.
+         */
+        muted: boolean;
+
+        /**
+         * The volume of the player.
+         */
+        volume: number;
+
+        /**
+         * Source data.
+         */
+        source?: {
+          /**
+           * The URL of the current stream.
+           */
+          url: string;
+
+          /**
+           * The title of the current track.
+           */
+          title?: string;
+        };
       };
+
+      /**
+       * Recordings player state.
+       */
       recordings: {
-        playing: boolean; //is recording player playing
-        srcUrl: string; //src of current recording
-        openedRec: number; //id of current recording
-        muted: boolean; //is recording player muted
-        played: number; //current progress
-        durations: object; //durations of recordings
-        isOpened: object; //boolean telling if a recording is opened
+        /**
+         * Whether the player is playing or not.
+         */
+        playing: boolean;
+
+        /**
+         * Whether the player is muted or not.
+         */
+        muted: boolean;
+
+        /**
+         * The volume of the player.
+         */
+        volume: number;
+
+        /**
+         * Source data.
+         */
+        source?: {
+          /**
+           * The URL of the current stream.
+           */
+          url: string;
+
+          /**
+           * The ID of the current recording.
+           */
+          recording: number;
+
+          /**
+           * How much of the recording has been played.
+           */
+          progress: number;
+
+          /**
+           * The duration of the recording in seconds.
+           */
+          duration: number;
+        };
       };
     };
 
+    /**
+     * State related to archives loading.
+     */
     archives: {
       recordings: ArchivePageData<RecordingArchiveData>;
       albums: ArchivePageData<AlbumArchiveData>;
@@ -195,15 +276,29 @@ interface RaThemeTypeScript extends Package {
       init: Action<Packages>;
     };
 
+    /**
+     * Actions related to players.
+     */
     players: {
-      main: {
-        playerPlay: Action<Packages>;
-        playerStop: Action<Packages>;
-      };
-      recordings: {
-        playerPlay: Action<Packages>;
-        playerPause: Action<Packages>;
-      };
+      /**
+       * Main player actions.
+       */
+      playMain: Action<Packages>;
+
+      /**
+       * Pauses the main player.
+       */
+      pauseMain: Action<Packages>;
+
+      /**
+       * Mutes the main player.
+       */
+      playRecordings: Action<Packages>;
+
+      /**
+       * Pauses the recordings player.
+       */
+      pauseRecordings: Action<Packages>;
     };
   };
 }

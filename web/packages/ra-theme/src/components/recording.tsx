@@ -1,14 +1,16 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
+import parse from "html-react-parser";
+import { useEffect } from "react";
 import { Packages } from "../../types";
 import { RecordingData, RecordingEntity } from "../data";
-import FeaturedAudio from "./featured-audio";
-import Back from "../img/icons/back.svg";
-import Link from "./link";
-import parse from "html-react-parser";
-import FeaturedImage from "./featured-image";
-import DefaultImage from "./default-image";
+import useMedia from "../hooks/useMedia";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
-import { motion } from "framer-motion";
+import Back from "../img/icons/back.svg";
+import DefaultImage from "./default-image";
+import FeaturedAudio from "./featured-audio";
+import FeaturedImage from "./featured-image";
+import Link from "./link";
 
 /**
  * Properties received by the `Recording` component.
@@ -28,21 +30,23 @@ function Recording({ data }: RecordingProps): JSX.Element {
   const { state } = useConnect<Packages>();
   const recording: RecordingEntity = state.source[data.type][data.id];
 
-  /**
-   * Open the recording if data is ready:
-   *  stop current recording
-   *  open ours by saving its id in state
-   */
-  if (
-    data.isReady &&
-    state.players.recordings.openedRec != recording.acf.file
-  ) {
-    state.players.recordings.srcUrl = "";
-    state.players.recordings.playing = false;
-    state.players.recordings.played = 0;
+  const {
+    status,
+    value: [media],
+  } = useMedia([recording.acf.file]);
 
-    state.players.recordings.openedRec = recording.acf.file;
-  }
+  useEffect(() => {
+    if (!media?.source_url) return;
+
+    if (state.players.recordings.source?.recording === recording.id) return;
+
+    state.players.recordings.source = {
+      url: media.source_url,
+      recording: recording.id,
+      progress: 0,
+      duration: 0,
+    };
+  }, [recording.id, media?.source_url]);
 
   // Load the post, but only if the data is ready.
   return data.isReady ? (
@@ -56,14 +60,14 @@ function Recording({ data }: RecordingProps): JSX.Element {
           <h1>{recording.acf.title}</h1>
 
           <BackButton>
-            <Link link={state.configuration.posts.recording.archivePath}>
+            <Link link={state.config.posts.recording.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>
         </Title>
 
         <AudioContainer>
-          {recording.acf.file && <FeaturedAudio id={recording.acf.file} />}
+          <FeaturedAudio id={recording.id} loading={status === "pending"} />
         </AudioContainer>
 
         <Description>{parse(recording.acf.description)}</Description>

@@ -1,6 +1,6 @@
 import { connect, css, styled, useConnect } from "frontity";
+import { useCallback, useContext } from "react";
 import { Packages } from "../../types";
-import React from "react";
 import { PlayerContext } from "./index";
 
 /**
@@ -13,15 +13,20 @@ function SeekSlider(): JSX.Element {
   /**
    * ReactPlayer handle from context - lets us to access ReactPlayer object
    */
-  const playerHandle = React.useContext(PlayerContext);
+  const playerHandle = useContext(PlayerContext);
 
   /**
    * when user uses seek slider
    */
-  const handleChange = function (newProgress) {
-    playerHandle.current.seekTo(newProgress); //seek
-    state.players.recordings.played = newProgress;
-  };
+  const onChange = useCallback(
+    (progress: number) => {
+      playerHandle.current.seekTo(progress); //seek
+
+      if (state.players.recordings.source)
+        state.players.recordings.source.progress = progress;
+    },
+    [playerHandle.current, state.players.recordings.source],
+  );
 
   return (
     <Container>
@@ -35,13 +40,13 @@ function SeekSlider(): JSX.Element {
           background: linear-gradient(
             90deg,
             #6aba9c 0%,
-            #6aba9c ${state.players.recordings.played * 100}%,
-            white ${state.players.recordings.played * 100}%,
+            #6aba9c ${(state.players.recordings.source?.progress || 0) * 100}%,
+            white ${(state.players.recordings.source?.progress || 0) * 100}%,
             white 100%
           );
         `}
-        onChange={(e) => handleChange(parseFloat(e.target.value))}
-        value={state.players.recordings.played}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
+        value={state.players.recordings.source?.progress || 0}
       />
     </Container>
   );

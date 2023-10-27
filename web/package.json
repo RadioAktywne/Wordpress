@@ -1,38 +1,20 @@
 {
   "name": "radioaktywne",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Radio Aktywne",
-  "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=6.0.0"
-  },
+  "version": "0.1.0",
   "scripts": {
     "build": "frontity build",
-    "serve": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity serve",
-    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 frontity dev",
-    "update": "ncu -u && npm i",
-    "format": "prettier --write ."
+    "serve": "frontity serve",
+    "dev": "frontity dev --port 20003",
+    "update": "ncu -u && npm i"
   },
   "dependencies": {
-    "@frontity/core": "^1.16.0",
-    "@frontity/html2react": "^1.7.0",
-    "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
     "@radioaktywne/ra-theme": "./packages/ra-theme",
-    "cross-env": "^7.0.3",
-    "framer-motion": "^4.1.17",
-    "frontity": "^1.17.2",
-    "html-react-parser": "^3.0.4",
-    "react-player": "^2.11.0",
-    "xhr2": "^0.2.1"
+    "frontity": "^1.17.2"
   },
   "devDependencies": {
-    "@types/node": "^18.11.17",
-    "@types/node-fetch": "^2.6.2",
-    "@types/react": "^18.0.26",
-    "npm-check-updates": "^16.6.2",
-    "prettier": "^2.8.1",
-    "typescript": "^4.9.4"
+    "@types/node": "^16.18.59",
+    "npm-check-updates": "^16.14.6",
+    "typescript": "^5.2.2"
   }
 }

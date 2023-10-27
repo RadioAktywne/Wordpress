@@ -5,6 +5,14 @@ import {
   PostTypeEntity,
 } from "@frontity/source/types";
 
+export function isArchive(data: Data): data is ArchiveData {
+  return (data as ArchiveData).isArchive === true;
+}
+
+export function isPostType(data: Data): data is PostTypeData {
+  return (data as PostTypeData).isPostType === true;
+}
+
 export interface MemberData extends PostTypeData {
   /**
    * Member type slug.
@@ -291,14 +299,6 @@ export interface RecordingEntity extends PostTypeEntity {
      */
     description?: string;
   };
-}
-
-export function isArchive(data: Data): data is ArchiveData {
-  return (data as ArchiveData).isArchive === true;
-}
-
-export function isPostType(data: Data): data is PostTypeData {
-  return (data as PostTypeData).isPostType === true;
 }
 
 export function isRecording(data: Data): data is RecordingData {

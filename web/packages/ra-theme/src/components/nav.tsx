@@ -1,7 +1,21 @@
+import { isHome, isPage, isPost, isPostArchive } from "@frontity/source";
 import { connect, styled, useConnect } from "frontity";
-import Link from "./link";
 import { Packages } from "../../types";
-import React from "react";
+import {
+  isAlbum,
+  isAlbumArchive,
+  isEvent,
+  isEventArchive,
+  isInfoTile,
+  isInfoTileArchive,
+  isMember,
+  isMemberArchive,
+  isRecording,
+  isRecordingArchive,
+  isShow,
+  isShowArchive,
+} from "../data";
+import Link from "./link";
 
 /**
  * The navigation component. It renders the navigation links.
@@ -11,52 +25,44 @@ import React from "react";
 function Nav(): JSX.Element {
   const { state } = useConnect<Packages>();
 
-  let afterOpened = false;
-
   return (
     <NavContainer>
       {state.theme.menu.map(([name, link], number) => {
-        // Check if the link matched the current page url.
         const data = state.source.get(state.router.link);
-        let isCurrentPage = data.route === link;
-        switch (link) {
-          case "/nagrania/":
-            if (data.route.includes("/nagranie/")) isCurrentPage = true;
-            break;
 
-          case "/plyty-tygodnia/":
-            if (data.route.includes("/plyta-tygodnia/")) isCurrentPage = true;
-            break;
+        const belongsToCurrentMenu = () => {
+          switch (link) {
+            case state.config.pages.home.path:
+              return isHome(data);
+            case state.config.posts.recording.archivePath:
+              return isRecording(data) || isRecordingArchive(data);
+            case state.config.posts.album.archivePath:
+              return isAlbum(data) || isAlbumArchive(data);
+            case state.config.posts.post.archivePath:
+              return isPost(data) || isPostArchive(data);
+            case state.config.posts.info.archivePath:
+              return (
+                isInfoTile(data) ||
+                isInfoTileArchive(data) ||
+                isMember(data) ||
+                isMemberArchive(data) ||
+                isShow(data) ||
+                isShowArchive(data) ||
+                isEvent(data) ||
+                isEventArchive(data) ||
+                (isPage(data) && !isHome(data))
+              );
+          }
+        };
 
-          case "/blog/":
-            if (data.route.includes("/blog/")) isCurrentPage = true;
-            break;
-
-          case "/radio/":
-            if (
-              data.route.includes("/ramowka/") ||
-              data.route.includes("/audycje/") ||
-              data.route.includes("/o-nas/") ||
-              data.route.includes("/audycja/") ||
-              data.route.includes("/radiowcy/") ||
-              data.route.includes("/radiowiec/")
-            )
-              isCurrentPage = true;
-            break;
-        }
-
-        if (isCurrentPage) afterOpened = true;
+        const highlight = belongsToCurrentMenu();
 
         return (
           <NavItem
-            key={name}
-            className={
-              isCurrentPage
-                ? "noBorder"
-                : "border" + ((number - (afterOpened ? 1 : 0)) % 4)
-            }
+            key={`${number} - ${name}`}
+            className={highlight ? "noBorder" : "border" + (number % 4)}
           >
-            <Link link={link} aria-current={isCurrentPage ? "page" : undefined}>
+            <Link link={link} aria-current={highlight ? "page" : undefined}>
               {name}
             </Link>
           </NavItem>
