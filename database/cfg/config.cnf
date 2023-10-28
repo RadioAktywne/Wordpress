@@ -1,3 +1,4 @@
 [mysqld]
+port=20001
 datadir=/app/data
 default_authentication_plugin=mysql_native_password

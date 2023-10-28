@@ -1,9 +1,9 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
-import MemberListPage from "./member-list-page";
+import React, { useEffect } from "react";
 import { Packages } from "../../../types";
 import { MemberArchiveData } from "../../data";
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import MemberListPage from "./member-list-page";
 
 /**
  * Props received by the {@link MemberList} component.

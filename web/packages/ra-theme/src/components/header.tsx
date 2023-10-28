@@ -1,9 +1,8 @@
-import { connect, styled, useConnect } from "frontity";
+import { connect, styled } from "frontity";
 import Link from "./link";
-import Nav from "./nav";
 import MobileMenu from "./menu";
+import Nav from "./nav";
 import Socials from "./socials";
-import { Packages } from "../../types";
 
 import Logo from "../img/ra-logo.svg";
 

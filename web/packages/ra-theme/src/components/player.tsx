@@ -2,11 +2,15 @@ import { connect, styled, useConnect } from "frontity";
 import { Packages } from "../../types";
 import VolumeSlider from "./volume-slider";
 
+import { useCallback, useEffect } from "react";
 import PlayerBackground from "../img/bg/studio.jpg";
-import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
+import Play from "../img/icons/play-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
 import Mute from "../img/icons/speaker-white.svg";
+import Loading from "./loading";
+
+import XMLHttpRequest from "xhr2";
 
 /**
  * Radio player.
@@ -16,44 +20,51 @@ import Mute from "../img/icons/speaker-white.svg";
 function Player() {
   const { state, actions } = useConnect<Packages>();
 
-  const playerToggle = function () {
-    if (state.players.main.playing)
-      actions.players.main.playerStop(); //erases src, so that it will stop, not only pause
-    else {
-      //now we set src back, but with some random number - it wont play from cache B)
-      state.players.main.srcUrl =
-        "https://listen.radioaktywne.pl:8443/ramp3?c=" + Date.now();
-      //and play the stream
-      actions.players.main.playerPlay();
+  const onPlay = useCallback(() => {
+    if (state.players.main.playing) {
+      actions.players.pauseMain();
+      return;
     }
-  };
 
-  const setVolume = function (vol) {
-    state.players.main.volume = vol;
-    state.players.main.muted = vol == 0 ? true : false; //if user set volume to 0, mute it
-  };
+    // we set url with some random number - it wont play from cache B)
+    const url = "https://listen.radioaktywne.pl:8443/ramp3?c=" + Date.now();
 
-  const muteToggle = function () {
-    setVolume(state.players.main.muted ? 1 : 0);
-  };
+    if (state.players.main.source) {
+      state.players.main.source.url = url;
+    } else {
+      state.players.main.source = {
+        url: url,
+        title: null,
+      };
+    }
 
-  //set rds autorefresh
-  const XMLHttpRequest = require("xhr2");
-  const xhr = new XMLHttpRequest();
-  const rds = function () {
+    //and play the stream
+    actions.players.playMain();
+  }, [state.players.main.playing]);
+
+  const onMute = useCallback(() => {
+    state.players.main.muted = !state.players.main.muted;
+  }, [state.players.main.muted]);
+
+  const rds = () => {
+    const xhr = new XMLHttpRequest();
+
     xhr.open(
       "GET",
       "https://listen.radioaktywne.pl:8443/status-json.xsl",
-      true
+      true,
     );
-    xhr.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        const title = JSON.parse(this.responseText).icestats.source[1].title;
+
+    xhr.onreadystatechange = () => {
+      if (!state.players.main.source) return;
+
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const title = JSON.parse(xhr.responseText).icestats.source[1].title;
 
         if (title.endsWith(" - Unknown"))
-          state.theme.title = title.replace(" - Unknown", "");
+          state.players.main.source.title = title.replace(" - Unknown", "");
         else if (title != "Unknown") {
-          state.theme.title = title;
+          state.players.main.source.title = title;
         }
       }
     };
@@ -61,10 +72,12 @@ function Player() {
     xhr.send();
   };
 
-  rds();
-  setInterval(function () {
+  useEffect(() => {
     rds();
-  }, 10000);
+    const interval = setInterval(rds, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -80,18 +93,24 @@ function Player() {
             </div>
             <PlayerContainer>
               <div id="ra-left">
-                <div id="ra-play" onClick={playerToggle}>
+                <div id="ra-play" onClick={onPlay}>
                   <img src={state.players.main.playing ? Pause : Play} />
                 </div>
 
                 <div id="rds">
-                  Teraz gramy:
-                  <div>{state.theme.title}</div>
+                  {state.players.main.source?.title ? (
+                    <>
+                      Teraz gramy:
+                      <div>{state.players.main.source.title}</div>
+                    </>
+                  ) : (
+                    <Loading />
+                  )}
                 </div>
               </div>
 
               <div id="ra-right">
-                <div id="ra-mute" onClick={muteToggle}>
+                <div id="ra-mute" onClick={onMute}>
                   <img src={state.players.main.muted ? Unmute : Mute} />
                 </div>
 

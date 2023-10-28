@@ -1,10 +1,10 @@
+import { ArchiveData } from "@frontity/source/types";
 import { connect, styled, useConnect } from "frontity";
 import { useEffect } from "react";
 import { Packages } from "../../../types";
-import Loading from "../loading";
 import Link from "../link";
+import Loading from "../loading";
 import RecordingListItem from "./recording-list-item";
-import { ArchiveData } from "@frontity/source/types";
 
 export type RecordingWidgetProps = {
   length?: number;
@@ -21,11 +21,11 @@ const RecordingWidget = ({ length = 6 }) => {
    * fetch recordings
    */
   useEffect(() => {
-    actions.source.fetch(state.configuration.posts.recording.archivePath);
+    actions.source.fetch(state.config.posts.recording.archivePath);
   }, []);
 
   const dataPost = state.source.get(
-    state.configuration.posts.recording.archivePath
+    state.config.posts.recording.archivePath,
   ) as ArchiveData;
 
   if (!dataPost.isReady)
@@ -46,7 +46,7 @@ const RecordingWidget = ({ length = 6 }) => {
           onMouseLeave={() => (state.home.hovered.recordings = false)}
           onClick={() => (state.home.hovered.recordings = false)}
         >
-          <Link link={state.configuration.posts.recording.archivePath}>
+          <Link link={state.config.posts.recording.archivePath}>
             <h1>Nagrania</h1>
           </Link>
         </Title>

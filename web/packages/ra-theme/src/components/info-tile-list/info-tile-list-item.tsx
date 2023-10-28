@@ -1,11 +1,11 @@
 import { connect, styled, useConnect } from "frontity";
-import Link from "../link";
 import { Packages } from "../../../types";
 import { InfoTileEntity } from "../../data";
-import { replacePath } from "../../lib/utils";
-import FeaturedImage from "../featured-image";
-import DefaultImage from "../default-image";
 import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
+import { replacePath } from "../../lib/utils";
+import DefaultImage from "../default-image";
+import FeaturedImage from "../featured-image";
+import Link from "../link";
 
 /**
  * The props of the {@link InfoTileListItem} component.
@@ -32,7 +32,7 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
   const link = item.acf.link.toString();
   const path = new URL(link).pathname;
 
-  const frontPath = replacePath(path, state.configuration);
+  const frontPath = replacePath(path, state.config);
 
   return (
     <article>

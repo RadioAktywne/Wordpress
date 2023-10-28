@@ -1,10 +1,9 @@
-import { connect, styled, useConnect } from "frontity";
-import Link from "./link";
-import { Packages } from "../../types";
-import YouTube from "../img/social/yt.svg";
-import Instagram from "../img/social/ig.svg";
+import { connect, styled } from "frontity";
 import Facebook from "../img/social/fb.svg";
+import Instagram from "../img/social/ig.svg";
 import Spotify from "../img/social/sf.svg";
+import YouTube from "../img/social/yt.svg";
+import Link from "./link";
 
 /**
  * Socials icons.

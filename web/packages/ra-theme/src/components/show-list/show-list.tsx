@@ -1,9 +1,9 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
-import ShowListPage from "./show-list-page";
+import React, { useEffect } from "react";
 import { Packages } from "../../../types";
 import { ShowArchiveData } from "../../data";
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import ShowListPage from "./show-list-page";
 
 /**
  * Props received by the {@link ShowList} component.

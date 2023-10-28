@@ -8,7 +8,7 @@ export type Callback = (cancelInfo: CancelInfo) => void | (() => any);
 
 export default function useCancellable(
   callback: Callback,
-  deps?: React.DependencyList
+  deps?: React.DependencyList,
 ) {
   React.useEffect(() => {
     let cancelInfo: CancelInfo = {

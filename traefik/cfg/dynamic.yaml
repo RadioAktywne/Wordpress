@@ -1,0 +1,17 @@
+http:
+  services:
+    web:
+      loadBalancer:
+        servers:
+          - url: "http://${TRAEFIK_WEB_HOST}:${TRAEFIK_WEB_PORT}"
+    wordpress:
+      loadBalancer:
+        servers:
+          - url: "http://${TRAEFIK_WORDPRESS_HOST}:${TRAEFIK_WORDPRESS_PORT}"
+  routers:
+    web:
+      rule: PathPrefix(`/`)
+      service: web
+    wordpress:
+      rule: PathPrefix(`/wp-`)
+      service: wordpress

@@ -32,7 +32,7 @@ define('DB_USER', envget('WORDPRESS_DATABASE_USER', 'user'));
 define('DB_PASSWORD', envget('WORDPRESS_DATABASE_PASSWORD', 'password'));
 
 /** Database hostname */
-define('DB_HOST', envget('WORDPRESS_DATABASE_HOST', 'database'));
+define('DB_HOST', envget('WORDPRESS_DATABASE_HOST', 'localhost') . ':' . envget('WORDPRESS_DATABASE_PORT', '20001'));
 
 /** Database charset to use in creating database tables. */
 define('DB_CHARSET', envget('WORDPRESS_DATABASE_CHARSET', 'utf8'));

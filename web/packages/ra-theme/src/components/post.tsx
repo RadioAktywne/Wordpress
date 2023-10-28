@@ -1,15 +1,15 @@
+import { isPageEntity, isPostEntity } from "@frontity/source";
+import { PostTypeData, PostTypeEntity } from "@frontity/source/types";
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
+import parse from "html-react-parser";
 import { Packages } from "../../types";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
-import Loading from "./loading";
 import Back from "../img/icons/back.svg";
-import Link from "./link";
-import parse from "html-react-parser";
-import { PostTypeData, PostTypeEntity } from "@frontity/source/types";
-import { isPageEntity, isPostEntity } from "@frontity/source";
-import FeaturedImage from "./featured-image";
 import DefaultImage from "./default-image";
-import { motion } from "framer-motion";
+import FeaturedImage from "./featured-image";
+import Link from "./link";
+import Loading from "./loading";
 
 /**
  * Properties received by the `Post` component.
@@ -26,7 +26,7 @@ interface PostProps {
  * @returns The {@link Album} element rendered.
  */
 function Post({ data }: PostProps): JSX.Element {
-  const { state, libraries } = useConnect<Packages>();
+  const { state } = useConnect<Packages>();
   const post: PostTypeEntity = state.source[data.type][data.id];
 
   // Load the post, but only if the data is ready.
@@ -41,7 +41,7 @@ function Post({ data }: PostProps): JSX.Element {
           <h1>{parse(post.title.rendered)}</h1>
 
           <BackButton>
-            <Link link={state.configuration.posts.post.archivePath}>
+            <Link link={state.config.posts.post.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>

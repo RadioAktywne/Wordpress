@@ -25,7 +25,7 @@ export function ensurePath(path: string): string {
  */
 export function replacePath(
   path: string,
-  config: RaThemeTypeScript["state"]["configuration"]
+  config: RaThemeTypeScript["state"]["config"],
 ): string {
   const normalizedPath = ensurePath(path);
 
@@ -57,26 +57,26 @@ export function replacePath(
       if (normalizedPath.replace(normalizedPostArchivePath, "") === "") {
         return normalizedPath.replace(
           normalizedPostArchivePath,
-          ensurePath(postMatch.archivePath)
+          ensurePath(postMatch.archivePath),
         );
       }
 
       return normalizedPath.replace(
         normalizedPostPath,
-        ensurePath(postMatch.path)
+        ensurePath(postMatch.path),
       );
     }
 
     if (normalizedPath.startsWith(normalizedPostPath)) {
       return normalizedPath.replace(
         normalizedPostPath,
-        ensurePath(postMatch.path)
+        ensurePath(postMatch.path),
       );
     }
 
     return normalizedPath.replace(
       normalizedPostArchivePath,
-      ensurePath(postMatch.archivePath)
+      ensurePath(postMatch.archivePath),
     );
   }
 

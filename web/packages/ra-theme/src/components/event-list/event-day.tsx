@@ -1,11 +1,11 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
-import EventListItem from "./event-list-item";
-import Link from "../link";
 import { Packages } from "../../../types";
 import { EventEntity } from "../../data";
-import Loading from "../loading";
 import useShows from "../../hooks/useShows";
-import { motion } from "framer-motion";
+import Link from "../link";
+import Loading from "../loading";
+import EventListItem from "./event-list-item";
 
 /**
  * polish names of days
@@ -26,7 +26,7 @@ const daysNames = {
  * @param b - event b
  * @returns boolean
  */
-const isEarlier = function (a, b) {
+const isEarlier = (a: EventEntity, b: EventEntity) => {
   return parseInt(a.acf.start_time.substring(0, 2)) <
     parseInt(b.acf.start_time.substring(0, 2)) ||
     (parseInt(a.acf.start_time.substring(0, 2)) ==
@@ -79,7 +79,7 @@ function EventDay({ data, onHome, day }: ListProps): JSX.Element {
             onMouseLeave={() => (state.home.hovered.events = false)}
             onClick={() => (state.home.hovered.events = false)}
           >
-            <Link link={state.configuration.posts.event.archivePath}>
+            <Link link={state.config.posts.event.archivePath}>
               <h2 className="">RAmówka na dziś</h2>
             </Link>
           </div>

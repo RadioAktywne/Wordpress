@@ -1,11 +1,11 @@
 import { connect, styled, useConnect } from "frontity";
 import Link from "./link";
 
+import { Packages } from "../../types";
+import Arrow from "../img/icons/arrow.svg";
 import FocusLogo from "../img/logos/focus.png";
 import SSPWLogo from "../img/logos/sspw.png";
 import TVPWsLogo from "../img/logos/tvpw.png";
-import Arrow from "../img/icons/arrow.svg";
-import { Packages } from "../../types";
 
 /**
  * The footer of the site, logo, socials and the nav bar.
@@ -19,10 +19,7 @@ function Footer() {
   return (
     <>
       <Container>
-        <Link
-          link={state.configuration.posts.info.archivePath}
-          id="contactLink"
-        >
+        <Link link={state.config.posts.info.archivePath} id="contactLink">
           kontakt
           <img src={Arrow} alt="kontakt" />
         </Link>

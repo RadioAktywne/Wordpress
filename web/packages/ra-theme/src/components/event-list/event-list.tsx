@@ -1,8 +1,8 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
-import EventDay from "./event-day";
 import { Packages } from "../../../types";
 import { EventArchiveData, EventEntity } from "../../data";
-import { motion } from "framer-motion";
+import EventDay from "./event-day";
 
 /**
  * Props received by the {@link EventList} component.
@@ -22,20 +22,24 @@ interface ListProps {
 function EventList({ data }: ListProps): JSX.Element {
   const { state } = useConnect<Packages>();
 
-  const eventsPerDay = {
-    monday: [],
-    tuesday: [],
-    wednesday: [],
-    thursday: [],
-    friday: [],
-    saturday: [],
-    sunday: [],
-  };
-
-  data.items.map(({ type, id }) => {
-    const item = state.source[type][id] as EventEntity;
-    eventsPerDay[item.acf.day].push(item);
-  });
+  const eventsPerDay = data.items.reduce(
+    (acc, { type, id }) => {
+      const item = state.source[type][id] as EventEntity;
+      const day = item.acf.day;
+      if (!acc[day]) acc[day] = [];
+      acc[day].push(item);
+      return acc;
+    },
+    {
+      monday: [],
+      tuesday: [],
+      wednesday: [],
+      thursday: [],
+      friday: [],
+      saturday: [],
+      sunday: [],
+    },
+  );
 
   return (
     <Container

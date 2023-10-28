@@ -1,14 +1,14 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
+import parse from "html-react-parser";
 import { Packages } from "../../types";
 import { AlbumData, AlbumEntity } from "../data";
-import Loading from "./loading";
-import Back from "../img/icons/back.svg";
-import Link from "./link";
-import parse from "html-react-parser";
-import FeaturedImage from "./featured-image";
-import DefaultImage from "./default-image";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
-import { motion } from "framer-motion";
+import Back from "../img/icons/back.svg";
+import DefaultImage from "./default-image";
+import FeaturedImage from "./featured-image";
+import Link from "./link";
+import Loading from "./loading";
 
 /**
  * Properties received by the `Album` component.
@@ -25,7 +25,7 @@ interface AlbumProps {
  * @returns The {@link Album} element rendered.
  */
 function Album({ data }: AlbumProps): JSX.Element {
-  const { state, libraries } = useConnect<Packages>();
+  const { state } = useConnect<Packages>();
   const album: AlbumEntity = state.source[data.type][data.id];
 
   // Load the post, but only if the data is ready.
@@ -42,7 +42,7 @@ function Album({ data }: AlbumProps): JSX.Element {
           </h1>
 
           <BackButton>
-            <Link link={state.configuration.posts.album.archivePath}>
+            <Link link={state.config.posts.album.archivePath}>
               <img src={Back} alt="cofnij" />
             </Link>
           </BackButton>

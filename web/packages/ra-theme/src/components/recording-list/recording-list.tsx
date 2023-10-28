@@ -1,9 +1,9 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
+import React, { useEffect } from "react";
 import { Packages } from "../../../types";
 import { RecordingArchiveData } from "../../data";
 import RecordingListPage from "./recording-list-page";
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
 
 /**
  * Props received by the {@link RecordingList} component.

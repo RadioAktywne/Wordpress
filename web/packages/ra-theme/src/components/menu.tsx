@@ -1,8 +1,8 @@
 import { connect, Global, styled, useConnect } from "frontity";
-import { CloseIcon, HamburgerIcon } from "./menu-icon";
-import MenuModal from "./menu-modal";
 import { Packages } from "../../types";
 import AmpHead from "./amp-head";
+import { CloseIcon, HamburgerIcon } from "./menu-icon";
+import MenuModal from "./menu-modal";
 
 /**
  * The menu that should be displayed on mobile devices displaying links to
@@ -14,6 +14,7 @@ import AmpHead from "./amp-head";
 function MobileMenu() {
   const { state, actions } = useConnect<Packages>();
   const { menu, isMobileMenuOpen } = state.theme;
+
   if (menu?.length === 0) return null;
 
   return state.frontity.mode === "amp" ? (

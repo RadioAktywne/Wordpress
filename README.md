@@ -1,4 +1,4 @@
-# Wordpress
+# website
 
 RadioAktywne website
 
@@ -10,14 +10,8 @@ Run from top directory:
 docker compose up
 ```
 
-By default, website is at [localhost](http://localhost),
-while the admin panel is at [localhost/wp-admin](http://localhost/wp-admin).
-
-You might need to use node 16.15.1
-
-```sh
-nvm use 16.15.1
-```
+By default, website is at [`localhost:20000`](http://localhost:20000),
+while the admin panel is at [`localhost:20000/wp-admin`](http://localhost:20000/wp-admin).
 
 ## Components
 
@@ -33,7 +27,6 @@ we just need to have it running.
 However, you can configure the database behavior with configuration files.
 
 You can find everything related to the database in `database` directory.
-It's available on [localhost:3306](http://localhost:3306) by default.
 
 ### WordPress
 
@@ -44,7 +37,7 @@ At first launch, you need to configure it by going to the admin panel.
 
 You can find everything related to WordPress in `wordpress` directory.
 WordPress admin panel is available
-on [localhost/wp-admin](http://localhost/wp-admin) by
+on [`localhost:20000/wp-admin`](http://localhost:20000/wp-admin) by
 default.
 
 ### Web
@@ -56,4 +49,4 @@ It means that you can use anything that is available in React
 to make your website look however you like.
 
 You can find everything related to the website in `web` directory.
-It's available on [localhost](http://localhost) by default.
+It's available on [`localhost:20000`](http://localhost:20000) by default.

@@ -1,10 +1,10 @@
-import { normalize } from "normalizr";
-import { transformLink } from "@frontity/wp-source/src/libraries/transform-link";
-import * as schemas from "@frontity/wp-source/src/libraries/schemas";
-import { replacePath } from "./utils";
-import { State } from "frontity/types";
 import { DataEntity } from "@frontity/source/types";
+import * as schemas from "@frontity/wp-source/src/libraries/schemas";
+import { transformLink } from "@frontity/wp-source/src/libraries/transform-link";
+import { State } from "frontity/types";
+import { normalize } from "normalizr";
 import { Packages } from "../../types";
+import { replacePath } from "./utils";
 
 export type PopulateParams = {
   state: State<Packages>;
@@ -44,7 +44,7 @@ export default async function populate({
   const isList = Array.isArray(json);
   const { entities, result } = normalize(
     json,
-    isList ? schemas.list : schemas.entity
+    isList ? schemas.list : schemas.entity,
   );
 
   // Add entities to source
@@ -54,7 +54,7 @@ export default async function populate({
       // to match the Frontity server location.
       if (entity.link) {
         transformLink({ entity, state, subdirectory });
-        entity.link = replacePath(entity.link, state.configuration);
+        entity.link = replacePath(entity.link, state.config);
       }
 
       // Get or init data using the transformed link

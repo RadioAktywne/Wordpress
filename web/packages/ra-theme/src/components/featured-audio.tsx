@@ -1,19 +1,19 @@
+import { motion } from "framer-motion";
 import { connect, css, Global, styled, useConnect } from "frontity";
+import { useCallback } from "react";
 import { Packages } from "../../types";
-import useMedia from "../hooks/useMedia";
-import Play from "../img/icons/play-white.svg";
 import Pause from "../img/icons/pause-white.svg";
+import Play from "../img/icons/play-white.svg";
 import Unmute from "../img/icons/speaker-muted-white.svg";
 import Mute from "../img/icons/speaker-white.svg";
 import SeekSlider from "./seek-slider";
-import { motion } from "framer-motion";
 
 /**
  * Formats time
  * @param total - integer: total seconds
  * @returns string: "minutes:seconds"
  */
-const secsToTime = function (total) {
+const secsToTime = (total: number) => {
   const minutes =
     Math.floor(total / 60) >= 10
       ? Math.floor(total / 60)
@@ -30,6 +30,7 @@ const secsToTime = function (total) {
  */
 interface FeaturedAudioProps {
   id: number;
+  loading?: boolean;
 }
 
 /**
@@ -45,74 +46,45 @@ interface ContainerProps {
  * featured audio.
  * @returns A react component.
  */
-function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
+function FeaturedAudio({ id, loading }: FeaturedAudioProps): JSX.Element {
   const { state, actions } = useConnect<Packages>();
-  const {
-    status,
-    value: [media],
-  } = useMedia([id]);
 
-  /**
-   * ReactPlayer handle from context - lets us to access ReactPlayer object
-   */
+  const getProgressString = () => {
+    if (!state.players.recordings.source)
+      return secsToTime(0) + " / " + secsToTime(0);
 
-  /**
-   * wait until media is loaded
-   * if it doesnt exist, return null
-   */
-  if (status === "pending")
-    return <LoadingContainer>{/* <Loading /> */}</LoadingContainer>;
-  if (!media) return null;
+    const progress = state.players.recordings.source.progress;
+    const duration = state.players.recordings.source.duration;
+    const progressSeconds = Math.floor(duration * progress);
+    const durationSeconds = Math.floor(duration);
 
-  /**
-   * those functions help us to listen events of opening and closing recordings.
-   * @returns .hidden class name if a recording is being closed
-   */
-  function openRecording() {
-    if (state.players.recordings.isOpened[id] !== true) {
-      state.players.recordings.isOpened[id] = true;
-      state.players.recordings.srcUrl = media.source_url;
-    }
-
-    return "";
-  }
-
-  function closeRecording() {
-    if (state.players.recordings.isOpened[id] == true) {
-      state.players.recordings.isOpened[id] = false;
-    }
-
-    return "hidden";
-  }
-
-  /**
-   * check if a recording should be opened.
-   * @returns a boolean
-   */
-  function shouldBeOpened() {
-    return state.players.recordings.openedRec == id;
-  }
+    return secsToTime(progressSeconds) + " / " + secsToTime(durationSeconds);
+  };
 
   /**
    * play/pause recording
    */
-  const recToggle = function () {
+  const onPlay = useCallback(() => {
     state.players.recordings.playing
-      ? actions.players.recordings.playerPause()
-      : actions.players.recordings.playerPlay();
-  };
+      ? actions.players.pauseRecordings()
+      : actions.players.playRecordings();
+  }, [state.players.recordings.playing]);
 
   /**
    * mute/unmute recording
    */
-  const recMuteToggle = function () {
+  const onMute = useCallback(() => {
     state.players.recordings.muted = !state.players.recordings.muted;
-  };
+  }, [state.players.recordings.muted]);
+
+  const isOpen = state.players.recordings.source?.recording === id;
+
+  if (loading) return <LoadingContainer />;
 
   return (
     <Container
       isAmp={state.frontity.mode === "amp"}
-      className={shouldBeOpened() ? openRecording() : closeRecording()}
+      className={isOpen ? "" : "hidden"}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -125,26 +97,15 @@ function FeaturedAudio({ id }: FeaturedAudioProps): JSX.Element {
         `}
       />
 
-      <div className="rec-play" onClick={recToggle}>
+      <div className="rec-play" onClick={onPlay}>
         <img src={state.players.recordings.playing ? Pause : Play} />
       </div>
 
-      <div className="progress-text">
-        {state.players.recordings.durations[id] !== undefined
-          ? secsToTime(
-              Math.floor(
-                state.players.recordings.durations[id] *
-                  state.players.recordings.played
-              )
-            ) +
-            " / " +
-            secsToTime(Math.floor(state.players.recordings.durations[id]))
-          : "00:00 / 00:00"}
-      </div>
+      <div className="progress-text">{getProgressString()}</div>
 
       <SeekSlider />
 
-      <div className="rec-mute" onClick={recMuteToggle}>
+      <div className="rec-mute" onClick={onMute}>
         <img src={state.players.recordings.muted ? Unmute : Mute} />
       </div>
     </Container>

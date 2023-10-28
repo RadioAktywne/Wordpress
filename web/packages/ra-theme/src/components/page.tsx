@@ -1,9 +1,9 @@
-import { connect, styled, useConnect } from "frontity";
-import { Packages } from "../../types";
-import { PageData, PageEntity } from "@frontity/source/types";
-import Loading from "./loading";
 import { isPageEntity } from "@frontity/source";
+import { PageData, PageEntity } from "@frontity/source/types";
+import { connect, styled, useConnect } from "frontity";
 import parse from "html-react-parser";
+import { Packages } from "../../types";
+import Loading from "./loading";
 
 /**
  * Properties received by the `Page` component.
@@ -35,7 +35,7 @@ interface PageProps {
  * @returns The {@link Page} element rendered.
  */
 function Page({ data }: PageProps): JSX.Element {
-  const { state, libraries } = useConnect<Packages>();
+  const { state } = useConnect<Packages>();
   // Get the data of the page.
   const page: PageEntity = state.source[data.type][data.id];
 

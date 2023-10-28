@@ -1,12 +1,11 @@
-import { connect, styled, useConnect } from "frontity";
-import Link from "../link";
-import { Packages } from "../../../types";
 import { PostEntity } from "@frontity/source/types";
+import { motion } from "framer-motion";
+import { connect, styled } from "frontity";
+import parse from "html-react-parser";
+import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
 import DefaultImage from "../default-image";
 import FeaturedImage from "../featured-image";
-import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
-import parse from "html-react-parser";
-import { motion } from "framer-motion";
+import Link from "../link";
 
 /**
  * The props of the {@link AlbumListItem} component.
@@ -19,8 +18,6 @@ interface ItemProps {
 }
 
 function AlbumListItem({ item }: ItemProps): JSX.Element {
-  const {} = useConnect<Packages>();
-
   return (
     <Container
       initial={{ scale: 0.5 }}

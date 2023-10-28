@@ -1,7 +1,7 @@
 import { connect, styled, useConnect } from "frontity";
+import { useEffect } from "react";
 import { Packages } from "../../../types";
 import { MemberArchiveData } from "../../data";
-import { useEffect } from "react";
 import Loading from "../loading";
 import MemberListItem from "./member-list-item";
 

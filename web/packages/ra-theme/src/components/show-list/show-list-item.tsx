@@ -1,11 +1,11 @@
+import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
-import Link from "../link";
 import { Packages } from "../../../types";
 import { ShowEntity } from "../../data";
-import FeaturedImage from "../featured-image";
-import DefaultImage from "../default-image";
 import defaultImageMedia from "../../img/defaultMedias/defaultMedia.png";
-import { motion } from "framer-motion";
+import DefaultImage from "../default-image";
+import FeaturedImage from "../featured-image";
+import Link from "../link";
 
 /**
  * The props of the {@link ShowListItem} component.

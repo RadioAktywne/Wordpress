@@ -1,15 +1,15 @@
-ARG PHP_IMAGE_TAG=7.4-apache
+FROM php:7.4-apache
 
-FROM php:$PHP_IMAGE_TAG
+ARG WORDPRESS_VERSION=6.3.2
+ARG WORDPRESS_SHA=858a79f5916909715e79df4b87fc4f30172e8254
+ARG WP_CLI_VERSION=2.9.0
+ARG WP_CLI_SHA=263dc2b67bdd97bd58519ca273e56be4905dea0e
 
-ARG WORDPRESS_VERSION=6.0
-ARG WORDPRESS_SHA=7a5a6d0591771e730b05c49d0c3fc134624d0491
-ARG WP_CLI_VERSION=2.6.0
-ARG WP_CLI_SHA=44556e41382b62e87d8b35de6aef454285a6d3cc
+SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 # persistent dependencies
-RUN set -eux; \
-	apt-get update; \
+# hadolint ignore=DL3008
+RUN apt-get update; \
 	apt-get install -y --no-install-recommends \
 # Ghostscript is required for rendering PDF previews
 		ghostscript \
@@ -26,9 +26,8 @@ RUN set -eux; \
 	rm -rf /var/lib/apt/lists/*
 
 # install the PHP extensions we need (https://make.wordpress.org/hosting/handbook/handbook/server-environment/#php-extensions)
-RUN set -ex; \
-	\
-	savedAptMark="$(apt-mark showmanual)"; \
+# hadolint ignore=DL3008,SC2086
+RUN savedAptMark=$(apt-mark showmanual); \
 	\
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
@@ -88,8 +87,7 @@ RUN set -ex; \
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
-RUN set -eux; \
-	docker-php-ext-enable opcache; \
+RUN docker-php-ext-enable opcache; \
 	{ \
 		echo 'opcache.memory_consumption=128'; \
 		echo 'opcache.interned_strings_buffer=8'; \
@@ -112,8 +110,7 @@ RUN { \
 		echo 'html_errors = Off'; \
 	} > /usr/local/etc/php/conf.d/error-logging.ini
 
-RUN set -eux; \
-	a2enmod rewrite expires; \
+RUN a2enmod rewrite expires; \
 	\
 # https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html
 	a2enmod remoteip; \
@@ -131,8 +128,7 @@ RUN set -eux; \
 # (replace all instances of "%h" with "%a" in LogFormat)
 	find /etc/apache2 -type f -name '*.conf' -exec sed -ri 's/([[:space:]]*LogFormat[[:space:]]+"[^"]*)%h([^"]*")/\1%a\2/g' '{}' +
 
-RUN set -eux; \
-	curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-$WORDPRESS_VERSION.tar.gz"; \
+RUN curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-$WORDPRESS_VERSION.tar.gz"; \
 	echo "$WORDPRESS_SHA  wordpress.tar.gz" | sha1sum -c -; \
 	\
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
@@ -141,18 +137,14 @@ RUN set -eux; \
 # pre-create uploads
     mkdir /usr/src/wordpress/wp-content/uploads;
 
-RUN set -eux; \
-    curl -o /usr/local/bin/wp -fL https://github.com/wp-cli/wp-cli/releases/download/v$WP_CLI_VERSION/wp-cli-$WP_CLI_VERSION.phar; \
+RUN curl -o /usr/local/bin/wp -fL https://github.com/wp-cli/wp-cli/releases/download/v$WP_CLI_VERSION/wp-cli-$WP_CLI_VERSION.phar; \
     echo "$WP_CLI_SHA  /usr/local/bin/wp" | sha1sum -c -; \
     chmod +x /usr/local/bin/wp
 
 WORKDIR /app
 
-# move downloaded wordpress to working directory
-RUN mv /usr/src/wordpress/* ./
-
-# change apache directory to working directory
-RUN set -eux; \
+# move downloaded wordpress and change apache directory to working directory
+RUN mv /usr/src/wordpress/* ./ && \
 	find /etc/apache2 -name '*.conf' -type f -exec sed -ri -e "s!/var/www/html!$PWD!g" -e "s!Directory /var/www/!Directory $PWD!g" '{}' +;
 
 COPY ./scripts/download.sh ./scripts/download.sh
@@ -178,7 +170,8 @@ COPY ./.htaccess ./.htaccess
 ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_DATABASE_USER=user \
     WORDPRESS_DATABASE_PASSWORD=password \
-    WORDPRESS_DATABASE_HOST=database \
+    WORDPRESS_DATABASE_HOST=localhost \
+	WORDPRESS_DATABASE_PORT=20001 \
     WORDPRESS_DATABASE_CHARSET=utf8 \
     WORDPRESS_DB_COLLATE='' \
     WORDPRESS_AUTH_KEY=auth-key \
@@ -192,11 +185,12 @@ ENV WORDPRESS_DATABASE_NAME=database \
     WORDPRESS_TABLE_PREFIX=wp_ \
     WORDPRESS_DEBUG='' \
     WORDPRESS_CONFIG_EXTRA='' \
-    WORDPRESS_PUBLIC_URL='http://localhost:80' \
+    WORDPRESS_PUBLIC_URL='http://localhost:20000' \
     WORDPRESS_SITE_TITLE='Radio Aktywne' \
     WORDPRESS_ADMIN_USERNAME=username \
     WORDPRESS_ADMIN_PASSWORD=password \
-    WORDPRESS_ADMIN_EMAIL='example@example.com'
+    WORDPRESS_ADMIN_EMAIL='example@example.com' \
+	WORDPRESS_MAX_UPLOAD_SIZE=512M
 
 EXPOSE 80
 
