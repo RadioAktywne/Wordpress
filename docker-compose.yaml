@@ -36,6 +36,7 @@ services:
     environment:
       - "WEB_PUBLIC_URL=${WEB_PUBLIC_URL:-http://localhost:20000}"
       - "WEB_WORDPRESS_PUBLIC_URL=${WORDPRESS_PUBLIC_URL:-http://localhost:20000}"
+      - "WEB_SURVEYS_API_URL=${WEB_SURVEYS_API_URL:-http://localhost:30000/api}"
     depends_on:
       - wordpress
   wordpress:

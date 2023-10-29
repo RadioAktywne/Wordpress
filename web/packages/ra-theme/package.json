@@ -2,9 +2,10 @@
   "name": "@radioaktywne/ra-theme",
   "version": "0.1.0",
   "scripts": {
+    "orval": "orval",
     "update": "ncu -u && npm i"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@frontity/components": "^1.8.2",
     "@frontity/core": "^1.16.0",
     "@frontity/html2react": "^1.7.0",
@@ -12,6 +13,9 @@
     "@frontity/source": "^1.5.2",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
+    "@tanstack/react-form": "^0.4.2",
+    "@tanstack/react-query": "^4.36.1",
+    "axios": "^1.6.0",
     "framer-motion": "^4.1.17",
     "frontity": "^1.17.2",
     "html-react-parser": "^4.2.9",
@@ -24,6 +28,7 @@
     "@types/node": "^16.18.59",
     "@types/node-fetch": "^2.6.7",
     "@types/react": "^17.0.69",
-    "npm-check-updates": "^16.14.6"
+    "npm-check-updates": "^16.14.6",
+    "orval": "^6.19.1"
   }
 }

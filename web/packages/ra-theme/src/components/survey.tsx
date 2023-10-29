@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
 import { connect, styled, useConnect } from "frontity";
+import { useCallback } from "react";
 import { Packages } from "../../types";
+import {
+  SubmissionFields,
+  useFormsIdGet,
+  useFormsIdSubmitSubmit,
+} from "../api";
 import { SurveyData, SurveyEntity } from "../data";
 import defaultImageMedia from "../img/defaultMedias/defaultMedia.png";
 import Back from "../img/icons/back.svg";
@@ -8,6 +14,7 @@ import DefaultImage from "./default-image";
 import FeaturedImage from "./featured-image";
 import Link from "./link";
 import Loading from "./loading";
+import SurveyForm from "./survey-form";
 
 /**
  * Properties received by the `Survey` component.
@@ -27,7 +34,20 @@ function Survey({ data }: SurveyProps): JSX.Element {
   const { state } = useConnect<Packages>();
   const survey: SurveyEntity = state.source[data.type][data.id];
 
-  if (!data.isReady) return <Loading />;
+  const getFormQuery = useFormsIdGet(survey.acf.id);
+  const submitMutation = useFormsIdSubmitSubmit();
+
+  const onSubmit = useCallback(
+    async (data: SubmissionFields) => {
+      await submitMutation.mutateAsync({
+        id: getFormQuery.data.data.form.id,
+        data: { submission: { metadata: {}, fields: data } },
+      });
+    },
+    [getFormQuery.data],
+  );
+
+  if (!data.isReady || getFormQuery.isLoading) return <Loading />;
 
   return (
     <Container
@@ -46,7 +66,15 @@ function Survey({ data }: SurveyProps): JSX.Element {
           </BackButton>
         </Title>
 
-        <Description>{survey.acf.id}</Description>
+        {getFormQuery.error ? (
+          <p>Nie udało się załadować ankiety</p>
+        ) : (
+          <SurveyForm
+            data={getFormQuery.data.data.form}
+            errors={submitMutation.error?.response?.data?.extra}
+            onSubmit={onSubmit}
+          />
+        )}
       </MainContent>
 
       <Cover>
@@ -80,28 +108,6 @@ const Container = styled(motion.section)`
     flex-direction: column;
     padding: 20px 0;
     margin: 0;
-  }
-`;
-
-const Description = styled.div`
-  color: #30241a;
-  font-size: 1rem;
-  line-height: 1.7;
-  margin-top: 20px;
-  white-space: pre-line;
-
-  & ul,
-  & ol {
-    line-height: 1;
-    margin: 0;
-  }
-
-  @media (max-width: 1400px) {
-    font-size: 0.8rem;
-  }
-
-  @media (max-width: 750px) {
-    margin: 0 20px;
   }
 `;
 

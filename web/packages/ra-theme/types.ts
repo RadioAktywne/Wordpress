@@ -155,6 +155,16 @@ interface RaThemeTypeScript extends Package {
         info: PostConfiguration;
         survey: PostConfiguration;
       };
+
+      /**
+       * Surveys API configuration.
+       */
+      surveys: {
+        /**
+         * The base URL of the API.
+         */
+        url: string;
+      };
     };
 
     /**

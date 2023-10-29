@@ -2,7 +2,7 @@ import iframe from "@frontity/html2react/processors/iframe";
 import image from "@frontity/html2react/processors/image";
 import link from "@frontity/html2react/processors/link";
 import RaThemeTypeScript from "../types";
-import Theme from "./components";
+import Root from "./components/root";
 import pageHandler from "./handlers/page";
 import postTypeHandler from "./handlers/postType";
 import postTypeArchiveHandler from "./handlers/postTypeArchive";
@@ -15,7 +15,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
      * In Frontity, any package can add React components to the site.
      * We use roots for that, scoped to the `theme` namespace.
      */
-    theme: Theme,
+    theme: Root,
   },
   state: {
     /**
@@ -115,6 +115,9 @@ const raThemeTypeScript: RaThemeTypeScript = {
           archivePath: "/ankiety/",
           perPage: 16,
         },
+      },
+      surveys: {
+        url: process.env.WEB_SURVEYS_API_URL || "http://localhost:30000/api",
       },
     },
 

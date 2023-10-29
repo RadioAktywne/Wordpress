@@ -49,7 +49,7 @@ import SurveyList from "./survey-list";
  * @returns The top-level react component representing the theme.
  */
 
-function Theme() {
+function Index() {
   const { state, actions, libraries } = useConnect<Packages>();
   const { route } = libraries.source.parse(state.router.link);
   const data = state.source.get(route);
@@ -184,7 +184,7 @@ function Theme() {
   );
 }
 
-export default connect(Theme);
+export default connect(Index);
 export const PlayerContext = React.createContext(undefined);
 
 const globalStyles = css`
