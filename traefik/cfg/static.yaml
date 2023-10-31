@@ -1,6 +1,8 @@
 entryPoints:
   http:
     address: :20000
+    forwardedHeaders:
+      insecure: true
 
 providers:
   file:
