@@ -58,12 +58,6 @@ function Survey({ data }: SurveyProps): JSX.Element {
       <MainContent>
         <Title>
           <h1>{survey.acf.title}</h1>
-
-          <BackButton>
-            <Link link={state.config.posts.survey.archivePath}>
-              <img src={Back} alt="cofnij" />
-            </Link>
-          </BackButton>
         </Title>
 
         <FormContainer>
@@ -176,21 +170,5 @@ const Title = styled.div`
     @media (max-width: 1400px) {
       font-size: 1.2rem;
     }
-  }
-`;
-
-const BackButton = styled.div`
-  cursor: pointer;
-  border-left: 2px solid #6aba9c;
-  background-color: #30241a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 6px;
-
-  & img {
-    height: 30px;
-    width: 50px;
-    transform: rotateZ(90deg);
   }
 `;
