@@ -260,7 +260,7 @@ export default function SurveyForm({
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>{"Ankieta wysłana."}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             Twoje odpowiedzi zostały zapisane. Dziękujemy!
