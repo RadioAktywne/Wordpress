@@ -1,5 +1,6 @@
 import { FieldApi } from "@tanstack/react-form";
 import { FormFieldsItem, SubmissionFields } from "../../../api";
+import TextField from '@mui/material/TextField';
 
 /**
  * Props of the {@link DefaultField} component.
@@ -24,7 +25,8 @@ export default function DefaultField({
   field,
 }: DefaultFieldProps): JSX.Element {
   return (
-    <input
+    <TextField
+      /*label={field.name}*/
       name={field.name}
       value={field.state.value}
       required={data.required}

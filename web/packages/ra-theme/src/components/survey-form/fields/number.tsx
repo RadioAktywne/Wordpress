@@ -1,5 +1,6 @@
 import { FieldApi } from "@tanstack/react-form";
 import { NumberFormField, SubmissionFields } from "../../../api";
+import TextField from '@mui/material/TextField';
 
 /**
  * Props of the {@link NumberField} component.
@@ -24,14 +25,14 @@ export default function NumberField({
   field,
 }: NumberFieldProps): JSX.Element {
   return (
-    <input
+    <TextField
       type="number"
+      label="numer"
       name={field.name}
       value={field.state.value}
       required={data.required}
-      step="any"
       onBlur={field.handleBlur}
-      onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+      onChange={(e) => field.handleChange(Number(e.target.value))}
     />
   );
 }

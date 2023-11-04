@@ -1,5 +1,6 @@
 import { FieldApi } from "@tanstack/react-form";
 import { EmailFormField, SubmissionFields } from "../../../api";
+import TextField from '@mui/material/TextField';
 
 /**
  * Props of the {@link EmailField} component.
@@ -24,8 +25,9 @@ export default function EmailField({
   field,
 }: EmailFieldProps): JSX.Element {
   return (
-    <input
+    <TextField
       type="email"
+      label="adres e-mail"
       name={field.name}
       value={field.state.value}
       required={data.required}

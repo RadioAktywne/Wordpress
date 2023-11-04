@@ -1,5 +1,6 @@
 import { FieldApi } from "@tanstack/react-form";
 import { SubmissionFields, YesNoFormField } from "../../../api";
+import Switch from "@mui/material/Switch";
 
 /**
  * Props of the {@link YesNoField} component.
@@ -24,12 +25,10 @@ export default function YesNoField({
   field,
 }: YesNoFieldProps): JSX.Element {
   return (
-    <input
-      type="checkbox"
-      name={field.name}
-      required={data.required}
-      checked={field.state.value}
+    <Switch 
       onBlur={field.handleBlur}
+      checked={field.state.value}
+      required={data.required}
       onChange={(e) => field.handleChange(e.target.checked)}
     />
   );

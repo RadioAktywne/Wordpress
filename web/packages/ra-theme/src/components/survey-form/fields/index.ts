@@ -6,7 +6,7 @@ export { default as EmailField } from "./email";
 export { default as NumberField } from "./number";
 export { default as RadioField } from "./radio";
 export { default as SliderField } from "./slider";
-export { default as TextField } from "./text";
+export { default as TextLineField } from "./text";
 export { default as TextareaField } from "./textarea";
 export { default as UrlField } from "./url";
 export { default as YesNoField } from "./yes-no";

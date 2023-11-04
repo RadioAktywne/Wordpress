@@ -1,5 +1,7 @@
-import { FieldApi } from "@tanstack/react-form";
+import { FieldApi, Updater } from "@tanstack/react-form";
 import { SliderFormField, SubmissionFields } from "../../../api";
+import Slider from '@mui/material/Slider';
+import React from "react";
 
 /**
  * Props of the {@link SliderField} component.
@@ -23,17 +25,22 @@ export default function SliderField({
   data,
   field,
 }: SliderFieldProps): JSX.Element {
+  const [value, setValue] = React.useState<number>(field.state.value);
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number);
+    field.handleChange(value);
+  };
+
   return (
-    <input
-      type="range"
+    <Slider 
       name={field.name}
-      value={field.state.value}
-      required={data.required}
+      value={value}
       min={data.min}
       max={data.max}
       step={data.step}
       onBlur={field.handleBlur}
-      onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+      onChange={handleChange}
+      aria-label="wybierz wartość" 
     />
   );
 }

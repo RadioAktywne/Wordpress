@@ -1,6 +1,8 @@
 import { FieldApi } from "@tanstack/react-form";
 import { Fragment } from "react";
 import { CheckboxFormField, SubmissionFields } from "../../../api";
+import Checkbox from '@mui/material/Checkbox';
+import { FormControlLabel } from "@mui/material";
 
 /**
  * Props of the {@link CheckboxField} component.
@@ -31,23 +33,23 @@ export default function CheckboxField({
 
         return (
           <Fragment key={option.id}>
-            <input
-              type="checkbox"
-              name={name}
-              required={data.required}
-              checked={field.state.value?.includes(option.value)}
-              onBlur={field.handleBlur}
-              onChange={(e) => {
-                const value = option.value;
-                const values = field.state.value || [];
-                if (values.includes(value)) {
-                  field.handleChange(values.filter((v) => v !== value));
-                } else {
-                  field.handleChange([...values, value]);
-                }
-              }}
-            />
-            <label htmlFor={name}>{option.title}</label>
+            <FormControlLabel label={option.title} control={
+              <Checkbox
+                name={name}
+                required={data.required}
+                checked={field.state.value?.includes(option.value)}
+                onBlur={field.handleBlur}
+                onChange={(e) => {
+                  const value = option.value;
+                  const values = field.state.value || [];
+                  if (values.includes(value)) {
+                    field.handleChange(values.filter((v) => v !== value));
+                  } else {
+                    field.handleChange([...values, value]);
+                  }
+                }}
+              />
+            }/>
           </Fragment>
         );
       })}

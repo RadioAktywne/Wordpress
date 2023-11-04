@@ -8,8 +8,13 @@
     "update": "ncu -u && npm i"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@frontity/wp-source": "^1.11.7",
+    "@mui/material": "^5.14.16",
+    "@mui/x-date-pickers": "^6.18.0",
     "@radioaktywne/ra-theme": "./packages/ra-theme",
+    "dayjs": "^1.11.10",
     "frontity": "^1.17.2"
   },
   "devDependencies": {

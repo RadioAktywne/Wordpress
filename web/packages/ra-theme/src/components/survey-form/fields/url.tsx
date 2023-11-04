@@ -1,5 +1,6 @@
 import { FieldApi } from "@tanstack/react-form";
 import { SubmissionFields, UrlFormField } from "../../../api";
+import TextField from '@mui/material/TextField';
 
 /**
  * Props of the {@link UrlField} component.
@@ -21,8 +22,9 @@ interface UrlFieldProps {
  */
 export default function UrlField({ data, field }: UrlFieldProps): JSX.Element {
   return (
-    <input
+    <TextField
       type="url"
+      label="wpisz adres internetowy"
       name={field.name}
       value={field.state.value}
       required={data.required}

@@ -1,10 +1,11 @@
 import { FieldApi } from "@tanstack/react-form";
 import { SubmissionFields, TextareaFormField } from "../../../api";
+import TextField from "@mui/material/TextField";
 
 /**
  * Props of the {@link TextField} component.
  */
-interface TextFieldProps {
+interface TextLineFieldProps {
   /**
    * Field data.
    */
@@ -19,13 +20,14 @@ interface TextFieldProps {
 /**
  * Text field component.
  */
-export default function TextField({
+export default function TextLineField({
   data,
   field,
-}: TextFieldProps): JSX.Element {
+}: TextLineFieldProps): JSX.Element {
   return (
-    <input
+    <TextField
       type="text"
+      label="wpisz tekst"
       name={field.name}
       value={field.state.value}
       required={data.required}

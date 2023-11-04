@@ -1,6 +1,7 @@
 import { FieldApi } from "@tanstack/react-form";
 import { Fragment } from "react";
 import { RadioFormField, SubmissionFields } from "../../../api";
+import { FormControlLabel, Radio } from "@mui/material";
 
 /**
  * Props of the {@link RadioField} component.
@@ -31,15 +32,15 @@ export default function RadioField({
 
         return (
           <Fragment key={option.id}>
-            <input
-              type="radio"
+            <FormControlLabel value="female" control={
+            <Radio 
               name={name}
               required={data.required}
               checked={field.state.value === option.value}
               onBlur={field.handleBlur}
               onChange={() => field.handleChange(option.value)}
             />
-            <label htmlFor={name}>{option.title}</label>
+            } label={option.title} />
           </Fragment>
         );
       })}

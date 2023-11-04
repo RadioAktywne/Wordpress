@@ -1,5 +1,9 @@
 import { FieldApi } from "@tanstack/react-form";
 import { DropdownFormField, SubmissionFields } from "../../../api";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 /**
  * Props of the {@link DropdownField} component.
@@ -24,18 +28,19 @@ export default function DropdownField({
   field,
 }: DropdownFieldProps): JSX.Element {
   return (
-    <select
-      name={field.name}
-      value={field.state.value}
-      required={data.required}
-      onBlur={field.handleBlur}
-      onChange={(e) => field.handleChange(e.target.value)}
-    >
-      {data.options.map((option) => (
-        <option key={option.id} value={option.value}>
-          {option.title}
-        </option>
-      ))}
-    </select>
+    <FormControl fullWidth>
+        <InputLabel>wybierz opcję</InputLabel>
+        <Select
+          value={field.state.value}
+          /*label={field.name}*/
+          onChange={(e) => field.handleChange(e.target.value)}
+          onBlur={field.handleBlur}
+          required={data.required}
+        >
+          {data.options.map((option) => (
+            <MenuItem key={option.id} value={option.value}>{option.title}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
   );
 }

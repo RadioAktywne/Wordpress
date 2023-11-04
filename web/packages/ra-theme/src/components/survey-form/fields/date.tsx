@@ -1,5 +1,7 @@
 import { FieldApi } from "@tanstack/react-form";
 import { DateFormField, SubmissionFields } from "../../../api";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 /**
  * Props of the {@link DateField} component.
@@ -24,13 +26,8 @@ export default function DateField({
   field,
 }: DateFieldProps): JSX.Element {
   return (
-    <input
-      type="date"
-      name={field.name}
-      value={field.state.value}
-      required={data.required}
-      onBlur={field.handleBlur}
-      onChange={(e) => field.handleChange(e.target.value)}
-    />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker value={field.state.value} onChange={(e) => field.handleChange(e)} /*label={field.name}*//>
+    </LocalizationProvider>
   );
 }

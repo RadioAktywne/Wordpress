@@ -1,5 +1,6 @@
 import { FieldApi } from "@tanstack/react-form";
 import { SubmissionFields, TextareaFormField } from "../../../api";
+import TextField from "@mui/material/TextField";
 
 /**
  * Props of the {@link TextareaField} component.
@@ -24,12 +25,15 @@ export default function TextareaField({
   field,
 }: TextareaFieldProps): JSX.Element {
   return (
-    <textarea
+    <TextField
       name={field.name}
       value={field.state.value}
+      label="wpisz tekst"
       required={data.required}
       onBlur={field.handleBlur}
       onChange={(e) => field.handleChange(e.target.value)}
+      multiline
+      minRows={2}
     />
   );
 }
