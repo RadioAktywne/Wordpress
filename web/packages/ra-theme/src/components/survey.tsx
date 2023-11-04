@@ -66,15 +66,17 @@ function Survey({ data }: SurveyProps): JSX.Element {
           </BackButton>
         </Title>
 
-        {getFormQuery.error ? (
-          <p>Nie udało się załadować ankiety</p>
-        ) : (
-          <SurveyForm
-            data={getFormQuery.data.data.form}
-            errors={submitMutation.error?.response?.data?.extra}
-            onSubmit={onSubmit}
-          />
-        )}
+        <FormContainer>
+          {getFormQuery.error ? (
+            <p>Nie udało się załadować ankiety</p>
+          ) : (
+            <SurveyForm
+              data={getFormQuery.data.data.form}
+              errors={submitMutation.error?.response?.data?.extra}
+              onSubmit={onSubmit}
+            />
+          )}
+        </FormContainer>
       </MainContent>
 
       <Cover>
@@ -89,6 +91,10 @@ function Survey({ data }: SurveyProps): JSX.Element {
 }
 
 export default connect(Survey);
+
+const FormContainer = styled.section`
+  margin: 0 10px;
+`
 
 const Container = styled(motion.section)`
   max-width: 1140px;

@@ -29,7 +29,19 @@ import {
   YesNoField,
 } from "./fields";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 import { styled } from "frontity";
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import React from "react";
+import DialogContentText from "@mui/material/DialogContentText";
+import Slide from "@mui/material/Slide";
+import { TransitionProps } from "@mui/material/transitions";
+import Link from "../link";
 
 export const themeOptions = createTheme({
   palette: {
@@ -102,10 +114,20 @@ export default function SurveyForm({
       {},
     ),
     onSubmit: async (values) => {
-      await onSubmit(values);
+      handleClickOpen();
       form.reset();
+      await onSubmit(values);
     },
   });
+
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
 
   return (
     <ThemeProvider theme={themeOptions}>
@@ -123,7 +145,7 @@ export default function SurveyForm({
               key={fieldData.id}
               children={(field) => (
                 <FormField>
-                  <label htmlFor={field.name}>{fieldData.title}</label>
+                  <label className="formFieldLabel" htmlFor={field.name}>{fieldData.title}</label>
                   {fieldData.description && <p>{fieldData.description}</p>}
                   {(() => {
                     switch (fieldData.type) {
@@ -223,18 +245,58 @@ export default function SurveyForm({
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             children={([canSubmit, isSubmitting]) => (
-              <button type="submit" disabled={!canSubmit}>
-                {isSubmitting ? "..." : "Submit"}
-              </button>
+              <ButtonContainer>
+                <Button disabled={!canSubmit} type="submit" variant="contained">{isSubmitting ? "..." : "Wyślij!"}</Button>
+              </ButtonContainer>
             )}
           />
         </form>
       </form.Provider>
+
+      <Dialog
+        open={dialogOpen}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Twoje odpowiedzi zostały zapisane. Dziękujemy!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Link link="/"><Button onClick={handleClose}>Przejdź na stronę radia</Button></Link>
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 }
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
 const FormField = styled.div`
   display: flex;
   flex-direction: column;
+
+  .formFieldLabel {
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 400;
+  }
+`
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  text-align: right;
+  padding: 20px 0;
 `
