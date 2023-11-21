@@ -46,7 +46,11 @@ function FeaturedImage({ id, size }: FeaturedImageProps): JSX.Element {
   return (
     <SquareContainer
       style={{
-        background: "url(" + media.source_url.substring(0, media.source_url.lastIndexOf('/') + 1) + media.media_details.sizes[size].file + ".webp)",
+        background: "url(" + 
+          media.media_details.sizes[size].file ? 
+            (media.source_url.substring(0, media.source_url.lastIndexOf('/') + 1) + media.media_details.sizes[size].file)
+            : (media.source_url)
+           + ".webp)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
