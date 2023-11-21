@@ -675,6 +675,98 @@ function ra_custom_types_register_info_tile()
     ra_custom_types_register_type('info', $args, $fields);
 }
 
+function ra_custom_types_register_survey()
+{
+    $labels = [
+        "name" => "Surveys",
+        "singular_name" => "Survey",
+        "menu_name" => "Surveys",
+        "all_items" => "All Surveys",
+        "add_new" => "Add new",
+        "add_new_item" => "Add new Survey",
+        "edit_item" => "Edit Survey",
+        "new_item" => "New Survey",
+        "view_item" => "View Survey",
+        "view_items" => "View Surveys",
+        "search_items" => "Search Surveys",
+        "not_found" => "No Surveys found",
+        "not_found_in_trash" => "No Surveys found in trash",
+        "parent" => "Parent Survey:",
+        "featured_image" => "Featured image for this Survey",
+        "set_featured_image" => "Set featured image for this Survey",
+        "remove_featured_image" => "Remove featured image for this Survey",
+        "use_featured_image" => "Use as featured image for this Survey",
+        "archives" => "Survey archives",
+        "insert_into_item" => "Insert into Survey",
+        "uploaded_to_this_item" => "Upload to this Survey",
+        "filter_items_list" => "Filter Surveys list",
+        "items_list_navigation" => "Surveys list navigation",
+        "items_list" => "Surveys list",
+        "attributes" => "Surveys attributes",
+        "name_admin_bar" => "Survey",
+        "item_published" => "Survey published",
+        "item_published_privately" => "Survey published privately.",
+        "item_reverted_to_draft" => "Survey reverted to draft.",
+        "item_scheduled" => "Survey scheduled",
+        "item_updated" => "Survey updated.",
+        "parent_item_colon" => "Parent Survey:",
+    ];
+
+    $args = [
+        "label" => "Surveys",
+        "labels" => $labels,
+        "public" => true,
+        "has_archive" => 'surveys',
+        "map_meta_cap" => true,
+        "can_export" => true,
+        "show_in_rest" => true,
+        "rewrite" => ["with_front" => false],
+        "menu_icon" => "dashicons-chart-bar",
+        "supports" => ['title'],
+    ];
+
+    $fields = [
+        'key' => 'survey_field_group',
+        'title' => 'Survey',
+        'fields' => [
+            [
+                'key' => 'survey_field_title',
+                'label' => 'Title',
+                'name' => 'title',
+                'type' => 'text',
+                'required' => true,
+            ],
+            [
+                'key' => 'survey_field_survey_id',
+                'label' => 'Identifier',
+                'name' => 'id',
+                'type' => 'text',
+                'required' => true,
+            ],
+            [
+                'key' => 'survey_field_image',
+                'label' => 'Image',
+                'name' => 'image',
+                'type' => 'image',
+                'required' => false,
+                'return_format' => 'id',
+            ],
+        ],
+        'location' => [
+            [
+                [
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'survey',
+                ],
+            ],
+        ],
+        'show_in_rest' => true
+    ];
+
+    ra_custom_types_register_type('survey', $args, $fields);
+}
+
 function ra_custom_types_register_types()
 {
     ra_custom_types_register_member();
@@ -683,6 +775,7 @@ function ra_custom_types_register_types()
     ra_custom_types_register_album();
     ra_custom_types_register_recording();
     ra_custom_types_register_info_tile();
+    ra_custom_types_register_survey();
 }
 
 function ra_custom_types_hide_title($types)
@@ -707,7 +800,8 @@ function ra_custom_types_hide_titles()
         "event",
         "album",
         "recording",
-        "info"
+        "info",
+        "survey",
     ]);
 }
 
@@ -765,6 +859,12 @@ function ra_custom_types_set_info_tile_defaults($id)
     ra_custom_types_set_cpt_defaults($id, $title);
 }
 
+function ra_custom_types_set_survey_defaults($id)
+{
+    $title = get_field('title', $id);
+    ra_custom_types_set_cpt_defaults($id, $title);
+}
+
 function ra_custom_types_set_defaults($post_id)
 {
     switch (get_post_type($post_id)) {
@@ -785,6 +885,9 @@ function ra_custom_types_set_defaults($post_id)
             break;
         case "info":
             ra_custom_types_set_info_tile_defaults($post_id);
+            break;
+        case "survey":
+            ra_custom_types_set_survey_defaults($post_id);
             break;
     }
 }

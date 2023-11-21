@@ -6,7 +6,7 @@ const settings: Settings<Theme | WpSource> = {
   name: "radioaktywne",
   state: {
     frontity: {
-      url: process.env.WEB_PUBLIC_URL || "https://radioaktywne.pl",
+      url: process.env.WEB_PUBLIC_URL || "http://localhost:20000",
       title: "Radio Aktywne",
       description: "Najstarsza studencka rozgłośnia internetowa w Warszawie!",
     },

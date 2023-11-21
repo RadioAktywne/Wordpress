@@ -364,3 +364,54 @@ export function isInfoTile(data: Data): data is InfoTileData {
 export function isInfoTileArchive(data: Data): data is InfoTileArchiveData {
   return (data as InfoTileArchiveData).isInfoArchive === true;
 }
+
+export interface SurveyData extends PostTypeData {
+  /**
+   * Survey type slug.
+   */
+  type: "survey";
+
+  /**
+   * Identify a survey.
+   */
+  isSurvey: true;
+}
+
+export interface SurveyArchiveData extends ArchiveData {
+  /**
+   * Survey archive type slug.
+   */
+  type: "survey";
+
+  /**
+   * Identify a survey archive.
+   */
+  isSurveyArchive: true;
+}
+
+export interface SurveyEntity extends PostTypeEntity {
+  acf: {
+    /**
+     * Survey title.
+     */
+    title: string;
+
+    /**
+     * Survey identifier.
+     */
+    id: string;
+
+    /**
+     * Survey image (id).
+     */
+    image?: number;
+  };
+}
+
+export function isSurvey(data: Data): data is SurveyData {
+  return (data as SurveyData).isSurvey === true;
+}
+
+export function isSurveyArchive(data: Data): data is SurveyArchiveData {
+  return (data as SurveyArchiveData).isSurveyArchive === true;
+}
