@@ -28,7 +28,7 @@ function AlbumListItem({ item }: ItemProps): JSX.Element {
         <Link link={item.link}>
           <PostTile>
             {item.featured_media ? (
-              <FeaturedImage id={item.featured_media} />
+              <FeaturedImage id={item.featured_media} size="medium_large"/>
             ) : (
               <DefaultImage img={defaultImageMedia} />
             )}

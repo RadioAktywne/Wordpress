@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { connect, styled } from "frontity";
 import useMedia from "../hooks/useMedia";
 import Loading from "./loading";
+import path from 'path';
 
 /**
  * Props of the {@link FeaturedImage} component.
@@ -9,8 +10,10 @@ import Loading from "./loading";
 interface FeaturedImageProps {
   /**
    * ID of the attachment entity.
+   * size - full, large, medium, medium_large, thumbnail
    */
   id: number;
+  size: string;
 }
 
 /**
@@ -31,7 +34,7 @@ interface ContainerProps {
  *
  * @returns A react component.
  */
-function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
+function FeaturedImage({ id, size }: FeaturedImageProps): JSX.Element {
   const {
     status,
     value: [media],
@@ -43,7 +46,7 @@ function FeaturedImage({ id }: FeaturedImageProps): JSX.Element {
   return (
     <SquareContainer
       style={{
-        background: "url(" + media.source_url + ".webp)",
+        background: "url(" + media.source_url.substring(0, media.source_url.lastIndexOf('/') + 1) + media.media_details.sizes[size].file + ".webp)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",

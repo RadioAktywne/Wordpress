@@ -59,7 +59,7 @@ function Show({ data }: ShowProps): JSX.Element {
       <AboutContent>
         <Cover>
           {show.acf.image ? (
-            <FeaturedImage id={show.acf.image} />
+            <FeaturedImage id={show.acf.image} size="large"/>
           ) : (
             <DefaultImage img={defaultImageMedia} />
           )}

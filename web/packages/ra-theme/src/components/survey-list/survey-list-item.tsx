@@ -30,7 +30,7 @@ function SurveyListItem({ item }: ItemProps): JSX.Element {
         <Link link={item.link}>
           <Cover>
             {item.acf.image ? (
-              <FeaturedImage id={item.acf.image} />
+              <FeaturedImage id={item.acf.image} size="medium_large"/>
             ) : (
               <DefaultImage img={defaultImageMedia} />
             )}

@@ -41,7 +41,7 @@ function InfoTileListItem({ item }: ItemProps): JSX.Element {
           <Title>{item.acf.title}</Title>
           <ImageContainer>
             {item.acf.image ? (
-              <FeaturedImage id={item.acf.image} />
+              <FeaturedImage id={item.acf.image} size="medium_large"/>
             ) : (
               <DefaultImage img={defaultImageMedia} />
             )}
