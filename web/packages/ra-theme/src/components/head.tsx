@@ -109,6 +109,7 @@ function Head({
   return (
     <FrontityHead {...props}>
       <title>{getTitle()}</title>
+      <meta property="og:title" content={getTitle()} />
       {children}
     </FrontityHead>
   );

@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { connect, styled } from "frontity";
+import { connect, styled, useConnect } from "frontity";
 import useMedia from "../hooks/useMedia";
 import Loading from "./loading";
 import path from 'path';
+import { Packages } from "../../types";
 
 /**
  * Props of the {@link FeaturedImage} component.
@@ -40,8 +41,12 @@ function FeaturedImage({ id, size }: FeaturedImageProps): JSX.Element {
     value: [media],
   } = useMedia([id]);
 
+  const { state } = useConnect<Packages>();
+
   if (status === "pending") return <Loading />;
   if (!media) return null;
+
+  if(media) state.theme.ogimage = media.source_url + ".webp";
 
   return (
     <SquareContainer

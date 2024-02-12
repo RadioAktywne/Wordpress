@@ -115,6 +115,11 @@ interface RaThemeTypeScript extends Package {
        * Indicates if the mobile menu is opened or closed.
        */
       isMobileMenuOpen: boolean;
+
+      /**
+       * Used for setting Open Graph image for seo purposes (preview of links in social media)
+       */
+      ogimage: string;
     };
 
     /**

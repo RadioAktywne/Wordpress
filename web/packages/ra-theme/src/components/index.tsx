@@ -83,8 +83,15 @@ function Index() {
       {/* @ts-ignore */}
       <Head>
         <meta name="description" content={state.frontity.description} />
+        <meta property="og:description" content={state.frontity.description} />
+        <meta property="og:locale" content="pl_PL" />
         <link rel="icon" type="image/x-icon" href={Favicon}></link>
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <html lang="pl" />
+
+        <meta name="twitter:image" property="og:image" content={state.theme.ogimage} />
+        <link property="image" href={state.theme.ogimage} />
       </Head>
 
       {/* Add some global styles for the whole site, like body or a's.
