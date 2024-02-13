@@ -7,6 +7,7 @@ import { Packages } from "../../types";
 import {
   isAlbum,
   isAlbumArchive,
+  isArchive,
   isEventArchive,
   isInfoTileArchive,
   isMember,
@@ -41,6 +42,7 @@ import Show from "./show";
 import ShowList from "./show-list";
 import Survey from "./survey";
 import SurveyList from "./survey-list";
+import Banner from "../img/logos/ra_banner.png";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -90,8 +92,12 @@ function Index() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <html lang="pl" />
 
-        <meta name="twitter:image" property="og:image" content={state.theme.ogimage} />
-        <link property="image" href={state.theme.ogimage} />
+        {data && (isHome(data) || isArchive(data)) && (
+            <meta name="twitter:image" property="og:image" content={Banner} />
+        )}
+        {data && (isHome(data) || isArchive(data)) && (
+            <link property="image" href={Banner} />
+        )}
       </Head>
 
       {/* Add some global styles for the whole site, like body or a's.

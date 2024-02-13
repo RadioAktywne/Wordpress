@@ -7,7 +7,6 @@ import pageHandler from "./handlers/page";
 import postTypeHandler from "./handlers/postType";
 import postTypeArchiveHandler from "./handlers/postTypeArchive";
 import { ensurePath } from "./lib/utils";
-import Banner from "./img/logos/ra_banner.png";
 
 const raThemeTypeScript: RaThemeTypeScript = {
   name: "@radioaktywne/ra-theme",
@@ -33,7 +32,6 @@ const raThemeTypeScript: RaThemeTypeScript = {
         ["Radio", state.config.posts.info.archivePath],
       ],
       isMobileMenuOpen: false,
-      ogimage: Banner,
     },
 
     home: {
