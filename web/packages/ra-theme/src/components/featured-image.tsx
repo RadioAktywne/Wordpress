@@ -46,15 +46,16 @@ function FeaturedImage({ id, size }: FeaturedImageProps): JSX.Element {
   if (status === "pending") return <Loading />;
   if (!media) return null;
 
-  /**
-   * If the image is meant to be a part of main content of the page, set is as preview image in links.
-   */
-  if(media && (size == "large" || size == "full")) {
-    const ogImageTag = document.createElement("meta");
-    ogImageTag.setAttribute("property", "og:image");
-    ogImageTag.setAttribute("content", media.source_url + ".webp");
-    document.head.appendChild(ogImageTag);
-  }
+  // temporairly,  use the same og image on all pages - set in index.html
+  // /**
+  //  * If the image is meant to be a part of main content of the page, set is as preview image in links.
+  //  */
+  // if(media && (size == "large" || size == "full")) {
+  //   const ogImageTag = document.createElement("meta");
+  //   ogImageTag.setAttribute("property", "og:image");
+  //   ogImageTag.setAttribute("content", media.source_url + ".webp");
+  //   document.head.appendChild(ogImageTag);
+  // }
 
   return (
     <SquareContainer

@@ -92,12 +92,13 @@ function Index() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <html lang="pl" />
 
-        {data && (isHome(data) || isArchive(data)) && (
+        {/* temporairly,  use the same og image on all pages*/}
+        {/* {data && (isHome(data) || isArchive(data)) && ( */}
             <meta name="twitter:image" property="og:image" content={Banner} />
-        )}
-        {data && (isHome(data) || isArchive(data)) && (
+        {/* )} */}
+        {/* {data && (isHome(data) || isArchive(data)) && ( */}
             <link property="image" href={Banner} />
-        )}
+        {/* )} */}
       </Head>
 
       {/* Add some global styles for the whole site, like body or a's.
