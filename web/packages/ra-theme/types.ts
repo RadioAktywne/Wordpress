@@ -26,6 +26,18 @@ type PageConfiguration = {
   path: string;
 };
 
+type Ordering = {
+  /**
+   * Field to sort by.
+   */
+  field: string;
+
+  /**
+   * Order of the sorting.
+   */
+  order?: "asc" | "desc";
+};
+
 type PostConfiguration = {
   /**
    * Endpoint of the post type in WordPress.
@@ -56,6 +68,11 @@ type PostConfiguration = {
    * Number of posts per page.
    */
   perPage?: number;
+
+  /**
+   * Ordering of the posts.
+   */
+  ordering?: Ordering;
 };
 
 type ArchivePageData<A extends ArchiveData> = {

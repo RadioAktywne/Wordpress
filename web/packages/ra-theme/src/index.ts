@@ -90,6 +90,10 @@ const raThemeTypeScript: RaThemeTypeScript = {
           path: "/audycja/",
           archivePath: "/audycje/",
           perPage: 16,
+          ordering: {
+            field: "title",
+            order: "asc",
+          },
         },
         member: {
           endpoint: "member",
@@ -214,6 +218,8 @@ const raThemeTypeScript: RaThemeTypeScript = {
               endpoint: data.endpoint,
               params: {
                 per_page: data.perPage,
+                orderby: data.ordering?.field,
+                order: data.ordering?.order,
               },
             }),
           });
