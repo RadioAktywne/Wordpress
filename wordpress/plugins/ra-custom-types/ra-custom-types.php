@@ -892,24 +892,146 @@ function ra_custom_types_set_defaults($post_id)
     }
 }
 
-function ra_custom_get_posts( $query ) 
-{
-    if ($query->get('post_type') == 'member' || $query->get('post_type') == 'show')
-    {
-        $query->set('orderby', 'title');
-        $query->set('order', 'ASC');
-    }
-}
-
 function ra_custom_types_format_links($value_formatted, $post_id, $field, $value, $format)
 {
     return acf_format_value($value, $post_id, $field);
 }
 
+function ra_custom_types_rest_modify_member_query($args)
+{
+    if ($args['orderby'] === 'name') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'name';
+    } elseif ($args['orderby'] === 'role') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'role';
+    }
+
+    return $args;
+}
+
+function ra_custom_types_rest_modify_show_query($args)
+{
+    return $args;
+}
+
+function ra_custom_types_rest_modify_event_query($args)
+{
+    if ($args['orderby'] === 'show') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'show';
+    } elseif ($args['orderby'] === 'day') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'day';
+    } elseif ($args['orderby'] === 'start_time') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'start_time';
+    } elseif ($args['orderby'] === 'end_time') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'end_time';
+    } elseif ($args['orderby'] === 'type') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'type';
+    }
+
+    return $args;
+}
+
+function ra_custom_types_rest_modify_album_query($args)
+{
+    if ($args['orderby'] === 'artist') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'artist';
+    } elseif ($args['orderby'] === 'album_title') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'title';
+    }
+
+    return $args;
+}
+
+function ra_custom_types_rest_modify_recording_query($args)
+{
+    return $args;
+}
+
+function ra_custom_types_rest_modify_info_tile_query($args)
+{
+    return $args;
+}
+
+function ra_custom_types_rest_modify_survey_query($args)
+{
+    if ($args['orderby'] === 'survey_id') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'id';
+    }
+
+    return $args;
+}
+
+function ra_custom_types_rest_modify_member_collection_params($params)
+{
+    $params['orderby']['enum'][] = 'name';
+    $params['orderby']['enum'][] = 'role';
+    return $params;
+}
+
+function ra_custom_types_rest_modify_show_collection_params($params)
+{
+    return $params;
+}
+
+function ra_custom_types_rest_modify_event_collection_params($params)
+{
+    $params['orderby']['enum'][] = 'show';
+    $params['orderby']['enum'][] = 'day';
+    $params['orderby']['enum'][] = 'start_time';
+    $params['orderby']['enum'][] = 'end_time';
+    $params['orderby']['enum'][] = 'type';
+    return $params;
+}
+
+function ra_custom_types_rest_modify_album_collection_params($params)
+{
+    $params['orderby']['enum'][] = 'artist';
+    $params['orderby']['enum'][] = 'album_title';
+    return $params;
+}
+
+function ra_custom_types_rest_modify_recording_collection_params($params)
+{
+    return $params;
+}
+
+function ra_custom_types_rest_modify_info_tile_collection_params($params)
+{
+    return $params;
+}
+
+function ra_custom_types_rest_modify_survey_collection_params($params)
+{
+    $params['orderby']['enum'][] = 'survey_id';
+    return $params;
+}
+
 add_action('admin_head', 'ra_custom_types_hide_titles', 9999);
 add_action('acf/init', 'ra_custom_types_register_types', 9999);
 add_action('acf/save_post', 'ra_custom_types_set_defaults', 9999);
-add_action('pre_get_posts', 'ra_custom_get_posts');
 
 add_filter('acf/rest/format_value_for_rest/type=link', 'ra_custom_types_format_links', 10, 5);
 add_filter('acf/rest/format_value_for_rest/type=page_link', 'ra_custom_types_format_links', 10, 5);
+add_filter('rest_member_query', 'ra_custom_types_rest_modify_member_query', 10, 5);
+add_filter('rest_show_query', 'ra_custom_types_rest_modify_show_query', 10, 5);
+add_filter('rest_event_query', 'ra_custom_types_rest_modify_event_query', 10, 5);
+add_filter('rest_album_query', 'ra_custom_types_rest_modify_album_query', 10, 5);
+add_filter('rest_recording_query', 'ra_custom_types_rest_modify_recording_query', 10, 5);
+add_filter('rest_info_query', 'ra_custom_types_rest_modify_info_tile_query', 10, 5);
+add_filter('rest_survey_query', 'ra_custom_types_rest_modify_survey_query', 10, 5);
+add_filter('rest_member_collection_params', 'ra_custom_types_rest_modify_member_collection_params', 10, 5);
+add_filter('rest_show_collection_params', 'ra_custom_types_rest_modify_show_collection_params', 10, 5);
+add_filter('rest_event_collection_params', 'ra_custom_types_rest_modify_event_collection_params', 10, 5);
+add_filter('rest_album_collection_params', 'ra_custom_types_rest_modify_album_collection_params', 10, 5);
+add_filter('rest_recording_collection_params', 'ra_custom_types_rest_modify_recording_collection_params', 10, 5);
+add_filter('rest_info_collection_params', 'ra_custom_types_rest_modify_info_tile_collection_params', 10, 5);
+add_filter('rest_survey_collection_params', 'ra_custom_types_rest_modify_survey_collection_params', 10, 5);
