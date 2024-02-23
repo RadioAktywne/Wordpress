@@ -65,6 +65,13 @@ function ra_custom_types_register_member()
         'title' => 'Member',
         'fields' => [
             [
+                'key' => 'member_field_orderid',
+                'label' => 'Order ID',
+                'name' => 'orderid',
+                'type' => 'text',
+                'required' => true,
+            ],
+            [
                 'key' => 'member_field_name',
                 'label' => 'Name',
                 'name' => 'name',
@@ -905,6 +912,9 @@ function ra_custom_types_rest_modify_member_query($args)
     } elseif ($args['orderby'] === 'role') {
         $args['orderby'] = 'meta_value';
         $args['meta_key'] = 'role';
+    } elseif ($args['orderby'] === 'orderid') {
+        $args['orderby'] = 'meta_value';
+        $args['meta_key'] = 'orderid';
     }
 
     return $args;
@@ -974,6 +984,7 @@ function ra_custom_types_rest_modify_member_collection_params($params)
 {
     $params['orderby']['enum'][] = 'name';
     $params['orderby']['enum'][] = 'role';
+    $params['orderby']['enum'][] = 'orderid';
     return $params;
 }
 

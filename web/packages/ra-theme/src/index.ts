@@ -102,6 +102,10 @@ const raThemeTypeScript: RaThemeTypeScript = {
           path: "/radiowiec/",
           archivePath: "/radiowcy/",
           perPage: 16,
+          ordering: {
+            field: "orderid",
+            order: "asc",
+          },
         },
         info: {
           endpoint: "info",
