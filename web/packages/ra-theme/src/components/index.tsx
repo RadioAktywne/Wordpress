@@ -89,7 +89,7 @@ function Index() {
 
   useEffect(() => {
     if(status == "success" && media)
-      setOgImage(media.source_url + ".webp");
+      setOgImage(media.source_url);
     else if(status != "idle" && status != "pending")
       setOgImage(Banner);
   }, [status])
