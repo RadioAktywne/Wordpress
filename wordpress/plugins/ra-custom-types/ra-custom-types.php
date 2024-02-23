@@ -91,7 +91,7 @@ function ra_custom_types_register_member()
                 'name' => 'image',
                 'type' => 'image',
                 'required' => false,
-                'return_format' => 'id',
+                'return_format' => 'url',
             ],
             [
                 'key' => 'member_field_description',
@@ -196,7 +196,7 @@ function ra_custom_types_register_show()
                 'name' => 'image',
                 'type' => 'image',
                 'required' => false,
-                'return_format' => 'id',
+                'return_format' => 'url',
             ],
             [
                 'key' => 'show_field_description',
@@ -433,7 +433,7 @@ function ra_custom_types_register_album()
                 'name' => 'image',
                 'type' => 'image',
                 'required' => false,
-                'return_format' => 'id',
+                'return_format' => 'url',
             ],
             [
                 'key' => 'album_field_description',
@@ -527,7 +527,7 @@ function ra_custom_types_register_recording()
                 'type' => 'file',
                 'required' => true,
                 'mime_types' => 'mp3,ogg,wav',
-                'return_format' => 'id',
+                'return_format' => 'url',
             ],
             [
                 'key' => 'recording_field_image',
@@ -535,7 +535,7 @@ function ra_custom_types_register_recording()
                 'name' => 'image',
                 'type' => 'image',
                 'required' => false,
-                'return_format' => 'id',
+                'return_format' => 'url',
             ],
             [
                 'key' => 'recording_field_description',
@@ -664,7 +664,7 @@ function ra_custom_types_register_info_tile()
                 'name' => 'image',
                 'type' => 'image',
                 'required' => false,
-                'return_format' => 'id',
+                'return_format' => 'url',
             ],
         ],
         'location' => [
@@ -756,7 +756,7 @@ function ra_custom_types_register_survey()
                 'name' => 'image',
                 'type' => 'image',
                 'required' => false,
-                'return_format' => 'id',
+                'return_format' => 'url',
             ],
         ],
         'location' => [

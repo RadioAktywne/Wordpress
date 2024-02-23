@@ -13,7 +13,8 @@ interface FeaturedImageProps {
    * ID of the attachment entity.
    * size - full, large, medium, medium_large, thumbnail
    */
-  id: number;
+  // id: number;
+  url: number;
   size: string;
 }
 
@@ -35,22 +36,23 @@ interface ContainerProps {
  *
  * @returns A react component.
  */
-function FeaturedImage({ id, size }: FeaturedImageProps): JSX.Element {
-  const {
-    status,
-    value: [media],
-  } = useMedia([id]);
+function FeaturedImage({ url, size }: FeaturedImageProps): JSX.Element {
+  // const {
+  //   status,
+  //   value: [media],
+  // } = useMedia([id]);
 
-  if (status === "pending") return <Loading />;
-  if (!media) return null;
+  // if (status === "pending") return <Loading />;
+  // if (!media) return null;
 
   return (
     <SquareContainer
       style={{
         background: "url(" + 
-            (media && media.media_details && media.media_details.sizes[size] ? 
-            (media.source_url.substring(0, media.source_url.lastIndexOf('/') + 1) + media.media_details.sizes[size].file)
-            : (media.source_url))
+            // (media && media.media_details && media.media_details.sizes[size] ? 
+            // (media.source_url.substring(0, media.source_url.lastIndexOf('/') + 1) + media.media_details.sizes[size].file)
+            // : (media.source_url))
+            url
            + ".webp)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",

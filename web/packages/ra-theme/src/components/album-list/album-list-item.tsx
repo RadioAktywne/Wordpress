@@ -30,7 +30,7 @@ function AlbumListItem({ item, onHome }: ItemProps): JSX.Element {
         <Link link={item.link}>
           <Cover>
             {item.acf.image ? (
-              <FeaturedImage id={item.acf.image} size="medium_large"/>
+              <FeaturedImage url={item.acf.image} size="medium_large"/>
             ) : (
               <DefaultImage img={defaultImageMedia} />
             )}

@@ -75,7 +75,7 @@ function Recording({ data }: RecordingProps): JSX.Element {
 
       <Cover>
         {recording.acf.image ? (
-          <FeaturedImage id={recording.acf.image} size="large"/>
+          <FeaturedImage url={recording.acf.image} size="large"/>
         ) : (
           <DefaultImage img={defaultImageMedia} />
         )}

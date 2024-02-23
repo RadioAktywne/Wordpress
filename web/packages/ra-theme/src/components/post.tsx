@@ -55,7 +55,7 @@ function Post({ data }: PostProps): JSX.Element {
 
       <Cover>
         {post.featured_media && (isPostEntity(post) || isPageEntity(post)) ? (
-          <FeaturedImage id={post.featured_media} size="large"/>
+          <FeaturedImage url={post.featured_media} size="large"/>
         ) : (
           <DefaultImage img={defaultImageMedia} />
         )}

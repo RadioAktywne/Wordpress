@@ -75,7 +75,7 @@ function Survey({ data }: SurveyProps): JSX.Element {
 
       <Cover>
         {survey.acf.image ? (
-          <FeaturedImage id={survey.acf.image} size="large"/>
+          <FeaturedImage url={survey.acf.image} size="large"/>
         ) : (
           <DefaultImage img={defaultImageMedia} />
         )}

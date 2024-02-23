@@ -54,7 +54,7 @@ function Member({ data }: MemberProps): JSX.Element {
 
       <Cover>
         {member.acf.image ? (
-          <FeaturedImage id={member.acf.image} size="large"/>
+          <FeaturedImage url={member.acf.image} size="large"/>
         ) : (
           <DefaultImage img={defaultImageMedia} />
         )}

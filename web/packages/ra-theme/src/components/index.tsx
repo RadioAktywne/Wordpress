@@ -82,17 +82,19 @@ function Index() {
   }, []);
 
   // try to load og image if acf
-  const {
-    status,
-    value: [media],
-  } = useMedia([state?.source[data?.type][data?.id]?.acf?.image]);
+  // const {
+  //   status,
+  //   value: [media],
+  // } = useMedia([state?.source[data?.type][data?.id]?.acf?.image]);
 
-  useEffect(() => {
-    if(status == "success" && media)
-      setOgImage(media.source_url);
-    else if(status != "idle" && status != "pending")
-      setOgImage(Banner);
-  }, [status])
+  // useEffect(() => {
+  //   if(status == "success" && media)
+  //     setOgImage(media.source_url);
+  //   else if(status != "idle" && status != "pending")
+  //     setOgImage(Banner);
+  // }, [status])
+
+  console.log(state?.source[data?.type][data?.id]?.acf?.image);
 
   return (
     <>

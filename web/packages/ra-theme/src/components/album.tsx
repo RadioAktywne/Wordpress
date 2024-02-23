@@ -53,7 +53,7 @@ function Album({ data }: AlbumProps): JSX.Element {
 
       <Cover>
         {album.acf.image ? (
-          <FeaturedImage id={album.acf.image} size="large"/>
+          <FeaturedImage url={album.acf.image} size="large"/>
         ) : (
           <DefaultImage img={defaultImageMedia} />
         )}
