@@ -1,7 +1,7 @@
 import Switch from "@frontity/components/switch";
 import { isError, isHome, isPage, isPostArchive } from "@frontity/source";
 import { Global, connect, css, styled, useConnect } from "frontity";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 import { Packages } from "../../types";
 import {
@@ -43,6 +43,7 @@ import ShowList from "./show-list";
 import Survey from "./survey";
 import SurveyList from "./survey-list";
 import Banner from "../img/logos/ra_banner.png";
+import useMedia from "../hooks/useMedia";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -54,6 +55,7 @@ import Banner from "../img/logos/ra_banner.png";
 function Index() {
   const { state, actions, libraries } = useConnect<Packages>();
   const { route } = libraries.source.parse(state.router.link);
+  const [ogImage, setOgImage] = React.useState<string>();
   const data = state.source.get(route);
 
   // handle for ReactPlayer object (right now undefined)
@@ -79,6 +81,19 @@ function Index() {
     actions.players.pauseRecordings();
   }, []);
 
+  // try to load og image if acf
+  const {
+    status,
+    value: [media],
+  } = useMedia([state?.source[data?.type][data?.id]?.acf?.image]);
+
+  useEffect(() => {
+    if(status == "success" && media)
+      setOgImage(media.source_url + ".webp");
+    else if(status != "idle" && status != "pending")
+      setOgImage(Banner);
+  }, [status])
+
   return (
     <>
       {/* Add some metatags to the <head> of the HTML. */}
@@ -92,13 +107,12 @@ function Index() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <html lang="pl" />
 
-        {/* temporairly,  use the same og image on all pages*/}
-        {/* {data && (isHome(data) || isArchive(data)) && ( */}
-            <meta name="twitter:image" property="og:image" content={Banner} />
-        {/* )} */}
-        {/* {data && (isHome(data) || isArchive(data)) && ( */}
-            <link property="image" href={Banner} />
-        {/* )} */}
+        {ogImage && 
+          <>
+            <meta name="twitter:image" property="og:image" content={ogImage} />
+            <link property="image" href={ogImage} />
+          </>
+        }
       </Head>
 
       {/* Add some global styles for the whole site, like body or a's.
