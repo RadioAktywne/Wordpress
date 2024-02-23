@@ -108,10 +108,11 @@ function Index() {
         <html lang="pl" />
 
         {ogImage && 
-          <>
             <meta name="twitter:image" property="og:image" content={ogImage} />
+        }
+
+        {ogImage && 
             <link property="image" href={ogImage} />
-          </>
         }
       </Head>
 
