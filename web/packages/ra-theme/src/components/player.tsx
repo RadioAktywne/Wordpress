@@ -27,7 +27,7 @@ function Player() {
     }
 
     // we set url with some random number - it wont play from cache B)
-    const url = "https://listen.radioaktywne.pl:8443/ramp3?c=" + Date.now();
+    const url = "https://listen.radioaktywne.pl/ramp3?c=" + Date.now();
 
     if (state.players.main.source) {
       state.players.main.source.url = url;
@@ -49,11 +49,7 @@ function Player() {
   const rds = () => {
     const xhr = new XMLHttpRequest();
 
-    xhr.open(
-      "GET",
-      "https://listen.radioaktywne.pl:8443/status-json.xsl",
-      true,
-    );
+    xhr.open("GET", "https://listen.radioaktywne.pl/status-json.xsl", true);
 
     xhr.onreadystatechange = () => {
       if (!state.players.main.source) return;

@@ -135,7 +135,7 @@ const raThemeTypeScript: RaThemeTypeScript = {
         muted: false,
         volume: 1,
         source: {
-          url: "https://listen.radioaktywne.pl:8443/ramp3",
+          url: "https://listen.radioaktywne.pl/ramp3",
           title: null,
         },
       },
