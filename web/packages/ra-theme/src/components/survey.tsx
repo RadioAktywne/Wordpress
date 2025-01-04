@@ -40,7 +40,12 @@ function Survey({ data }: SurveyProps): JSX.Element {
   const onSubmit = useCallback(
     async (data: SubmissionFields) => {
       const deviceName = navigator.userAgent;
-      const ipData = await fetch('https://ipv4.icanhazip.com').then((response) => response.text());
+      let ipData;
+      try {
+        ipData = await fetch('https://ipv4.icanhazip.com').then((response) => response.text());
+      } catch (error) {
+        ipData = "CORS";
+      }
 
       await submitMutation.mutateAsync({
         id: getFormQuery.data.data.form.id,
