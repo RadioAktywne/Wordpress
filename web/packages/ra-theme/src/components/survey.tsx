@@ -40,13 +40,11 @@ function Survey({ data }: SurveyProps): JSX.Element {
   const onSubmit = useCallback(
     async (data: SubmissionFields) => {
       const deviceName = navigator.userAgent;
-      const ipResponse = await fetch('https://icanhazip.com');
-      const ipData = await ipResponse.json();
-      const ipAddress = ipData.ip;
+      const ipData = await fetch('https://ipv4.icanhazip.com').then((response) => response.text());
 
       await submitMutation.mutateAsync({
         id: getFormQuery.data.data.form.id,
-        data: { submission: { metadata: { device: { name: deviceName, type: ipAddress } }, fields: data } },
+        data: { submission: { metadata: { device: { name: deviceName, type: ipData } }, fields: data } },
       });
     },
     [getFormQuery.data],
