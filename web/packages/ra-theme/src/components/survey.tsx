@@ -39,9 +39,14 @@ function Survey({ data }: SurveyProps): JSX.Element {
 
   const onSubmit = useCallback(
     async (data: SubmissionFields) => {
+      const deviceName = navigator.userAgent;
+      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const ipData = await ipResponse.json();
+      const ipAddress = ipData.ip;
+
       await submitMutation.mutateAsync({
         id: getFormQuery.data.data.form.id,
-        data: { submission: { metadata: {}, fields: data } },
+        data: { submission: { metadata: { device: { name: deviceName, type: ipAddress } }, fields: data } },
       });
     },
     [getFormQuery.data],
