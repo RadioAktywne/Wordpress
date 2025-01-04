@@ -40,7 +40,7 @@ function Survey({ data }: SurveyProps): JSX.Element {
   const onSubmit = useCallback(
     async (data: SubmissionFields) => {
       const deviceName = navigator.userAgent;
-      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const ipResponse = await fetch('https://icanhazip.com');
       const ipData = await ipResponse.json();
       const ipAddress = ipData.ip;
 
