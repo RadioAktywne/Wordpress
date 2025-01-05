@@ -108,8 +108,10 @@ export default function SurveyForm({
   errors,
   onSubmit,
 }: SurveyFormProps): JSX.Element {
+  const sortedFields = data.fields.sort((a, b) => a.id.localeCompare(b.id));
+
   const form = useForm<SubmissionFields, any>({
-    defaultValues: data.fields.reduce(
+    defaultValues: sortedFields.reduce(
       (acc, field) => ({ ...acc, [field.id]: field.default }),
       {},
     ),
@@ -139,7 +141,7 @@ export default function SurveyForm({
             form.handleSubmit();
           }}
         >
-          {data.fields.map((fieldData) => (
+          {sortedFields.map((fieldData) => (
             <form.Field
               name={fieldData.id}
               key={fieldData.id}
