@@ -26,7 +26,7 @@ export default function CheckboxField({
   data,
   field,
 }: CheckboxFieldProps): JSX.Element {
-  const sortedOptions = data.options.sort((a, b) => a.id.localeCompare(b.id));
+  const sortedOptions = data.options.sort((a, b) => a.title.localeCompare(b.title));
   return (
     <>
       {sortedOptions.map((option) => {
