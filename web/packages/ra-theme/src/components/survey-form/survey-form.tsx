@@ -42,6 +42,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import Link from "../link";
+import parse from "html-react-parser";
 
 export const themeOptions = createTheme({
   palette: {
@@ -148,7 +149,7 @@ export default function SurveyForm({
               children={(field) => (
                 <FormField>
                   <label className="formFieldLabel" htmlFor={field.name}>{fieldData.title}</label>
-                  {fieldData.description && <p>{fieldData.description}</p>}
+                  {fieldData.description && <p>{parse(fieldData.description)}</p>}
                   {(() => {
                     switch (fieldData.type) {
                       case "checkbox":
